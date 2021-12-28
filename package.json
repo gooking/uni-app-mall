@@ -1,0 +1,12 @@
+{
+	"id": "tianshitongzhuang",
+	"scripts": {
+		"test": "eslint . --fix"
+	},
+	"devDependencies": {
+		"apifm-uniapp": "^3.46.0",
+		"eslint": "^8.2.0",
+		"eslint-config-airbnb": "^19.0.0",
+		"vue-i18n": "^8.20.0"
+	}
+}
