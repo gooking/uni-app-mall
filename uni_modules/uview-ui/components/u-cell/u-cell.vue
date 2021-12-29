@@ -75,13 +75,9 @@
 
 			}
 		},
-		mounted() {
-			console.log('this.titleStyle', this.titleStyle);
-		},
 		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
 		computed: {
 			titleTextStyle() {
-				console.log(this.titleStyle, uni.$u.addStyle(this.titleStyle));
 				return uni.$u.addStyle(this.titleStyle)
 			}
 		},

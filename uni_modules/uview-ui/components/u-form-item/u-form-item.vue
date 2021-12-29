@@ -62,13 +62,13 @@
 				v-if="!!message && parentData.errorType === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
-					marginLeft: $u.addUnit(labelWidth || parentData.labelWidth)
+					marginLeft:  $u.addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
 				}"
 			>{{ message }}</text>
 		</slot>
 		<u-line
 			v-if="borderBottom"
-			:color="message && parentData.errorType === 'border-bottom' ? $u.color.error : $u.props.line.color"
+			:color="message && parentData.errorType === 'border-bottom' ? $u.color.error : propsLine.color"
 			:customStyle="`margin-top: ${message ? '5px' : 0}`"
 		></u-line>
 	</view>
@@ -112,6 +112,11 @@
 			}
 		},
 		// 组件创建完成时，将当前实例保存到u-form中
+		computed: {
+			propsLine() {
+				return uni.$u.props.line
+			}
+		},
 		mounted() {
 			this.init()
 		},
