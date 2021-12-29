@@ -1,4 +1,6 @@
 <script>
+	const WXAUTH = require('@/common/wxauth.js')
+	const TTAUTH = require('@/common/ttauth.js')
 	export default {
 		globalData: {
 			subDomain: 'tz',
@@ -84,6 +86,13 @@
 				if(!isLogined) {
 					await WXAUTH.authorize()
 					await WXAUTH.bindSeller()
+				}
+				// #endif
+				// #ifdef MP-TOUTIAO
+				const isLogined = await TTAUTH.checkHasLogined()
+				if(!isLogined) {
+					await TTAUTH.authorize()
+					await TTAUTH.bindSeller()
 				}
 				// #endif
 				setTimeout(() => {

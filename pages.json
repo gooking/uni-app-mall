@@ -5,6 +5,12 @@
 		    "style": {
 				"navigationStyle": "custom"
 		    }
+		},
+		{
+		    "path" : "pages/shop/select",
+		    "style": {
+				"navigationBarTitleText":"选择门店"
+		    }
 		}
     ],
 	"globalStyle": {
