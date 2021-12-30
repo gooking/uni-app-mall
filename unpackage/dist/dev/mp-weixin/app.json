@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/start",
+    "pages/shop/select",
+    "pages/index/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app商城",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#909399",
+    "selectedColor": "#303133",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/nav/home-off.png",
+        "selectedIconPath": "static/images/nav/home-on.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/start",
+        "iconPath": "static/images/nav/home-off.png",
+        "selectedIconPath": "static/images/nav/home-on.png",
+        "text": "首页2"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "为你推荐附近的门店"
+    }
+  },
+  "usingComponents": {}
+}

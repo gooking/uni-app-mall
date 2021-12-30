@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-7369b029, scroll-view.data-v-7369b029, swiper-item.data-v-7369b029 {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-cell-group.data-v-7369b029 {
+  flex: 1;
+}
+.u-cell-group__title.data-v-7369b029 {
+  padding: 16px 16px 8px;
+}
+.u-cell-group__title__text.data-v-7369b029 {
+  font-size: 15px;
+  line-height: 16px;
+  color: #303133;
+}
+.u-cell-group__wrapper.data-v-7369b029 {
+  position: relative;
+}
+

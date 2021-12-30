@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-2ee87dc9, scroll-view.data-v-2ee87dc9, swiper-item.data-v-2ee87dc9 {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+@font-face {
+  font-family: 'uicon-iconfont';
+  src: url("https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf") format("truetype");
+}
+.u-icon.data-v-2ee87dc9 {
+  display: flex;
+  align-items: center;
+}
+.u-icon--left.data-v-2ee87dc9 {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.u-icon--right.data-v-2ee87dc9 {
+  flex-direction: row;
+  align-items: center;
+}
+.u-icon--top.data-v-2ee87dc9 {
+  flex-direction: column-reverse;
+  justify-content: center;
+}
+.u-icon--bottom.data-v-2ee87dc9 {
+  flex-direction: column;
+  justify-content: center;
+}
+.u-icon__icon.data-v-2ee87dc9 {
+  font-family: uicon-iconfont;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.u-icon__icon--primary.data-v-2ee87dc9 {
+  color: #3c9cff;
+}
+.u-icon__icon--success.data-v-2ee87dc9 {
+  color: #5ac725;
+}
+.u-icon__icon--error.data-v-2ee87dc9 {
+  color: #f56c6c;
+}
+.u-icon__icon--warning.data-v-2ee87dc9 {
+  color: #f9ae3d;
+}
+.u-icon__icon--info.data-v-2ee87dc9 {
+  color: #909399;
+}
+.u-icon__img.data-v-2ee87dc9 {
+  height: auto;
+  will-change: transform;
+}
+.u-icon__label.data-v-2ee87dc9 {
+  line-height: 1;
+}
+
