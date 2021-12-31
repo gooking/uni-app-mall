@@ -22,6 +22,19 @@
 			<u-notice-bar class="notice" v-if="goodsDynamic" icon="bag" :text="goodsDynamic" direction="column"
 				mode="link" :disableTouch="false"></u-notice-bar>
 		</view>
+		<view v-if="categories && categories.length > 0" class="category-container">
+			<view class="category-box">
+				<view class="category-list" v-for="(item, index) in categories" wx:key="index">
+					<view class="category-column" @click="categoryClick(item)">
+						<image mode="aspectFill" class="category-imgbox" :src="item.icon"></image>
+						<view class="category-title">{{item.name}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title"
+			mode="link" :url="'/pages/index/notice?id=' + notice.id"></u-notice-bar>
+		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true" :src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix" @click="goUrl(adPosition['index-live-pic'].url)"></u--image>
 	</view>
 </template>
 
@@ -37,6 +50,9 @@
 				shopInfo: undefined,
 				banners: undefined,
 				goodsDynamic: undefined,
+				categories: undefined,
+				notice: undefined,
+				adPosition: {}
 			}
 		},
 		onLoad() {
@@ -52,6 +68,9 @@
 			});
 			this.shopInfo = uni.getStorageSync('shopInfo')
 			this._banners()
+			this._categories()
+			this._notice()
+			this._adPosition()
 		},
 		onShow() {
 			this._goodsDynamic()
@@ -95,6 +114,51 @@
 					})
 				}
 			},
+			async _categories() {
+				// https://www.yuque.com/apifm/nu0f75/racmle
+				const res = await this.$wxapi.goodsCategory()
+				if (res.code == 0) {
+					this.categories = res.data.filter(ele => {
+						return ele.level == 1
+					})
+				}
+			},
+			categoryClick(category) {
+				if (category.vopCid1 || category.vopCid2) {
+					wx.navigateTo({
+						url: '/pages/goods/list-vop?cid1=' + (category.vopCid1 ? category.vopCid1 : '') +
+							'&cid2=' + (category.vopCid2 ? category.vopCid2 : ''),
+					})
+				} else {
+					wx.setStorageSync("_categoryId", category.id)
+					wx.switchTab({
+						url: '/pages/goods/category',
+					})
+				}
+			},
+			async _notice() {
+				// https://www.yuque.com/apifm/nu0f75/zanb9r
+				const res = await this.$wxapi.noticeLastOne()
+				if (res.code == 0) {
+					this.notice = res.data
+				}
+			},
+			async _adPosition() {
+				// https://www.yuque.com/apifm/nu0f75/ypi79p
+				const res = await this.$wxapi.adPositionBatch('indexPop,index-live-pic')
+				if (res.code == 0) {
+					res.data.forEach(ele => {
+						this.adPosition[ele.key] = ele
+					})
+				}
+			},
+			goUrl(url) {
+				if(url) {
+					uni.navigateTo({
+						url
+					})
+				}
+			},
 		}
 	}
 </script>
@@ -130,6 +194,51 @@
 				opacity: 0.8;
 				border-radius: 32rpx;
 			}
+		}
+
+		.category-container {
+			padding: 0 0 10px 0;
+			margin-top: 16rpx;
+			position: relative;
+			background-color: white;
+
+			.category-box {
+				background-color: #fff;
+				display: flex;
+				flex-wrap: wrap;
+				box-shadow: 0px 0px 18px 0px rgba(5, 5, 5, 0.15);
+				width: 700rpx;
+				margin-left: 25rpx;
+				border-radius: 10px;
+				padding: 20rpx 0;
+				position: inherit;
+			}
+
+			.category-list {
+				width: 140rpx;
+				text-align: center;
+				display: inline-block;
+				overflow: hidden;
+			}
+
+			.category-column {
+				width: 100%;
+				margin-top: 20rpx;
+				overflow: hidden;
+			}
+
+			.category-imgbox {
+				width: 100rpx;
+				height: 100rpx;
+			}
+
+			.category-title {
+				font-size: 24rpx;
+				text-align: center;
+			}
+		}
+		.live-pic {
+			margin-top: 16rpx;
 		}
 	}
 </style>

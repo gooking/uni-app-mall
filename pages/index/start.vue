@@ -46,8 +46,7 @@
 		},
 		methods: {
 			goNextPage() {
-				// const shopMod = this.sysconfigMap.shopMod
-				const shopMod = 1
+				const shopMod = this.sysconfigMap.shopMod
 				this.$u.vuex('app_show_pic_version', getApp().globalData.version)
 				if (shopMod == 1) {
 					wx.redirectTo({
