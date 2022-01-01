@@ -18,9 +18,8 @@
 			<u-swiper v-if="banners" :list="banners" indicator circular keyName="picUrl" height="375rpx"
 				@click="tapBanner">
 			</u-swiper>
-			<!-- TODO 点击具体哪一条公告，可以区分跳转 -->
 			<u-notice-bar class="notice" v-if="goodsDynamic" icon="bag" :text="goodsDynamic" direction="column"
-				mode="link" :disableTouch="false"></u-notice-bar>
+				mode="link" :disableTouch="false" @click="noticeclick"></u-notice-bar>
 		</view>
 		<view v-if="categories && categories.length > 0" class="category-container">
 			<view class="category-box">
@@ -32,9 +31,42 @@
 				</view>
 			</view>
 		</view>
-		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title"
-			mode="link" :url="'/pages/index/notice?id=' + notice.id"></u-notice-bar>
-		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true" :src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix" @click="goUrl(adPosition['index-live-pic'].url)"></u--image>
+		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title" mode="link"
+			:url="'/pages/index/notice?id=' + notice.id"></u-notice-bar>
+		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true"
+			:src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix"
+			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
+		<view v-if="miaoshaGoods" class="miaoshaGoods">
+			<view class="t">
+				<u-line class="l"></u-line>
+				<view class="content">
+					<image src="/static/images/miaosha.png"></image>
+					<text>限时秒杀</text>
+				</view>
+				<u-line class="l"></u-line>
+			</view>
+			<view v-for="(item, index) in miaoshaGoods" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<view class="r">
+					<view class="goods-title">{{item.name}}</view>
+					<u-count-down v-if="item.dateStartInt > 0" class="count-down" :time="item.dateStartInt" format="距离开始: HH 时 mm 分 ss 秒"></u-count-down>
+					<u-count-down v-if="item.dateStartInt <= 0 && item.dateEndInt > 0" class="count-down" :time="item.dateEndInt" format="剩余: HH 时 mm 分 ss 秒"></u-count-down>
+					<view class="miaosha-price-btn">
+						<view class="price">￥{{item.minPrice}} <text>￥{{item.originalPrice}}</text></view>
+						<van-button custom-class="msbtn" v-if="item.dateStartInt > 0" type="danger" size="small" round
+							plain disabled>未开始</van-button>
+						<van-button custom-class="msbtn" v-if="item.dateEndInt <= 0" type="danger" size="small" round>
+							已结束
+						</van-button>
+						<van-button custom-class="msbtn" v-if="item.stores <= 0" type="danger" size="small" round>已抢完
+						</van-button>
+						<van-button custom-class="msbtn"
+							v-if="item.dateStartInt <= 0 && item.dateEndInt > 0 && item.stores > 0" type="danger"
+							size="small" round>立即抢购</van-button>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -52,7 +84,8 @@
 				goodsDynamic: undefined,
 				categories: undefined,
 				notice: undefined,
-				adPosition: {}
+				adPosition: {},
+				miaoshaGoods: undefined
 			}
 		},
 		onLoad() {
@@ -71,6 +104,7 @@
 			this._categories()
 			this._notice()
 			this._adPosition()
+			this._miaoshaGoods()
 		},
 		onShow() {
 			this._goodsDynamic()
@@ -153,10 +187,31 @@
 				}
 			},
 			goUrl(url) {
-				if(url) {
+				if (url) {
 					uni.navigateTo({
 						url
 					})
+				}
+			},
+			noticeclick(e) {
+				console.log(e);
+			},
+			async _miaoshaGoods() {
+				// https://www.yuque.com/apifm/nu0f75/wg5t98
+				const res = await this.$wxapi.goodsv2({
+					miaosha: true
+				})
+				if (res.code == 0) {
+					res.data.result.forEach(ele => {
+						const _now = new Date().getTime()
+						if (ele.dateStart) {
+							ele.dateStartInt = new Date(ele.dateStart.replace(/-/g, '/')).getTime() - _now
+						}
+						if (ele.dateEnd) {
+							ele.dateEndInt = new Date(ele.dateEnd.replace(/-/g, '/')).getTime() - _now
+						}
+					})
+					this.miaoshaGoods = res.data.result
 				}
 			},
 		}
@@ -183,6 +238,7 @@
 
 		.swiper {
 			position: relative;
+			margin-top: 8rpx;
 
 			.notice {
 				position: absolute;
@@ -237,8 +293,84 @@
 				text-align: center;
 			}
 		}
+
 		.live-pic {
 			margin-top: 16rpx;
+		}
+
+		.miaoshaGoods {
+			.t {
+				display: flex;
+				align-items: center;
+				margin-top: 24rpx;
+
+				.l {
+					flex: 1;
+				}
+
+				.content {
+					display: flex;
+					align-items: center;
+					padding: 0 16rpx;
+
+					image {
+						width: 34rpx;
+						height: 42rpx;
+					}
+
+					text {
+						color: #333;
+						font-size: 28rpx;
+					}
+				}
+			}
+
+			.miaosha-goods-list {
+				margin: 20rpx;
+				border-radius: 16rpx;
+				display: flex;
+				padding: 20rpx;
+			}
+
+			.miaosha-goods-list .image {
+				width: 260rpx;
+				height: 260rpx;
+				flex-shrink: 0;
+				border-radius: 16rpx;
+			}
+
+			.miaosha-goods-list .r {
+				margin-left: 32rpx;
+			}
+
+			.miaosha-goods-list .r .goods-title {
+				color: #333;
+				font-size: 28rpx;
+			}
+
+			.miaosha-goods-list .r .label {
+				color: #e64340;
+				font-size: 24rpx;
+				display: flex;
+				align-items: flex-start;
+				margin-top: 8rpx;
+			}
+
+			.miaosha-goods-list .r .label text {
+				margin-left: 8rpx;
+			}
+
+			.miaosha-goods-list .count-down {
+				background: rgba(250, 195, 198, 0.3);
+				border-radius: 5rpx;
+				font-size: 14rpx;
+				color: red;
+				font-weight: 400;
+				padding: 6rpx 16rpx;
+				margin-top: 6rpx;
+				text-align: center;
+				border-radius: 10rpx;
+			}
 		}
 	}
 </style>
