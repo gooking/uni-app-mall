@@ -37,7 +37,7 @@
 			:src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix"
 			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
 		<view v-if="miaoshaGoods" class="miaoshaGoods">
-			<view class="t">
+			<view class="ttt">
 				<u-line class="l"></u-line>
 				<view class="content">
 					<image src="/static/images/miaosha.png"></image>
@@ -49,30 +49,136 @@
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
 				<view class="r">
 					<view class="goods-title">{{item.name}}</view>
-					<u-count-down v-if="item.dateStartInt > 0" class="count-down" :time="item.dateStartInt" format="距离开始: HH 时 mm 分 ss 秒"></u-count-down>
-					<u-count-down v-if="item.dateStartInt <= 0 && item.dateEndInt > 0" class="count-down" :time="item.dateEndInt" format="剩余: HH 时 mm 分 ss 秒"></u-count-down>
+					<u-count-down v-if="item.dateStartInt > 0" class="count-down" :time="item.dateStartInt"
+						format="距离开始: HH时mm分ss秒"></u-count-down>
+					<u-count-down v-if="item.dateStartInt <= 0 && item.dateEndInt > 0" class="count-down"
+						:time="item.dateEndInt" format="剩余: HH时mm分ss秒"></u-count-down>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.minPrice}} <text>￥{{item.originalPrice}}</text></view>
-						<van-button custom-class="msbtn" v-if="item.dateStartInt > 0" type="danger" size="small" round
-							plain disabled>未开始</van-button>
-						<van-button custom-class="msbtn" v-if="item.dateEndInt <= 0" type="danger" size="small" round>
-							已结束
-						</van-button>
-						<van-button custom-class="msbtn" v-if="item.stores <= 0" type="danger" size="small" round>已抢完
-						</van-button>
-						<van-button custom-class="msbtn"
-							v-if="item.dateStartInt <= 0 && item.dateEndInt > 0 && item.stores > 0" type="danger"
-							size="small" round>立即抢购</van-button>
+						<u-button v-if="item.dateStartInt > 0" type="warning" size="mini" plain disabled text="即将开始">
+						</u-button>
+						<u-button v-else-if="item.dateEndInt <= 0" type="info" size="mini" plain disabled text="已结束">
+						</u-button>
+						<u-button v-else-if="item.stores <= 0" type="info" size="mini" plain disabled text="已抢完">
+						</u-button>
+						<u-button v-else type="error" size="mini" plain text="立即抢购"></u-button>
 					</view>
 				</view>
 			</view>
 		</view>
+		<view v-if="goodsRecommend" class="goodsRecommend">
+			<view class="ttt">
+				<u-line class="l"></u-line>
+				<view class="content">
+					<image src="/static/images/recommend.png"></image>
+					<text>爆款推荐</text>
+				</view>
+				<u-line class="l"></u-line>
+			</view>
+			<view class="goods-container">
+				<view v-for="(item, index) in goodsRecommend" :key="index" class="goods-box" bindtap="toDetailsTap">
+					<view class="img-box">
+						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+					</view>
+					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333"></u--text>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<view style='display:flex;'>
+						<view class="goods-price">¥ {{item.minPrice}}</view>
+						<view v-if="item.originalPrice && item.originalPrice > 0" class="goods-price"
+							style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-if="kanjiaList" class="miaoshaGoods">
+			<view class="ttt">
+				<u-line class="l"></u-line>
+				<view class="content">
+					<image src="/static/images/kanjia.png"></image>
+					<text>疯狂砍价</text>
+				</view>
+				<u-line class="l"></u-line>
+			</view>
+			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<view class="r">
+					<view class="goods-title">{{item.name}}</view>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<u-line-progress :percentage="item.process" activeColor="#ff0000"></u-line-progress>
+					<view class="miaosha-price-btn">
+						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
+						<u-button type="error" size="mini" plain text="我要砍价"></u-button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-if="pingtuanList" class="miaoshaGoods">
+			<view class="ttt">
+				<u-line class="l"></u-line>
+				<view class="content">
+					<image src="/static/images/pingtuan.png"></image>
+					<text>全民拼团</text>
+				</view>
+				<u-line class="l"></u-line>
+			</view>
+			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<view class="r">
+					<view class="goods-title">{{item.name}}</view>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<view class="miaosha-price-btn">
+						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
+						<u-button type="success" size="mini" text="我要拼团"></u-button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-if="goods" class="goodsRecommend">
+			<view class="ttt">
+				<u-line class="l"></u-line>
+				<view class="content">
+					<image src="/static/images/goodslist.png"></image>
+					<text>商品列表</text>
+				</view>
+				<u-line class="l"></u-line>
+			</view>
+			<view class="goods-container">
+				<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
+					<view class="img-box">
+						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+					</view>
+					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333"></u--text>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<view style='display:flex;'>
+						<view class="goods-price">¥ {{item.minPrice}}</view>
+						<view v-if="item.originalPrice && item.originalPrice > 0" class="goods-price"
+							style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class='coupons-float' @click="goCoupons">
+			<image src="/static/images/gift.png"></image>
+		</view>
+		<u-overlay v-if="adPosition['indexPop']" :show="adPositionIndexPop" @click="goUrl(adPosition['indexPop'].url)">
+			<view class="adPositionIndexPop">
+				<image :src="adPosition['indexPop'].val" mode="widthFix"></image>
+				<view class="close" @click="adPositionIndexPop = false">
+					<u-icon name="close-circle-fill" color="#eee" size="80rpx"></u-icon>
+				</view>
+			</view>
+		</u-overlay>
 	</view>
 </template>
 
 
 
 <script>
+	const TOOLS = require('@/common/tools')
 	export default {
 		data() {
 			return {
@@ -85,10 +191,21 @@
 				categories: undefined,
 				notice: undefined,
 				adPosition: {},
-				miaoshaGoods: undefined
+				miaoshaGoods: undefined,
+				goodsRecommend: undefined,
+				kanjiaList: undefined,
+				pingtuanList: undefined,
+				page: 1,
+				goods: undefined,
+				adPositionIndexPop: false
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			// #ifdef  MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || MP-QQ
+			uni.showShareMenu({
+				withShareTicket: true,
+			})
+			// #endif
 			// #ifdef  MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ
 			const systemInfo = uni.getSystemInfoSync()
 			const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
@@ -96,20 +213,64 @@
 				`width: ${systemInfo.screenWidth - menuButtonInfo.left}px;height: ${menuButtonInfo.height}px`
 			this.headerMarginTopStyle = `margin-top:${menuButtonInfo.top}px`
 			// #endif
+			// 读取分享链接中的邀请人编号
+			if (e && e.inviter_id) {
+				this.$u.vuex('referrer', e.inviter_id)
+			}
+			// 读取小程序码中的邀请人编号
+			if (e && e.scene) {
+				const scene = decodeURIComponent(e.scene)
+				if (scene) {
+					this.$u.vuex('referrer', scene.substring(11))
+				}
+			}
 			uni.setNavigationBarTitle({
 				title: this.sysconfigMap.mallName
-			});
-			this.shopInfo = uni.getStorageSync('shopInfo')
+			})
 			this._banners()
 			this._categories()
 			this._notice()
 			this._adPosition()
 			this._miaoshaGoods()
+			this._goodsRecommend()
+			this._kanjiaList()
+			this._pingtuanList()
+			this._goods()
 		},
 		onShow() {
+			this.shopInfo = uni.getStorageSync('shopInfo')
 			this._goodsDynamic()
+			TOOLS.showTabBarBadge()
+			const refreshIndex = wx.getStorageSync('refreshIndex')
+			if (refreshIndex) {
+				this.onPullDownRefresh()
+				wx.removeStorageSync('refreshIndex')
+			}
 		},
 		created() {},
+		onShareAppMessage() {
+			return {
+				title: '"' + this.sysconfigMap.mallName + '" ' + this.sysconfigMap.share_profile,
+				path: '/pages/index/index?inviter_id=' + this.uid
+			}
+		},
+		onReachBottom() {
+			this.page += 1
+			this._goods()
+		},
+		onPullDownRefresh() {
+			this.page = 1
+			this._banners()
+			this._categories()
+			this._notice()
+			this._adPosition()
+			this._miaoshaGoods()
+			this._goodsRecommend()
+			this._kanjiaList()
+			this._pingtuanList()
+			this._goods()
+			wx.stopPullDownRefresh()
+		},
 		methods: {
 			goSearch() {
 				uni.navigateTo({
@@ -183,10 +344,14 @@
 				if (res.code == 0) {
 					res.data.forEach(ele => {
 						this.adPosition[ele.key] = ele
+						if (ele.key == 'indexPop') {
+							this.adPositionIndexPop = true
+						}
 					})
 				}
 			},
 			goUrl(url) {
+				this.adPositionIndexPop = false
 				if (url) {
 					uni.navigateTo({
 						url
@@ -212,6 +377,71 @@
 						}
 					})
 					this.miaoshaGoods = res.data.result
+				}
+			},
+			async _goodsRecommend() {
+				// https://www.yuque.com/apifm/nu0f75/wg5t98
+				const res = await this.$wxapi.goodsv2({
+					recommendStatus: 1
+				})
+				if (res.code == 0) {
+					this.goodsRecommend = res.data.result
+				}
+			},
+			async _kanjiaList() {
+				// https://www.yuque.com/apifm/nu0f75/wg5t98
+				const res = await this.$wxapi.goodsv2({
+					kanjia: true
+				})
+				if (res.code == 0) {
+					const kanjiaGoodsIds = []
+					res.data.result.forEach(ele => {
+						kanjiaGoodsIds.push(ele.id)
+					})
+					// https://www.yuque.com/apifm/nu0f75/xs42ih
+					const goodsKanjiaSetRes = await this.$wxapi.kanjiaSet(kanjiaGoodsIds.join())
+					if (goodsKanjiaSetRes.code == 0) {
+						res.data.result.forEach(ele => {
+							const _process = goodsKanjiaSetRes.data.find(_set => {
+								return _set.goodsId == ele.id
+							})
+							if (_process) {
+								ele.process = 100 * _process.numberBuy / _process.number
+								ele.process = ele.process.toFixed(0)
+							}
+						})
+						this.kanjiaList = res.data.result
+					}
+				}
+			},
+			async _pingtuanList() {
+				// https://www.yuque.com/apifm/nu0f75/wg5t98
+				const res = await this.$wxapi.goodsv2({
+					pingtuan: true
+				})
+				if (res.code == 0) {
+					this.pingtuanList = res.data.result
+				}
+			},
+			async _goods() {
+				// https://www.yuque.com/apifm/nu0f75/wg5t98
+				const res = await this.$wxapi.goodsv2({
+					page: this.page,
+					pageSize: 10
+				})
+				if (res.code == 0) {
+					if (this.page == 1) {
+						this.goods = res.data.result
+					} else {
+						this.goods = this.goods.concat(res.data.result)
+					}
+				} else {
+					if (this.page != 1) {
+						uni.showToast({
+							title: '没有更多了～',
+							icon: 'none'
+						})
+					}
 				}
 			},
 		}
@@ -298,33 +528,34 @@
 			margin-top: 16rpx;
 		}
 
-		.miaoshaGoods {
-			.t {
-				display: flex;
-				align-items: center;
-				margin-top: 24rpx;
+		.ttt {
+			display: flex;
+			align-items: center;
+			margin-top: 24rpx;
 
-				.l {
-					flex: 1;
-				}
-
-				.content {
-					display: flex;
-					align-items: center;
-					padding: 0 16rpx;
-
-					image {
-						width: 34rpx;
-						height: 42rpx;
-					}
-
-					text {
-						color: #333;
-						font-size: 28rpx;
-					}
-				}
+			.l {
+				flex: 1;
 			}
 
+			.content {
+				display: flex;
+				align-items: center;
+				padding: 0 16rpx;
+
+				image {
+					width: 34rpx;
+					height: 42rpx;
+				}
+
+				text {
+					margin-left: 16rpx;
+					color: #333;
+					font-size: 28rpx;
+				}
+			}
+		}
+
+		.miaoshaGoods {
 			.miaosha-goods-list {
 				margin: 20rpx;
 				border-radius: 16rpx;
@@ -371,6 +602,123 @@
 				text-align: center;
 				border-radius: 10rpx;
 			}
+
+			.miaosha-price-btn {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.miaosha-price-btn .msbtn {
+				width: 170rpx;
+				height: 60rpx;
+				background: linear-gradient(156deg, #FF7863 0%, #FF211A 100%);
+				border-radius: 34rpx;
+				border: none !important;
+				line-height: 60rpx !important;
+				font-size: 13px !important;
+			}
+
+			.miaosha-price-btn .price {
+				color: #e64340;
+				font-size: 40rpx;
+				margin-top: 12rpx;
+				padding-right: 32rpx;
+			}
+
+			.miaosha-price-btn .price text {
+				color: #666666;
+				font-size: 26rpx;
+				text-decoration: line-through;
+			}
+		}
+
+		.goods-container {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			box-sizing: content-box;
+			padding: 0 24rpx;
+		}
+
+		.goods-box {
+			width: 339rpx;
+			background-color: #fff;
+			overflow: hidden;
+			margin-top: 24rpx;
+			border-radius: 5px;
+			border: 1px solid #D1D1D1;
+			padding-bottom: 10rpx;
+		}
+
+		.goods-box .img-box {
+			width: 339rpx;
+			height: 339rpx;
+			overflow: hidden;
+		}
+
+		.goods-box .img-box image {
+			width: 339rpx;
+			height: 339rpx;
+		}
+
+		.goods-box .goods-title {
+			padding: 0 4rpx;
+		}
+
+		.goods-box .goods-price-container {
+			display: flex;
+			align-items: baseline;
+		}
+
+		.goods-box .goods-price {
+			overflow: hidden;
+			font-size: 34rpx;
+			color: #F20C32;
+			margin-left: 24rpx;
+		}
+
+		.goods-box .goods-price2 {
+			overflow: hidden;
+			font-size: 26rpx;
+			color: #aaa;
+			text-decoration: line-through;
+			margin-left: 20rpx;
+		}
+
+		.coupons-float {
+			position: fixed;
+			right: 15rpx;
+			bottom: 180rpx;
+			width: 80rpx;
+			height: 80rpx;
+			background-color: #fff;
+			text-align: center;
+			border-radius: 50%;
+			border: 1rpx solid #ddd;
+		}
+
+		.coupons-float image {
+			width: 60rpx;
+			height: 60rpx;
+			margin-top: 10rpx;
+		}
+
+		.adPositionIndexPop {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.adPositionIndexPop image {
+			width: 420rpx;
+		}
+
+		.adPositionIndexPop .close {
+			margin-top: 32rpx;
 		}
 	}
 </style>

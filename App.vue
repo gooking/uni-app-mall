@@ -5,7 +5,7 @@
 		globalData: {
 			subDomain: 'tz',
 			version: '0.0.1',
-			sysconfigkeys: 'mallName,shopMod'
+			sysconfigkeys: 'mallName,shopMod,share_profile'
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n
