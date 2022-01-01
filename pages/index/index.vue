@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title" mode="link"
-			:url="'/pages/index/notice?id=' + notice.id"></u-notice-bar>
+			url="/pages/notice/list"></u-notice-bar>
 		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true"
 			:src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix"
 			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
@@ -213,10 +213,6 @@
 				`width: ${systemInfo.screenWidth - menuButtonInfo.left}px;height: ${menuButtonInfo.height}px`
 			this.headerMarginTopStyle = `margin-top:${menuButtonInfo.top}px`
 			// #endif
-			// 读取分享链接中的邀请人编号
-			if (e && e.inviter_id) {
-				this.$u.vuex('referrer', e.inviter_id)
-			}
 			// 读取小程序码中的邀请人编号
 			if (e && e.scene) {
 				const scene = decodeURIComponent(e.scene)

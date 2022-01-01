@@ -18,6 +18,18 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
 		    }
+		},
+		{
+		    "path" : "pages/notice/list",
+		    "style": {
+				"navigationBarTitleText":"公告"
+		    }
+		},
+		{
+		    "path" : "pages/notice/detail",
+		    "style": {
+				"navigationBarTitleText":"公告详情"
+		    }
 		}
     ],
 	"globalStyle": {
