@@ -30,6 +30,12 @@
 		    "style": {
 				"navigationBarTitleText":"公告详情"
 		    }
+		},
+		{
+		    "path" : "pages/category/category",
+		    "style": {
+				"navigationBarTitleText":"商品分类"
+		    }
 		}
     ],
 	"globalStyle": {
@@ -51,10 +57,10 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/index/start",
-				"iconPath": "static/images/nav/home-off.png",
-				"selectedIconPath": "static/images/nav/home-on.png",
-				"text": "首页2"
+				"pagePath": "pages/category/category",
+				"iconPath": "static/images/nav/fl-off.png",
+				"selectedIconPath": "static/images/nav/fl-on.png",
+				"text": "分类"
 			}
 		]
 	}
