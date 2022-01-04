@@ -36,8 +36,10 @@
 						<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
 						<view class="price">
 							<font>¥</font>{{ item.minPrice }} 
-							<font v-if="item.gotScore">+￠</font>{{ item.gotScore ? item.gotScore : '' }}
+							<view v-if="item.gotScore"><font>+￠</font>{{ item.gotScore }}</view>
 						</view>
+						<u-icon v-if="item.propertyIds || item.hasAddition" class="addCar" name="plus-circle" color="#e64340" size="48rpx"></u-icon>
+						<u-icon v-else class="addCar" name="shopping-cart" color="#e64340" size="64rpx"></u-icon>
 					</view>
 				</view>
 			</scroll-view>
@@ -247,7 +249,9 @@
 					padding: 0 8rpx;
 					display: flex;
 					.goods-info {
+						flex: 1;
 						margin-left: 24rpx;
+						position: relative;
 						.t {
 							font-weight: bold;
 							color: #333;
@@ -260,9 +264,16 @@
 						.price {
 							color: #e64340;
 							font-size: 40rpx;
+							display: flex;
+							align-items: center;
 							font {
 								font-size: 22rpx;
 							}
+						}
+						.addCar {
+							position: absolute;
+							right: 24rpx;
+							bottom: 16rpx;
 						}
 					}
 				}
