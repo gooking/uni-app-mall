@@ -1,49 +1,52 @@
 <template>
-	<view class="category-page">
-		<view class="search">
-			<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" @search="search">
-			</u-search>
-			<view class="scan" @click="searchscan">
-				<u-icon name="scan" size="48rpx"></u-icon>
+	<view class="category-page-box">
+		<view class="category-page">
+			<view class="search">
+				<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" @search="search">
+				</u-search>
+				<view class="scan" @click="searchscan">
+					<u-icon name="scan" size="48rpx"></u-icon>
+				</view>
+			</view>
+			<view class="main">
+				<scroll-view class="u-tab-view menu-scroll-view" scroll-y="true" scroll-with-animation="true">
+					<!-- <van-sidebar custom-class="sidebar-l" active-key="{{ activeCategory }}">
+						<van-sidebar-item wx:if="{{item.level == 1}}" id="category{{item.id}}" wx:for="{{firstCategories}}"
+							wx:key="id" data-idx="{{index}}" bindtap="onCategoryClick" title="{{ item.name }}" />
+					</van-sidebar> -->
+					<view v-for="(item,index) in firstCategories" :key="index" class="u-tab-item"
+						:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index"
+						@tap.stop="swichMenu(index)">
+						<text class="u-line-1">{{item.name}}</text>
+					</view>
+				</scroll-view>
+				<scroll-view class="goods-container" scroll-y="true" :scroll-top="scrolltop" @scrolltolower="goodsGoBottom">
+					<u-empty v-if="!goodsList" mode="list" text="暂无商品" marginTop="200rpx" />
+					<!-- <van-card
+						  tag="{{item.gotScore ? item.gotScore + '积分' : ''}}"
+						>
+						  <view class="goods-btn" slot="footer">
+							<van-icon wx:if="{{ item.propertyIds || item.hasAddition }}" name="add" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
+							<van-icon wx:else name="shopping-cart-o" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
+						  </view>
+						</van-card> -->
+					<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
+						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="120px" height="120px" @click="click"></u--image>
+						<view class="goods-info">
+							<u--text class="t" :lines="3" :text="item.name"></u--text>
+							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
+							<view class="price">
+								<font>¥</font>{{ item.minPrice }} 
+								<view v-if="item.gotScore"><font>+￠</font>{{ item.gotScore }}</view>
+							</view>
+							<u-icon v-if="item.propertyIds || item.hasAddition" class="addCar" name="plus-circle" color="#e64340" size="48rpx" @click="_showGoodsPop(item)"></u-icon>
+							<u-icon v-else class="addCar" name="shopping-cart" color="#e64340" size="64rpx" @click="_showGoodsPop(item)"></u-icon>
+						</view>
+					</view>
+				</scroll-view>
 			</view>
 		</view>
-		<view class="main">
-			<scroll-view class="u-tab-view menu-scroll-view" scroll-y="true" scroll-with-animation="true">
-				<!-- <van-sidebar custom-class="sidebar-l" active-key="{{ activeCategory }}">
-					<van-sidebar-item wx:if="{{item.level == 1}}" id="category{{item.id}}" wx:for="{{firstCategories}}"
-						wx:key="id" data-idx="{{index}}" bindtap="onCategoryClick" title="{{ item.name }}" />
-				</van-sidebar> -->
-				<view v-for="(item,index) in firstCategories" :key="index" class="u-tab-item"
-					:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index"
-					@tap.stop="swichMenu(index)">
-					<text class="u-line-1">{{item.name}}</text>
-				</view>
-			</scroll-view>
-			<scroll-view class="goods-container" scroll-y="true" :scroll-top="scrolltop" @scrolltolower="goodsGoBottom">
-				<u-empty v-if="!goodsList" mode="list" text="暂无商品" marginTop="200rpx" />
-				<!-- <van-card
-				      tag="{{item.gotScore ? item.gotScore + '积分' : ''}}"
-				    >
-				      <view class="goods-btn" slot="footer">
-				        <van-icon wx:if="{{ item.propertyIds || item.hasAddition }}" name="add" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
-				        <van-icon wx:else name="shopping-cart-o" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
-				      </view>
-				    </van-card> -->
-				<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
-					<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="100px" height="100px" @click="click"></u--image>
-					<view class="goods-info">
-						<u--text class="t" :lines="3" :text="item.name"></u--text>
-						<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
-						<view class="price">
-							<font>¥</font>{{ item.minPrice }} 
-							<view v-if="item.gotScore"><font>+￠</font>{{ item.gotScore }}</view>
-						</view>
-						<u-icon v-if="item.propertyIds || item.hasAddition" class="addCar" name="plus-circle" color="#e64340" size="48rpx"></u-icon>
-						<u-icon v-else class="addCar" name="shopping-cart" color="#e64340" size="64rpx"></u-icon>
-					</view>
-				</view>
-			</scroll-view>
-		</view>
+		<goods-pop :show="showGoodsPop" :goodsDetail="goodsDetail" @close="showGoodsPop = false"></goods-pop>
 	</view>
 </template>
 
@@ -61,7 +64,10 @@
 				scrolltop: 0,
 				goodsList: undefined,
 				skuCurGoods: undefined,
-				page: 1
+				page: 1,
+				// 下面为弹出商品详情
+				showGoodsPop: false,
+				goodsDetail: undefined
 			}
 		},
 		created() {
@@ -180,6 +186,20 @@
 					this.goodsList = this.goodsList.concat(res.data.result)
 				}
 			},
+			// 弹出商品购买弹窗
+			async _showGoodsPop(item) {
+				// https://www.yuque.com/apifm/nu0f75/vuml8a
+				const res = await this.$wxapi.goodsDetail(item.id, this.token)
+				if(res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				this.goodsDetail = res.data
+				this.showGoodsPop = true
+			},
 		}
 	}
 </script>
@@ -206,7 +226,7 @@
 			display: flex;
 
 			.u-tab-view {
-				width: 200rpx;
+				width: 180rpx;
 				height: 100%;
 				background-color: #f6f6f6;
 			}
