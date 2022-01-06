@@ -2,7 +2,10 @@
   "pages": [
     "pages/index/start",
     "pages/shop/select",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/notice/list",
+    "pages/notice/detail",
+    "pages/category/category"
   ],
   "subPackages": [],
   "window": {
@@ -24,10 +27,10 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/index/start",
-        "iconPath": "static/images/nav/home-off.png",
-        "selectedIconPath": "static/images/nav/home-on.png",
-        "text": "首页2"
+        "pagePath": "pages/category/category",
+        "iconPath": "static/images/nav/fl-off.png",
+        "selectedIconPath": "static/images/nav/fl-on.png",
+        "text": "分类"
       }
     ]
   },
@@ -36,5 +39,6 @@
       "desc": "为你推荐附近的门店"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

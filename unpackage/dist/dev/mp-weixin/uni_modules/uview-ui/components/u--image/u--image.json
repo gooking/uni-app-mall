@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "uv-image": "/uni_modules/uview-ui/components/u-image/u-image"
+  }
+}

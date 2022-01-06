@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "node": "/uni_modules/uview-ui/components/u-parse/node/node"
+  }
+}

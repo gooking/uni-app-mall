@@ -1,0 +1,86 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.goodsList-pop.data-v-56f7457a {
+  margin-top: 32rpx;
+  padding: 0 8rpx;
+  display: flex;
+}
+.goodsList-pop .goods-info.data-v-56f7457a {
+  flex: 1;
+  margin-left: 24rpx;
+  position: relative;
+}
+.goodsList-pop .goods-info .t.data-v-56f7457a {
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.goodsList-pop .goods-info .t2.data-v-56f7457a {
+  color: #666;
+  font-size: 26rpx;
+}
+.goodsList-pop .goods-info .price.data-v-56f7457a {
+  color: green;
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+}
+.goodsList-pop .goods-info .price font.data-v-56f7457a {
+  font-size: 22rpx;
+}
+.goodsList-pop .goods-info .addCar.data-v-56f7457a {
+  position: absolute;
+  right: 24rpx;
+  bottom: 16rpx;
+}
+.skuList .t.data-v-56f7457a {
+  margin: 32rpx 0 0 32rpx;
+  color: #333;
+  font-size: 28rpx;
+}
+.skuList .items.data-v-56f7457a {
+  display: flex;
+  flex-wrap: wrap;
+}
+.skuList .items .item.data-v-56f7457a {
+  margin: 16rpx 0 0 32rpx;
+}
+.sku-space.data-v-56f7457a {
+  padding-top: 32rpx;
+}
+.buy-number.data-v-56f7457a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  color: #333;
+  font-size: 30rpx;
+}
+.btns.data-v-56f7457a {
+  display: flex;
+  padding: 32rpx;
+}
+.btns .icon-btn.data-v-56f7457a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24rpx;
+  color: #333;
+  margin-right: 32rpx;
+}
+.btns .btn.data-v-56f7457a {
+  flex: 1;
+}
+.btns .btn .half-l.data-v-56f7457a {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.btns .btn .half-r.data-v-56f7457a {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+

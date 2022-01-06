@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-3a231fda, scroll-view.data-v-3a231fda, swiper-item.data-v-3a231fda {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-popup.data-v-3a231fda {
+  flex: 1;
+}
+.u-popup__content.data-v-3a231fda {
+  background-color: #fff;
+  position: relative;
+}
+.u-popup__content--round-top.data-v-3a231fda {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.u-popup__content--round-left.data-v-3a231fda {
+  border-top-left-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 10px;
+}
+.u-popup__content--round-right.data-v-3a231fda {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 0;
+}
+.u-popup__content--round-bottom.data-v-3a231fda {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.u-popup__content--round-center.data-v-3a231fda {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.u-popup__content__close.data-v-3a231fda {
+  position: absolute;
+}
+.u-popup__content__close--hover.data-v-3a231fda {
+  opacity: 0.4;
+}
+.u-popup__content__close--top-left.data-v-3a231fda {
+  top: 15px;
+  left: 15px;
+}
+.u-popup__content__close--top-right.data-v-3a231fda {
+  top: 15px;
+  right: 15px;
+}
+.u-popup__content__close--bottom-left.data-v-3a231fda {
+  bottom: 15px;
+  left: 15px;
+}
+.u-popup__content__close--bottom-right.data-v-3a231fda {
+  right: 15px;
+  bottom: 15px;
+}
+

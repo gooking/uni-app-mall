@@ -31,7 +31,7 @@
 						  </view>
 						</van-card> -->
 					<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
-						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="120px" height="120px" @click="click"></u--image>
+						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx" @click="click"></u--image>
 						<view class="goods-info">
 							<u--text class="t" :lines="3" :text="item.name"></u--text>
 							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
@@ -39,8 +39,10 @@
 								<font>¥</font>{{ item.minPrice }} 
 								<view v-if="item.gotScore"><font>+￠</font>{{ item.gotScore }}</view>
 							</view>
-							<u-icon v-if="item.propertyIds || item.hasAddition" class="addCar" name="plus-circle" color="#e64340" size="48rpx" @click="_showGoodsPop(item)"></u-icon>
-							<u-icon v-else class="addCar" name="shopping-cart" color="#e64340" size="64rpx" @click="_showGoodsPop(item)"></u-icon>
+							<view class="addCar">
+								<u-icon v-if="item.propertyIds || item.hasAddition" name="plus-circle" color="#e64340" size="48rpx" @click="_showGoodsPop(item)"></u-icon>
+								<u-icon v-else name="shopping-cart" color="#e64340" size="64rpx" @click="_showGoodsPop(item)"></u-icon>
+							</view>
 						</view>
 					</view>
 				</scroll-view>

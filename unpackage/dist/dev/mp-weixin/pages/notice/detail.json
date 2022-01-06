@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "公告详情",
+  "usingComponents": {
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "u-cell": "/uni_modules/uview-ui/components/u-cell/u-cell",
+    "u-line": "/uni_modules/uview-ui/components/u-line/u-line",
+    "u-parse": "/uni_modules/uview-ui/components/u-parse/u-parse"
+  }
+}

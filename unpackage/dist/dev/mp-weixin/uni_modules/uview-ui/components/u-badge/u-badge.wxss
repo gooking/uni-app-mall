@@ -1,0 +1,71 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-13728ffe, scroll-view.data-v-13728ffe, swiper-item.data-v-13728ffe {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-badge.data-v-13728ffe {
+  border-top-right-radius: 100px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  line-height: 11px;
+  text-align: center;
+  font-size: 11px;
+  color: #FFFFFF;
+}
+.u-badge--dot.data-v-13728ffe {
+  height: 8px;
+  width: 8px;
+}
+.u-badge--inverted.data-v-13728ffe {
+  font-size: 13px;
+}
+.u-badge--not-dot.data-v-13728ffe {
+  padding: 2px 5px;
+}
+.u-badge--horn.data-v-13728ffe {
+  border-bottom-left-radius: 0;
+}
+.u-badge--primary.data-v-13728ffe {
+  background-color: #3c9cff;
+}
+.u-badge--primary--inverted.data-v-13728ffe {
+  color: #3c9cff;
+}
+.u-badge--error.data-v-13728ffe {
+  background-color: #f56c6c;
+}
+.u-badge--error--inverted.data-v-13728ffe {
+  color: #f56c6c;
+}
+.u-badge--success.data-v-13728ffe {
+  background-color: #5ac725;
+}
+.u-badge--success--inverted.data-v-13728ffe {
+  color: #5ac725;
+}
+.u-badge--info.data-v-13728ffe {
+  background-color: #909399;
+}
+.u-badge--info--inverted.data-v-13728ffe {
+  color: #909399;
+}
+.u-badge--warning.data-v-13728ffe {
+  background-color: #f9ae3d;
+}
+.u-badge--warning--inverted.data-v-13728ffe {
+  color: #f9ae3d;
+}
+

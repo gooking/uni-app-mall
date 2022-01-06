@@ -1,0 +1,177 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-3732d7af, scroll-view.data-v-3732d7af, swiper-item.data-v-3732d7af {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-tag-wrapper.data-v-3732d7af {
+  position: relative;
+}
+.u-tag.data-v-3732d7af {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-style: solid;
+}
+.u-tag--circle.data-v-3732d7af {
+  border-radius: 100px;
+}
+.u-tag--square.data-v-3732d7af {
+  border-radius: 3px;
+}
+.u-tag__icon.data-v-3732d7af {
+  margin-right: 4px;
+}
+.u-tag__text--mini.data-v-3732d7af {
+  font-size: 12px;
+  line-height: 12px;
+}
+.u-tag__text--medium.data-v-3732d7af {
+  font-size: 13px;
+  line-height: 13px;
+}
+.u-tag__text--large.data-v-3732d7af {
+  font-size: 15px;
+  line-height: 15px;
+}
+.u-tag--mini.data-v-3732d7af {
+  height: 22px;
+  line-height: 22px;
+  padding: 0 5px;
+}
+.u-tag--medium.data-v-3732d7af {
+  height: 26px;
+  line-height: 22px;
+  padding: 0 10px;
+}
+.u-tag--large.data-v-3732d7af {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 15px;
+}
+.u-tag--primary.data-v-3732d7af {
+  background-color: #3c9cff;
+  border-width: 1px;
+  border-color: #3c9cff;
+}
+.u-tag--primary--plain.data-v-3732d7af {
+  border-width: 1px;
+  border-color: #3c9cff;
+}
+.u-tag--primary--plain--fill.data-v-3732d7af {
+  background-color: #ecf5ff;
+}
+.u-tag__text--primary.data-v-3732d7af {
+  color: #FFFFFF;
+}
+.u-tag__text--primary--plain.data-v-3732d7af {
+  color: #3c9cff;
+}
+.u-tag--error.data-v-3732d7af {
+  background-color: #f56c6c;
+  border-width: 1px;
+  border-color: #f56c6c;
+}
+.u-tag--error--plain.data-v-3732d7af {
+  border-width: 1px;
+  border-color: #f56c6c;
+}
+.u-tag--error--plain--fill.data-v-3732d7af {
+  background-color: #fef0f0;
+}
+.u-tag__text--error.data-v-3732d7af {
+  color: #FFFFFF;
+}
+.u-tag__text--error--plain.data-v-3732d7af {
+  color: #f56c6c;
+}
+.u-tag--warning.data-v-3732d7af {
+  background-color: #f9ae3d;
+  border-width: 1px;
+  border-color: #f9ae3d;
+}
+.u-tag--warning--plain.data-v-3732d7af {
+  border-width: 1px;
+  border-color: #f9ae3d;
+}
+.u-tag--warning--plain--fill.data-v-3732d7af {
+  background-color: #fdf6ec;
+}
+.u-tag__text--warning.data-v-3732d7af {
+  color: #FFFFFF;
+}
+.u-tag__text--warning--plain.data-v-3732d7af {
+  color: #f9ae3d;
+}
+.u-tag--success.data-v-3732d7af {
+  background-color: #5ac725;
+  border-width: 1px;
+  border-color: #5ac725;
+}
+.u-tag--success--plain.data-v-3732d7af {
+  border-width: 1px;
+  border-color: #5ac725;
+}
+.u-tag--success--plain--fill.data-v-3732d7af {
+  background-color: #f5fff0;
+}
+.u-tag__text--success.data-v-3732d7af {
+  color: #FFFFFF;
+}
+.u-tag__text--success--plain.data-v-3732d7af {
+  color: #5ac725;
+}
+.u-tag--info.data-v-3732d7af {
+  background-color: #909399;
+  border-width: 1px;
+  border-color: #909399;
+}
+.u-tag--info--plain.data-v-3732d7af {
+  border-width: 1px;
+  border-color: #909399;
+}
+.u-tag--info--plain--fill.data-v-3732d7af {
+  background-color: #f4f4f5;
+}
+.u-tag__text--info.data-v-3732d7af {
+  color: #FFFFFF;
+}
+.u-tag__text--info--plain.data-v-3732d7af {
+  color: #909399;
+}
+.u-tag__close.data-v-3732d7af {
+  position: absolute;
+  z-index: 999;
+  top: 10px;
+  right: 10px;
+  border-radius: 100px;
+  background-color: #C6C7CB;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  -webkit-transform: scale(0.6) translate(80%, -80%);
+          transform: scale(0.6) translate(80%, -80%);
+}
+.u-tag__close--mini.data-v-3732d7af {
+  width: 18px;
+  height: 18px;
+}
+.u-tag__close--medium.data-v-3732d7af {
+  width: 22px;
+  height: 22px;
+}
+.u-tag__close--large.data-v-3732d7af {
+  width: 25px;
+  height: 25px;
+}
+

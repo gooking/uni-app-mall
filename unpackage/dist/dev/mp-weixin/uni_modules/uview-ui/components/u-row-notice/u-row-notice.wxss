@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+view.data-v-9adf94ee, scroll-view.data-v-9adf94ee, swiper-item.data-v-9adf94ee {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-notice.data-v-9adf94ee {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.u-notice__left-icon.data-v-9adf94ee {
+  align-items: center;
+  margin-right: 5px;
+}
+.u-notice__right-icon.data-v-9adf94ee {
+  margin-left: 5px;
+  align-items: center;
+}
+.u-notice__content.data-v-9adf94ee {
+  text-align: right;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.u-notice__content__text.data-v-9adf94ee {
+  font-size: 14px;
+  color: #f9ae3d;
+  padding-left: 100%;
+  word-break: keep-all;
+  white-space: nowrap;
+  -webkit-animation: u-loop-animation-data-v-9adf94ee 10s linear infinite both;
+          animation: u-loop-animation-data-v-9adf94ee 10s linear infinite both;
+}
+@-webkit-keyframes u-loop-animation-data-v-9adf94ee {
+0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+}
+}
+@keyframes u-loop-animation-data-v-9adf94ee {
+0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+}
+}
+

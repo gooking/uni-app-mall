@@ -1,35 +1,49 @@
 <template>
-	<u-popup v-if="show" :show="show" class="goods-pop" mode="bottom" round="32rpx" @close="close">
-		<view class="goodsList">
-			<u--image showLoading lazyLoad :src="pic" radius="16rpx" width="120px" height="120px"></u--image>
+	<u-popup v-if="show" :show="show" class="goods-pop-class" mode="bottom" round="32rpx" :customStyle="{maxHeight: '80vh', overflow: 'scroll'}" @close="close">
+		<view class="goodsList-pop">
+			<u--image showLoading lazyLoad :src="pic" radius="16rpx" width="240rpx" height="240rpx"></u--image>
 			<view class="goods-info">
 				<u--text class="t" :lines="3" :text="goodsDetail.basicInfo.name"></u--text>
-				<view v-if="goodsDetail.basicInfo.numberSells" class="t2">已售:{{ goodsDetail.basicInfo.numberSells }}</view>
+				<view v-if="goodsDetail.basicInfo.numberSells" class="t2">已售:{{ goodsDetail.basicInfo.numberSells }}
+				</view>
 				<view class="price">
-					<font>¥</font>{{ price }} 
-					<view v-if="score"><font>+￠</font>{{ score }}</view>
+					<font>¥</font>{{ price }}
+					<view v-if="score">
+						<font>+￠</font>{{ score }}
+					</view>
 				</view>
 			</view>
 		</view>
 		<u-line></u-line>
-		<view v-for="(item,index) in goodsDetail.properties" :key="'skup_' + index" class="skuList">
+		<view v-for="(item,index) in goodsDetail.properties" :key="item.id" v-if="!item.hidden" class="skuList">
 			<view class="t">{{ item.name }}</view>
 			<view class="items">
-				<u-tag v-for="(item2,index2) in item.childsCurGoods" :key="'skuc_' + index2" :text="item2.name"></u-tag>
+				<u-tag v-for="(item2,index2) in item.childsCurGoods" :key="item2.id" class="item"
+					:show="!item2.hidden" :type="item2.selected ? 'error' : 'info'"
+					:plain="item2.selected ? false : true" :text="item2.name" @click="skuSelect(index, index2)"></u-tag>
 			</view>
 		</view>
-		可选配件
-		<u-line></u-line>
+		<view v-for="(item,index) in goodsAddition" :key="item.id" class="skuList">
+			<view class="t">{{ item.name }}</view>
+			<view class="items">
+				<u-tag v-for="(item2,index2) in item.items" :key="item2.id" class="item"
+					:type="item2.selected ? 'error' : 'info'" :plain="item2.selected ? false : true" :text="item2.name"
+					@click="additionSelect(index, index2)"></u-tag>
+			</view>
+		</view>
+		<u-line v-if="goodsAddition || goodsDetail.properties" class="sku-space"></u-line>
 		<view class="buy-number">
 			<font>购买数量</font>
 			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
 		</view>
 		<u-line></u-line>
 		<view class="btns">
+			<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 			<view class="icon-btn">
 				<u-icon name="chat" size="48rpx"></u-icon>
 				<text>客服</text>
 			</view>
+			<!--  #endif -->
 			<view class="icon-btn">
 				<u-icon name="shopping-cart" size="48rpx"></u-icon>
 				<text>购物车</text>
@@ -46,10 +60,12 @@
 				<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"></u-button>
 			</view> -->
 			<view class="btn">
-				<u-button class="half-l" text="加入购物车" shape="circle" color="linear-gradient(90deg,#ffd01e, #ff8917)"></u-button>
+				<u-button class="half-l" text="加入购物车" shape="circle" color="linear-gradient(90deg,#ffd01e, #ff8917)">
+				</u-button>
 			</view>
 			<view class="btn">
-				<u-button class="half-r" text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24)"></u-button>
+				<u-button class="half-r" text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24)">
+				</u-button>
 			</view>
 		</view>
 	</u-popup>
@@ -80,123 +96,297 @@
 				buyNumber: 1,
 				min: 1,
 				max: 0,
+				propertyChildIds: undefined, // 用户已经选的sku信息数组
+				propertyChildNames: undefined,
+				goodsAddition: undefined
 			}
 		},
 		watch: {
 			// word(newVal, oldVal) {
 			// 	console.log('最新值是：'+newVal,"原来的值是："+ oldVal);
 			// },
-		    goodsDetail: {
+			goodsDetail: {
 				// deep: true,
-		        immediate: true,
-		        handler(newVal, oldName) {
-		            this._initData()
-		        }
-		    }
+				immediate: true,
+				handler(newVal, oldName) {
+					this._initData()
+				}
+			}
 		},
 		mounted() {
-			
+
 		},
 		methods: {
 			_initData() {
-				if(!this.goodsDetail) {
+				if (!this.goodsDetail) {
 					return
 				}
-				console.log(this.goodsDetail);
 				this.pic = this.goodsDetail.basicInfo.pic
 				this.price = this.goodsDetail.basicInfo.minPrice
 				this.score = this.goodsDetail.basicInfo.minScore
-				if(!this.goodsDetail.basicInfo.stores) {
+				if (!this.goodsDetail.basicInfo.stores) {
 					this.min = 0
+				} else {
+					this.min = 1
 				}
 				this.max = this.goodsDetail.basicInfo.stores
+				if (this.goodsDetail.basicInfo.hasAddition) {
+					this._goodsAddition()
+				}
+				this.goodsAddition = null
 			},
 			close() {
 				this.$emit('close')
+			},
+			// sku 选择事件
+			async skuSelect(index, index2) {
+				this.buyNumber = 1
+				const p = this.goodsDetail.properties[index]
+				const c = p.childsCurGoods[index2]
+				// 当前sku往下的所有sku取消选中
+				for (let i = index; i < this.goodsDetail.properties.length; i++) {
+					const _p = this.goodsDetail.properties[i]
+					_p.childsCurGoods.forEach(ele => {
+						ele.selected = false
+					})
+					_p.selectedChild = null
+					this.goodsDetail.properties.splice(i, 1, _p)
+				}
+				// 当前选中
+				c.selected = true
+				p.selectedChild = c
+				p.childsCurGoods.splice(index2, 1, c)
+				this.goodsDetail.properties.splice(index, 1, p)
+				// 计算已经选中的sku信息
+				const propertyChildIds = []
+				const propertyChildNames = []
+				this.goodsDetail.properties.forEach(ele => {
+					if (ele.selectedChild) {
+						propertyChildIds.push(ele.id + ':' + ele.selectedChild.id)
+						propertyChildNames.push(ele.name + ':' + ele.selectedChild.name)
+					}
+				})
+				this.propertyChildIds = propertyChildIds
+				this.propertyChildNames = propertyChildNames
+				// 目前条件下可继续匹配的sku
+				const skuList = this.goodsDetail.skuList.filter(ele => {
+					let ok = true
+					propertyChildIds.forEach(a => {
+						if (ele.propertyChildIds.indexOf(a) == -1) {
+							ok = false
+						}
+					})
+					return ok
+				})
+				// 设置下面的可选性
+				for (let i = index + 1; i < this.goodsDetail.properties.length; i++) {
+					const _p = this.goodsDetail.properties[i]
+					let a = skuList.findIndex(ele => {
+						return ele.propertyChildIds.indexOf(_p.id + ':') != -1
+					})
+					if (a == -1) {
+						_p.hidden = true
+					} else {
+						_p.hidden = false
+					}
+					_p.childsCurGoods.forEach(c => {
+						a = skuList.findIndex(ele => {
+							return ele.propertyChildIds.indexOf(_p.id + ':' + c.id) != -1
+						})
+						if (a == -1) {
+							c.hidden = true
+						} else {
+							c.hidden = false
+						}
+					})
+					this.goodsDetail.properties.splice(i, 1, _p)
+				}
+				// 切换sku商品图片
+				if (this.goodsDetail.subPics && this.goodsDetail.subPics.length > 0) {
+				  const _subPic = this.goodsDetail.subPics.find(ele => {
+					return ele.optionValueId == c.id
+				  })
+				  if (_subPic) {
+					this.pic = _subPic.pic
+				  }
+				}
+				this.calculateGoodsPrice()
+			},
+			// 可选配件选择事件
+			async additionSelect(index, index2) {
+				const p = this.goodsAddition[index]
+				const c = p.items[index2]
+				if (c.selected) {
+					// 该操作为取消选择
+					c.selected = false
+					p.items.splice(index2, 1, c)
+					this.calculateGoodsPrice()
+					return
+				}
+				// 如果是单选，先取消现有选中的
+				if (p.type == 0) {
+					p.items.forEach(child => {
+						child.selected = false
+					})
+				}
+				c.selected = true
+				p.items.splice(index2, 1, c)
+				this.goodsAddition.splice(index, 1, p)
+				this.calculateGoodsPrice()
+			},
+			async _goodsAddition() {
+				// https://www.yuque.com/apifm/nu0f75/lveknt
+				const res = await this.$wxapi.goodsAddition(this.goodsDetail.basicInfo.id)
+				if (res.code == 0) {
+					this.goodsAddition = res.data
+				}
+			},
+			async calculateGoodsPrice() {
+				// 计算最终的商品价格
+				if(!this.propertyChildIds || !this.goodsDetail.properties || this.propertyChildIds.length != this.goodsDetail.properties.length) {
+					this.price = this.goodsDetail.basicInfo.minPrice
+					this.score = this.goodsDetail.basicInfo.minScore
+					if (!this.goodsDetail.basicInfo.stores) {
+						this.min = 0
+					} else {
+						this.min = 1
+					}
+					this.max = this.goodsDetail.basicInfo.stores
+					return
+				}
+				// 获取价格
+				// https://www.yuque.com/apifm/nu0f75/dxvqq2
+				const res = await this.$wxapi.goodsPriceV2({
+					token: this.token,
+					goodsId: this.goodsDetail.basicInfo.id,
+					propertyChildIds: this.propertyChildIds.join()
+				})
+				if(res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				this.price = res.data.price
+				this.score = res.data.score
+				if (!res.data.stores) {
+					this.min = 0
+				} else {
+					this.min = 1
+				}
+				this.max = res.data.stores
+				if (this.goodsAddition) {
+					this.goodsAddition.forEach(big => {
+						big.items.forEach(small => {
+							if (small.selected) {
+								this.price = (this.price * 100 + small.price * 100) / 100
+							}
+						})
+					})
+				}
 			},
 		}
 
 	}
 </script>
-<style lang="scss">
-.goods-pop {
-	.goodsList {
-		margin-top: 32rpx;
-		padding: 0 8rpx;
-		display: flex;
-		.goods-info {
-			flex: 1;
-			margin-left: 24rpx;
-			position: relative;
-			.t {
-				font-weight: bold;
-				color: #333;
-				font-size: 28rpx;
-			}
-			.t2 {
-				color: #666;
-				font-size: 26rpx;
-			}
-			.price {
-				color: #e64340;
-				font-size: 40rpx;
-				display: flex;
-				align-items: center;
-				font {
-					font-size: 22rpx;
+<style scoped lang="scss">
+		.goodsList-pop {
+			margin-top: 32rpx;
+			padding: 0 8rpx;
+			display: flex;
+
+			.goods-info {
+				flex: 1;
+				margin-left: 24rpx;
+				position: relative;
+
+				.t {
+					font-weight: bold;
+					font-size: 28rpx;
+				}
+
+				.t2 {
+					color: #666;
+					font-size: 26rpx;
+				}
+
+				.price {
+					color: #e64340;
+					font-size: 40rpx;
+					display: flex;
+					align-items: center;
+
+					font {
+						font-size: 22rpx;
+					}
+				}
+
+				.addCar {
+					position: absolute;
+					right: 24rpx;
+					bottom: 16rpx;
 				}
 			}
-			.addCar {
-				position: absolute;
-				right: 24rpx;
-				bottom: 16rpx;
+		}
+
+		.skuList {
+			.t {
+				margin: 32rpx 0 0 32rpx;
+				color: #333;
+				font-size: 28rpx;
+				// font-weight: bold;
+			}
+
+			.items {
+				display: flex;
+				flex-wrap: wrap;
+
+				.item {
+					margin: 16rpx 0 0 32rpx;
+				}
 			}
 		}
-	}
-	.skuList {
-		.t {
-			margin: 32rpx 0 0 32rpx;
-			color: #333;
-			font-size: 28rpx;
-			// font-weight: bold;
+
+		.sku-space {
+			padding-top: 32rpx;
 		}
-		.items {
+
+		.buy-number {
 			display: flex;
-			flex-wrap: wrap;
-			margin: 16rpx 0 0 32rpx;
-		}
-	}
-	.buy-number {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 32rpx;
-		color: #333;
-		font-size: 30rpx;
-	}
-	.btns {
-		display: flex;
-		padding: 32rpx;
-		.icon-btn {
-			position: relative;
-			display: flex;
-			flex-direction: column;
+			justify-content: space-between;
 			align-items: center;
-			font-size: 24rpx;
+			padding: 32rpx;
 			color: #333;
-			margin-right: 32rpx;
+			font-size: 30rpx;
 		}
-		.btn {
-			flex: 1;
-			.half-l {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
+
+		.btns {
+			display: flex;
+			padding: 32rpx;
+
+			.icon-btn {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				font-size: 24rpx;
+				color: #333;
+				margin-right: 32rpx;
 			}
-			.half-r {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
+
+			.btn {
+				flex: 1;
+
+				.half-l {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+
+				.half-r {
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+				}
 			}
 		}
-	}
-}
 </style>

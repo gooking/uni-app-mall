@@ -154,7 +154,7 @@ var TTAUTH = __webpack_require__(/*! @/common/ttauth.js */ 16);var _default =
   globalData: {
     subDomain: 'tz',
     version: '0.0.1',
-    sysconfigkeys: 'mallName,shopMod' },
+    sysconfigkeys: 'mallName,shopMod,share_profile' },
 
   onLaunch: function onLaunch() {
     // https://www.yuque.com/apifm/nu0f75/cdqz1n
