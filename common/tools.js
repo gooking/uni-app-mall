@@ -32,6 +32,10 @@ async function showTabBarBadge(noTabBarPage){
       })
     }
   }
+  store.commit('$uStore', {
+  	name: 'cartNumber',
+	value: number
+  })
   return number
 }
 

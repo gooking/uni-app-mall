@@ -12,7 +12,7 @@ try{
 }
 
 // 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-let saveStateKeys = ['sysconfigMap', 'app_show_pic_version', 'referrer', 'token', 'uid'];
+let saveStateKeys = ['sysconfigMap', 'app_show_pic_version', 'referrer', 'token', 'uid', 'cartNumber'];
 
 // 保存变量到本地存储中
 const saveLifeData = function(key, value){
@@ -37,8 +37,9 @@ const store = new Vuex.Store({
 		},
 		app_show_pic_version: lifeData.app_show_pic_version ? lifeData.app_show_pic_version : '',
 		referrer: lifeData.referrer ? lifeData.referrer : '',
-		token: lifeData.token ? lifeData.token : 'c22cd584-9b63-4fdf-8ff3-522d751ef9a4',
+		token: lifeData.token ? lifeData.token : '45fce34a-cae3-428e-827a-471cef71b30f',
 		uid: lifeData.uid ? lifeData.uid : '1351478',
+		cartNumber: 0
 	},
 	mutations: {
 		$uStore(state, payload) {
