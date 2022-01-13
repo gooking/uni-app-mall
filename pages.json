@@ -48,6 +48,12 @@
 		    "style": {
 				"navigationBarTitleText":"确认订单"
 		    }
+		},
+		{
+		    "path" : "pages/goods/list",
+		    "style": {
+				"navigationBarTitleText":"商品列表"
+		    }
 		}
     ],
 	"globalStyle": {

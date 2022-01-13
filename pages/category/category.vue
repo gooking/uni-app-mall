@@ -4,9 +4,11 @@
 			<view class="search">
 				<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" @search="search">
 				</u-search>
+				<!--  #ifndef  H5 || MP-KUAISHOU -->
 				<view class="scan" @click="searchscan">
 					<u-icon name="scan" size="48rpx"></u-icon>
 				</view>
+				<!--  #endif -->
 			</view>
 			<view class="main">
 				<scroll-view class="u-tab-view menu-scroll-view" scroll-y="true" scroll-with-animation="true">
@@ -20,7 +22,8 @@
 						<text class="u-line-1">{{item.name}}</text>
 					</view>
 				</scroll-view>
-				<scroll-view class="goods-container" scroll-y="true" :scroll-top="scrolltop" @scrolltolower="goodsGoBottom">
+				<scroll-view class="goods-container" scroll-y="true" :scroll-top="scrolltop"
+					@scrolltolower="goodsGoBottom">
 					<u-empty v-if="!goodsList" mode="list" text="暂无商品" marginTop="200rpx" />
 					<!-- <van-card
 						  tag="{{item.gotScore ? item.gotScore + '积分' : ''}}"
@@ -31,17 +34,22 @@
 						  </view>
 						</van-card> -->
 					<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
-						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx" @click="click"></u--image>
+						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx"
+							@click="click"></u--image>
 						<view class="goods-info">
 							<u--text class="t" :lines="3" :text="item.name"></u--text>
 							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
 							<view class="price">
-								<font>¥</font>{{ item.minPrice }} 
-								<view v-if="item.gotScore"><font>+￠</font>{{ item.gotScore }}</view>
+								<font>¥</font>{{ item.minPrice }}
+								<view v-if="item.gotScore">
+									<font>+￠</font>{{ item.gotScore }}
+								</view>
 							</view>
 							<view class="addCar">
-								<u-icon v-if="item.propertyIds || item.hasAddition" name="plus-circle" color="#e64340" size="48rpx" @click="_showGoodsPop(item)"></u-icon>
-								<u-icon v-else name="shopping-cart" color="#e64340" size="64rpx" @click="_showGoodsPop(item)"></u-icon>
+								<u-icon v-if="item.propertyIds || item.hasAddition" name="plus-circle" color="#e64340"
+									size="48rpx" @click="_showGoodsPop(item)"></u-icon>
+								<u-icon v-else name="shopping-cart" color="#e64340" size="64rpx" @click="addCart(item)">
+								</u-icon>
 							</view>
 						</view>
 					</view>
@@ -53,6 +61,7 @@
 </template>
 
 <script>
+	const TOOLS = require('@/common/tools')
 	export default {
 		data() {
 			return {
@@ -88,14 +97,15 @@
 			})
 			// #endif
 			this._categories();
+			TOOLS.showTabBarBadge()
 		},
 		onShow() {
 
 		},
 		onShareAppMessage(e) {
 			return {
-				title: '',
-				path: ''
+				title: '"' + this.sysconfigMap.mallName + '" ' + this.sysconfigMap.share_profile,
+				path: '/pages/index/index?inviter_id=' + this.uid
 			}
 		},
 		methods: {
@@ -192,7 +202,7 @@
 			async _showGoodsPop(item) {
 				// https://www.yuque.com/apifm/nu0f75/vuml8a
 				const res = await this.$wxapi.goodsDetail(item.id, this.token)
-				if(res.code != 0) {
+				if (res.code != 0) {
 					uni.showToast({
 						title: res.msg,
 						icon: 'none'
@@ -202,6 +212,38 @@
 				this.goodsDetail = res.data
 				this.showGoodsPop = true
 			},
+			async addCart(item) {
+				// https://www.yuque.com/apifm/nu0f75/et6m6m
+				const res = await this.$wxapi.shippingCarInfoAddItem(this.token, item.id, 1, [], [])
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				TOOLS.showTabBarBadge()
+				uni.showToast({
+					title: '加入购物车'
+				})
+			},
+			search(v) {
+				console.log(v);
+				uni.navigateTo({
+					url: '/pages/goods/list?kw=' + v,
+				})
+			},
+			searchscan() {
+				uni.scanCode({
+					scanType: ['barCode', 'qrCode', 'datamatrix', 'pdf417'],
+					success: res => {
+						this.kw = res.result
+						uni.navigateTo({
+							url: '/pages/goods/list?kw=' + res.result,
+						})
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -266,32 +308,39 @@
 			.goods-container {
 				flex: 1;
 				height: 100%;
+
 				.goodsList {
 					margin-bottom: 32rpx;
 					padding: 0 8rpx;
 					display: flex;
+
 					.goods-info {
 						flex: 1;
 						margin-left: 24rpx;
 						position: relative;
+
 						.t {
 							font-weight: bold;
 							color: #333;
 							font-size: 28rpx;
 						}
+
 						.t2 {
 							color: #666;
 							font-size: 26rpx;
 						}
+
 						.price {
 							color: #e64340;
 							font-size: 40rpx;
 							display: flex;
 							align-items: center;
+
 							font {
 								font-size: 22rpx;
 							}
 						}
+
 						.addCar {
 							position: absolute;
 							right: 24rpx;
