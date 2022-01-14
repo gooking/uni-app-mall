@@ -25,19 +25,11 @@
 				<scroll-view class="goods-container" scroll-y="true" :scroll-top="scrolltop"
 					@scrolltolower="goodsGoBottom">
 					<u-empty v-if="!goodsList" mode="list" text="暂无商品" marginTop="200rpx" />
-					<!-- <van-card
-						  tag="{{item.gotScore ? item.gotScore + '积分' : ''}}"
-						>
-						  <view class="goods-btn" slot="footer">
-							<van-icon wx:if="{{ item.propertyIds || item.hasAddition }}" name="add" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
-							<van-icon wx:else name="shopping-cart-o" color="#e64340" size="48rpx" data-id="{{item.id}}" bind:click="addShopCar" />
-						  </view>
-						</van-card> -->
 					<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
 						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx"
-							@click="click"></u--image>
+							@click="goDetail(item)"></u--image>
 						<view class="goods-info">
-							<u--text class="t" :lines="3" :text="item.name"></u--text>
+							<u--text class="t" :lines="3" :text="item.name" @click="goDetail(item)"></u--text>
 							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
 							<view class="price">
 								<font>¥</font>{{ item.minPrice }}
@@ -242,6 +234,11 @@
 							url: '/pages/goods/list?kw=' + res.result,
 						})
 					}
+				})
+			},
+			goDetail(item) {
+				uni.navigateTo({
+					url: '/pages/goods/detail?id=' + item.id
 				})
 			}
 		}

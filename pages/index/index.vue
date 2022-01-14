@@ -46,22 +46,22 @@
 				<u-line class="l"></u-line>
 			</view>
 			<view v-for="(item, index) in miaoshaGoods" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
-				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
-					<view class="goods-title">{{item.name}}</view>
+					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
 					<u-count-down v-if="item.dateStartInt > 0" class="count-down" :time="item.dateStartInt"
 						format="距离开始: HH时mm分ss秒"></u-count-down>
 					<u-count-down v-if="item.dateStartInt <= 0 && item.dateEndInt > 0" class="count-down"
 						:time="item.dateEndInt" format="剩余: HH时mm分ss秒"></u-count-down>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.minPrice}} <text>￥{{item.originalPrice}}</text></view>
-						<u-button v-if="item.dateStartInt > 0" type="warning" size="mini" plain disabled text="即将开始">
+						<u-button v-if="item.dateStartInt > 0" type="warning" size="mini" plain disabled text="即将开始" @click="goDetail(item)">
 						</u-button>
-						<u-button v-else-if="item.dateEndInt <= 0" type="info" size="mini" plain disabled text="已结束">
+						<u-button v-else-if="item.dateEndInt <= 0" type="info" size="mini" plain disabled text="已结束" @click="goDetail(item)">
 						</u-button>
-						<u-button v-else-if="item.stores <= 0" type="info" size="mini" plain disabled text="已抢完">
+						<u-button v-else-if="item.stores <= 0" type="info" size="mini" plain disabled text="已抢完" @click="goDetail(item)">
 						</u-button>
-						<u-button v-else type="error" size="mini" plain text="立即抢购"></u-button>
+						<u-button v-else type="error" size="mini" plain text="立即抢购" @click="goDetail(item)"></u-button>
 					</view>
 				</view>
 			</view>
@@ -78,9 +78,9 @@
 			<view class="goods-container">
 				<view v-for="(item, index) in goodsRecommend" :key="index" class="goods-box" bindtap="toDetailsTap">
 					<view class="img-box">
-						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 					</view>
-					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333"></u--text>
+					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u--text>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
 					<view style='display:flex;'>
@@ -101,15 +101,15 @@
 				<u-line class="l"></u-line>
 			</view>
 			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
-				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
-					<view class="goods-title">{{item.name}}</view>
+					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
 					<u-line-progress :percentage="item.process" activeColor="#ff0000"></u-line-progress>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
-						<u-button type="error" size="mini" plain text="我要砍价"></u-button>
+						<u-button type="error" size="mini" plain text="我要砍价" @click="goDetail(item)"></u-button>
 					</view>
 				</view>
 			</view>
@@ -124,14 +124,14 @@
 				<u-line class="l"></u-line>
 			</view>
 			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
-				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
-					<view class="goods-title">{{item.name}}</view>
+					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
-						<u-button type="success" size="mini" text="我要拼团"></u-button>
+						<u-button type="success" size="mini" text="我要拼团" @click="goDetail(item)"></u-button>
 					</view>
 				</view>
 			</view>
@@ -148,9 +148,9 @@
 			<view class="goods-container">
 				<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
 					<view class="img-box">
-						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
+						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 					</view>
-					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333"></u--text>
+					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u--text>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
 					<view style='display:flex;'>
@@ -316,14 +316,13 @@
 			},
 			categoryClick(category) {
 				if (category.vopCid1 || category.vopCid2) {
-					wx.navigateTo({
+					uni.navigateTo({
 						url: '/pages/goods/list-vop?cid1=' + (category.vopCid1 ? category.vopCid1 : '') +
 							'&cid2=' + (category.vopCid2 ? category.vopCid2 : ''),
 					})
 				} else {
-					wx.setStorageSync("_categoryId", category.id)
-					wx.switchTab({
-						url: '/pages/goods/category',
+					uni.navigateTo({
+						url: '/pages/goods/list?categoryId=' + category.id,
 					})
 				}
 			},
@@ -440,6 +439,11 @@
 					}
 				}
 			},
+			goDetail(item) {
+				uni.navigateTo({
+					url: '/pages/goods/detail?id=' + item.id
+				})
+			}
 		}
 	}
 </script>

@@ -54,6 +54,18 @@
 		    "style": {
 				"navigationBarTitleText":"商品列表"
 		    }
+		},
+		{
+		    "path" : "pages/goods/fav",
+		    "style": {
+				"navigationBarTitleText":"我的收藏"
+		    }
+		},
+		{
+		    "path" : "pages/goods/detail",
+		    "style": {
+				"navigationBarTitleText":"商品详情"
+		    }
 		}
     ],
 	"globalStyle": {

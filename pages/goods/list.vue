@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-sticky>
+		<u-sticky bgColor="#FFFFFF">
 			<view class="search">
 				<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" @search="search">
 				</u-search>
@@ -11,38 +11,39 @@
 				<!--  #endif -->
 			</view>
 			<u-tabs :list="tabs" lineColor="#e64340" @click="paixu"></u-tabs>
-			<view v-if="showmod == 0" class="goodslist">
-				<view v-for="(item, index) in goods" :key="index" class="list" @click="toDetailsTap">
-					<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
-					<view class="r">
-						<view class="goods-title">{{item.name}}</view>
-						<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-							color="#c95060"></u--text>
-						<view class="price-box">
-							<view class="price">￥{{item.minPrice}} <text v-if="item.originalPrice">￥{{item.originalPrice}}</text></view>
-						</view>
-					</view>
-					
-				</view>
-			</view>
-			<view v-else class="goodsRecommend">
-				<view class="goods-container">
-					<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
-						<view class="img-box">
-							<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" />
-						</view>
-						<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333"></u--text>
-						<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-							color="#c95060"></u--text>
-						<view style='display:flex;'>
-							<view class="goods-price">¥ {{item.minPrice}}</view>
-							<view v-if="item.originalPrice && item.originalPrice > 0" class="goods-price"
-								style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
-						</view>
-					</view>
-				</view>
-			</view>
 		</u-sticky>
+		<u-empty v-if="!goods || goods.length == 0" mode="list" text="暂无商品" marginTop="200rpx" />
+		<view v-if="showmod == 0" class="goodslist">
+			<view v-for="(item, index) in goods" :key="index" class="list" @click="toDetailsTap">
+				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
+				<view class="r">
+					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<view class="price-box">
+						<view class="price">￥{{item.minPrice}} <text v-if="item.originalPrice">￥{{item.originalPrice}}</text></view>
+					</view>
+				</view>
+				
+			</view>
+		</view>
+		<view v-else>
+			<view class="goods-container">
+				<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
+					<view class="img-box">
+						<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
+					</view>
+					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u--text>
+					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u--text>
+					<view style='display:flex;'>
+						<view class="goods-price">¥ {{item.minPrice}}</view>
+						<view v-if="item.originalPrice && item.originalPrice > 0" class="goods-price"
+							style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -52,6 +53,7 @@
 			return {
 				kw: '',
 				orderBy: '',
+				categoryId: '',
 				page: 1,
 				tabs: [
 					{
@@ -86,6 +88,7 @@
 		},
 		onLoad(e) {
 			this.kw = e.kw ? e.kw : ''
+			this.categoryId = e.categoryId ? e.categoryId : ''
 			this._goods()
 		},
 		onShow() {
@@ -130,7 +133,8 @@
 				const res = await this.$wxapi.goodsv2({
 					page: this.page,
 					k: this.kw,
-					orderBy: this.orderBy ? this.orderBy : ''
+					orderBy: this.orderBy ? this.orderBy : '',
+					categoryId: this.categoryId ? this.categoryId : '',
 				})
 				uni.hideLoading()
 				if (res.code == 0) {
@@ -148,6 +152,11 @@
 					}
 				}
 			},
+			goDetail(item) {
+				uni.navigateTo({
+					url: '/pages/goods/detail?id=' + item.id
+				})
+			}
 		}
 	}
 </script>
@@ -156,7 +165,6 @@
 		padding: 8rpx;
 		display: flex;
 		align-items: center;
-
 		.scan {
 			padding: 0 16rpx;
 		}
