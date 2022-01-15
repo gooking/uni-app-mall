@@ -3,12 +3,14 @@
 	const TTAUTH = require('@/common/ttauth.js')
 	export default {
 		globalData: {
-			subDomain: 'tz',
+			subDomain: 'jdjf0115',
+			merchantId: '42151',
 			version: '0.0.1',
 			sysconfigkeys: 'mallName,shopMod,share_profile'
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n
+			this.$wxapi.setMerchantId(this.globalData.merchantId)
 			this.$wxapi.init(this.globalData.subDomain)
 			const _this = this
 			// 1.1.0版本之前关于http拦截器代码，已平滑移动到/common/http.interceptor.js中

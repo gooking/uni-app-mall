@@ -161,6 +161,7 @@
 				</view>
 			</view>
 		</view>
+		<view class="blank"></view>
 		<view class='coupons-float' @click="goCoupons">
 			<image src="/static/images/gift.png"></image>
 		</view>
@@ -196,7 +197,7 @@
 				kanjiaList: undefined,
 				pingtuanList: undefined,
 				page: 1,
-				goods: undefined,
+				goods: [],
 				adPositionIndexPop: false
 			}
 		},
@@ -720,5 +721,8 @@
 		.adPositionIndexPop .close {
 			margin-top: 32rpx;
 		}
+	}
+	.blank {
+		height: 32rpx;
 	}
 </style>

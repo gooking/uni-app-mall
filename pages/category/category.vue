@@ -205,8 +205,18 @@
 				this.showGoodsPop = true
 			},
 			async addCart(item) {
-				// https://www.yuque.com/apifm/nu0f75/et6m6m
-				const res = await this.$wxapi.shippingCarInfoAddItem(this.token, item.id, 1, [], [])
+				let res
+				if(item.supplyType == 'vop_jd') {
+					// https://www.yuque.com/apifm/nu0f75/yum741
+					res = await this.$wxapi.jdvopCartAdd({
+						token: this.token,
+						goodsId: item.yyId,
+						number: 1
+					})
+				} else {
+					// https://www.yuque.com/apifm/nu0f75/et6m6m
+					res = await this.$wxapi.shippingCarInfoAddItem(this.token, item.id, 1, [], [])
+				}
 				if (res.code != 0) {
 					uni.showToast({
 						title: res.msg,

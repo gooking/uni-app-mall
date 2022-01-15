@@ -409,8 +409,18 @@
 						})
 					})
 				}
-				// https://www.yuque.com/apifm/nu0f75/et6m6m
-				const res = await this.$wxapi.shippingCarInfoAddItem(this.token, this.goodsDetail.basicInfo.id, this.buyNumber, sku, goodsAddition)
+				let res
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					// https://www.yuque.com/apifm/nu0f75/yum741
+					res = await this.$wxapi.jdvopCartAdd({
+						token: this.token,
+						goodsId: this.goodsDetail.basicInfo.yyId,
+						number: this.buyNumber
+					})
+				} else {
+					// https://www.yuque.com/apifm/nu0f75/et6m6m
+					res = await this.$wxapi.shippingCarInfoAddItem(this.token, this.goodsDetail.basicInfo.id, this.buyNumber, sku, goodsAddition)
+				}
 				if (res.code != 0) {
 				  uni.showToast({
 					title: res.msg,
@@ -422,6 +432,7 @@
 				uni.showToast({
 				  title: '加入购物车'
 				})
+				TOOLS.showTabBarBadge()
 			},
 			async tobuy() {
 				if (!this.checkOk()) {
@@ -458,6 +469,8 @@
 				}
 				const buyInfo = {
 					goodsId: this.goodsDetail.basicInfo.id,
+					supplyType: this.goodsDetail.basicInfo.supplyType,
+					yyId: this.goodsDetail.basicInfo.yyId,
 					buyNumber: this.buyNumber,
 					sku,
 					goodsAddition

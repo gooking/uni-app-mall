@@ -39,12 +39,15 @@
 				<view id="content">
 					<u-divider text="详细介绍"></u-divider>
 					<view class="content">
-						<u-parse :content="goodsDetail.content"></u-parse>
+						<view v-if="wxintroduction">
+							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"></u--image>
+						</view>
+						<u-parse v-else :content="goodsDetail.content"></u-parse>
 					</view>
 				</view>
-				<view v-if="reputationList" id="reputation">
-					<u-divider text="用户评价"></u-divider>
-					<view class="reputation-box">
+				<view id="reputation">
+					<u-divider v-if="reputationList" text="用户评价"></u-divider>
+					<view v-if="reputationList" class="reputation-box">
 						<view v-for="(item,index) in reputationList" :key="index" class="album">
 							<view class="album__avatar">
 								<u--image class="image" :src="item.user.avatarUrl" shape="circle" width="120rpx" height="120rpx"></u--image>
@@ -128,6 +131,8 @@
 				}],
 				curViewId: 'basic',
 				goodsDetail: undefined,
+				jdGoodsDetail: undefined,
+				wxintroduction: undefined,
 				faved: false,
 				showGoodsPop: false,
 				page: 1,
@@ -169,14 +174,52 @@
 						title: res.msg,
 						icon: 'none'
 					})
-					uni.navigateBack()
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 3000)
 					return
 				}
 				this.goodsDetail = res.data
 				// 检测是否收藏
 				this.goodsFavCheck()
 				this._reputationList()
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					this.jdvopGoodsDetail(this.goodsDetail.basicInfo.yyId)
+				}
 			},
+			async jdvopGoodsDetail(skuId) {
+				// https://www.yuque.com/apifm/nu0f75/ar77dc
+				const res = await this.$wxapi.jdvopGoodsDetail(skuId)
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 3000)
+					return
+				}
+				this.jdGoodsDetail = res.data
+				this.goodsDetail.basicInfo.minPrice = this.jdGoodsDetail.price.priceSale
+				this.goodsDetail.basicInfo.originalPrice = this.jdGoodsDetail.price.priceJd
+				this.goodsDetail.basicInfo.name = this.jdGoodsDetail.price.skuName
+				if (this.jdGoodsDetail.info.wxintroduction) {
+				  this.wxintroduction = JSON.parse(this.jdGoodsDetail.info.wxintroduction)
+				}
+				this.jdvopGoodsSkuImages(skuId)
+			},
+			async jdvopGoodsSkuImages(skuId) {
+				// https://www.yuque.com/apifm/nu0f75/pvcu30
+			    const res = await this.$wxapi.jdvopGoodsSkuImages(skuId)
+			    if (res.code == 0) {
+					const pics = res.data
+					pics.forEach(ele => {
+						ele.pic = this.jdGoodsDetail.imageDomain + ele.path
+					})
+					this.goodsDetail.pics = pics
+			    }
+			  },
 			goCart() {
 				uni.switchTab({
 					url: "/pages/cart/index"
