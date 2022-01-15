@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<u-sticky></u-sticky><!-- TODO h5 下会把内容遮住 -->
+		<u-sticky bgColor="#00FF00"></u-sticky><!-- TODO h5 下会把内容遮住 -->
 		<view class="top-box" :style="headerMarginTopStyle">
 			<view class="t">{{ sysconfigMap.mallName }}</view>
 			<view class="search">
