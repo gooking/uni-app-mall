@@ -1,10 +1,6 @@
 <template>
 	<view class="cart">
-		<view class="blank-top"></view>
-		<view class="title">
-			购物车
-			<text></text>
-		</view>
+		
 		<view class="title-sub">左滑可删除商品</view>
 		<page-box-empty v-if="!shippingCarInfo || shippingCarInfo.number == 0" title="您还没有挑选任何商品" sub-title="可以去看看有那些想买的～" :show-btn="true" />
 		<view v-if="shippingCarInfo" class="order">
@@ -82,7 +78,7 @@
 		},
 		methods: {
 			async _shippingCarInfo() {
-				const res = await this.$api.shippingCarInfo(this.token)
+				const res = await this.$wxapi.shippingCarInfo(this.token)
 				if (res.code == 0) {
 					res.data.items.forEach(ele => {
 						ele.show = false
@@ -95,7 +91,7 @@
 			async numberChange(e) {
 				// console.log(e.value, e.index);
 				const item = this.shippingCarInfo.items[e.index]
-				const res = await this.$api.shippingCarInfoModifyNumber(this.token, item.key, e.value)
+				const res = await this.$wxapi.shippingCarInfoModifyNumber(this.token, item.key, e.value)
 				if (res.code != 0) {
 					uni.showToast({
 						title: res.msg,
@@ -115,7 +111,7 @@
 				const item = this.shippingCarInfo.items[index1]
 				if(index2 == 0) {
 					// 删除
-					const res = await this.$api.shippingCarInfoRemoveItem(this.token, item.key)
+					const res = await this.$wxapi.shippingCarInfoRemoveItem(this.token, item.key)
 					this._shippingCarInfo()
 				}
 			},
@@ -128,13 +124,6 @@
 	}
 </script>
 <style scoped lang="scss">
-	.cart {
-
-	}
-	.blank-top {
-		height: 88rpx;
-	}
-
 	.title {
 		font-size: 90rpx;
 		margin-left: 20px;
