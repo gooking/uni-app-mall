@@ -190,6 +190,7 @@
 			},
 			async numberChange0(e) {
 				const item = this.shippingCarInfo.items[e.name]
+				// https://www.yuque.com/apifm/nu0f75/kbi5b0
 				const res = await this.$wxapi.shippingCarInfoModifyNumber(this.token, item.key, e.value)
 				if (res.code != 0) {
 					uni.showToast({
@@ -220,14 +221,6 @@
 					ele.show = false
 				})
 				this.shippingCarInfo.items[index].show = true
-			},
-			async click(index1, index2) {
-				const item = this.shippingCarInfo.items[index1]
-				if(index2 == 0) {
-					// 删除
-					const res = await this.$wxapi.shippingCarInfoRemoveItem(this.token, item.key)
-					this._shippingCarInfo()
-				}
 			},
 			submit0() {
 				uni.navigateTo({
