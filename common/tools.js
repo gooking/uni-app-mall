@@ -8,12 +8,12 @@ async function showTabBarBadge(noTabBarPage){
     return 0
   }
   let number = 0
-  // 自营商品
+  // 自营商品 https://www.yuque.com/apifm/nu0f75/awql14
   let res = await WXAPI.shippingCarInfo(token)
   if (res.code == 0) {
     number += res.data.number
   }
-  // vop 购物车
+  // 京东购物车 https://www.yuque.com/apifm/nu0f75/gwat37
   res = await WXAPI.jdvopCartInfo(token)
   if (res.code == 0) {
     number += res.data.number
