@@ -76,6 +76,7 @@
 				canSubmit: false,
 				orderInfo: undefined,
 				userAmount: undefined,
+				goodsType: 0 // 0 自营商品； 1 京东vop商品
 			};
 		},
 		onLoad(e) {
@@ -83,9 +84,11 @@
 			this.cartType = e.cartType
 			if (e.mod == 'cart') {
 				if (e.cartType == 'apifm') {
+					this.goodsType = 0
 					this.readCartApifm()
 				}
 				if (e.cartType == 'jdvop') {
+					this.goodsType = 1
 					this.readCartJdVop()
 				}
 			}
@@ -94,6 +97,7 @@
 				this.goodsList.forEach(ele => {
 					this.goodsNumber += ele.number
 					this.goodsPrice += ele.price
+					this.goodsType = ele.goodsType
 				})
 				this.calculatePrice()
 			}
@@ -199,13 +203,14 @@
 					goodsJsonStr: JSON.stringify(goodsJsonStr),
 					remark: this.remark,
 					calculate,
-					goodsType: 0,
+					goodsType: this.goodsType,
 					couponId: this.couponId
 				}
 				if (this.defaultAddress) {
 					data.provinceId = this.defaultAddress.info.provinceId
 					data.cityId = this.defaultAddress.info.cityId
 					data.districtId = this.defaultAddress.info.districtId
+					data.streetId = this.defaultAddress.info.streetId
 					data.address = this.defaultAddress.info.address
 					data.linkMan = this.defaultAddress.info.linkMan
 					data.mobile = this.defaultAddress.info.mobile

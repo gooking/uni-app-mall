@@ -467,14 +467,21 @@
 						})
 					})
 				}
+				let goodsType = 0
+				let goodsId = this.goodsDetail.basicInfo.id
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					goodsType = 1
+					goodsId = this.goodsDetail.basicInfo.yyId
+				}
 				const goodsList = [{
-					goodsId: this.goodsDetail.basicInfo.id,
+					goodsId,
 					goodsName: this.goodsDetail.basicInfo.name,
 					number: 1,
 					pic: this.goodsDetail.basicInfo.pic,
 					price: this.goodsDetail.basicInfo.minPrice,
 					sku: [], // optionId optionName optionValueId optionValueName
 					additions: [], // id name pid pname price
+					goodsType
 				}]
 				uni.setStorageSync('goodsList', goodsList)
 				uni.navigateTo({
