@@ -467,17 +467,18 @@
 						})
 					})
 				}
-				const buyInfo = {
+				const goodsList = [{
 					goodsId: this.goodsDetail.basicInfo.id,
-					supplyType: this.goodsDetail.basicInfo.supplyType,
-					yyId: this.goodsDetail.basicInfo.yyId,
-					buyNumber: this.buyNumber,
-					sku,
-					goodsAddition
-				}
-				uni.setStorageSync('buyInfo', buyInfo)
+					goodsName: this.goodsDetail.basicInfo.name,
+					number: 1,
+					pic: this.goodsDetail.basicInfo.pic,
+					price: this.goodsDetail.basicInfo.minPrice,
+					sku: [], // optionId optionName optionValueId optionValueName
+					additions: [], // id name pid pname price
+				}]
+				uni.setStorageSync('goodsList', goodsList)
 				uni.navigateTo({
-					url: '/pages/pay/order'
+					url: '../pay/order?mod=buy'
 				})
 			},
 		}

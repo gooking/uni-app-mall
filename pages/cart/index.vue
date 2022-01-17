@@ -67,8 +67,8 @@
 					<text>￥</text>{{ jdvopCartInfo.price }}
 				</text>
 			</view>
-			<view v-if="jdvopCartInfo && jdvopCartInfo.number > 0" class="submit1">
-				<u-button type="error" @click="submit">提交订单</u-button>
+			<view v-if="jdvopCartInfo && jdvopCartInfo.number > 0" class="submit">
+				<u-button type="error" @click="submit1">提交订单</u-button>
 			</view>
 		</view>
 	</view>
@@ -229,7 +229,7 @@
 			},
 			submit1() {
 				uni.navigateTo({
-					url: '../pay/order?mod=cart&cartType=vop'
+					url: '../pay/order?mod=cart&cartType=jdvop'
 				})
 			},
 		}

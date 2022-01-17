@@ -72,6 +72,18 @@
 		    "style": {
 				"navigationStyle":"custom"
 		    }
+		},
+		{
+		    "path" : "pages/address/index",
+		    "style": {
+				"navigationBarTitleText": "收货地址"
+		    }
+		},
+		{
+		    "path" : "pages/address/addSite",
+		    "style": {
+				"navigationBarTitleText": "收货地址"
+		    }
 		}
     ],
 	"globalStyle": {
