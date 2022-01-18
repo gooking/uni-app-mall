@@ -7,7 +7,7 @@
 					{{ title }}
 					<view v-if="subTitle" class="tips">{{ subTitle }}</view>
 				</view>
-				<view v-if="showBtn" class="btn" @click="goIndex">随便逛逛</view>
+				<view v-if="showBtn" class="btn" @click="goIndex">{{ btnName }}</view>
 			</view>
 		</view>
 	</view>
@@ -22,6 +22,14 @@
 				default: '暂无数据'
 			},
 			subTitle: {
+				type: String,
+				default: ''
+			},
+			btnName: {
+				type: String,
+				default: '随便逛逛'
+			},
+			url: {
 				type: String,
 				default: ''
 			},
@@ -46,9 +54,15 @@
 		},
 		methods: {
 			goIndex() {
-				uni.switchTab({
-					url: "../../pages/index/index"
-				})
+				if(!this.url) {
+					uni.switchTab({
+						url: "../../pages/index/index"
+					})
+				} else {
+					uni.navigateTo({
+						url: this.url
+					})
+				}
 			},
 		}
 	}

@@ -1,24 +1,24 @@
 <template>
 	<view class="wrap">
 		<view class="top">
-			<u-form ref="uForm" label-width="auto" :model="form">
+			<u--form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="收货人" prop="linkMan" required>
-					<u-input v-model="form.linkMan" clearable placeholder="请输入收货人" />
+					<u--input v-model="form.linkMan" clearable placeholder="请输入收货人" />
 				</u-form-item>
 				<u-form-item label="手机号码" prop="mobile" required>
-					<u-input v-model="form.mobile" type="number" clearable placeholder="请输入手机号码" />
+					<u--input v-model="form.mobile" type="number" clearable placeholder="请输入手机号码" />
 				</u-form-item>
 				<u-form-item label="所在地区" prop="areaDisplay" required>
-					<u-input v-model="form.areaDisplay" type="select" clearable placeholder="省市区县、乡镇等" @click="showRegion = true" />
-					<city-select v-model="showRegion" :area-code="areaCode" @city-change="cityChange"></city-select>
+					<u-cell style="width: 100%;" :title="form.areaDisplay ? form.areaDisplay : '省市区县、乡镇信息'" required clickable isLink :border="false" @click="showRegion = true"></u-cell>
+					<city-select v-model="showRegion" :area-code="areaCode" :level="4" @city-change="cityChange"></city-select>
 				</u-form-item>
 				<u-form-item label="详细地址" label-position="top" prop="address" required>
-					<u-input v-model="form.address" type="textarea" :auto-height="true" clearable placeholder="请输入详细地址" />
+					<u--input v-model="form.address" type="textarea" :auto-height="true" clearable placeholder="请输入详细地址" />
 				</u-form-item>
-				<u-form-item label="设置默认地址">
+				<u-form-item label="默认地址">
 					<u-switch v-model="form.isDefault" active-color="#19be6b" slot="right"></u-switch>
 				</u-form-item>
-			</u-form>
+			</u--form>
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">保存</u-button>
@@ -65,6 +65,7 @@ export default {
 				provinceId: '',
 				cityId: '',
 				districtId: '',
+				streetId: '',
 				address: '',
 				isDefault: true,
 			},
@@ -81,38 +82,33 @@ export default {
 		}
 	},
 	mounted() {
-			// this.$u.post('https://s3.amazonaws.com/hzhmbucket/cn-north-1', {
-			// 	id: 2
-			// }).then(res => {
-			// 	console.log(res);
-			// })
 	},
 	methods: {
 		async _addressDetail(id) {
-			const res = await this.$api.addressDetail(this.token, id)
+			// https://www.yuque.com/apifm/nu0f75/gszs9g
+			const res = await this.$wxapi.addressDetail(this.token, id)
 			if(res.code == 0) {
 				this.form = Object.assign(this.form, res.data.info)
-				this.areaCode = [res.data.info.provinceId, res.data.info.cityId, res.data.info.districtId]
-				this.form.areaDisplay = res.data.info.provinceStr + res.data.info.cityStr + res.data.info.areaStr
+				this.areaCode = [res.data.info.provinceId, res.data.info.cityId, res.data.info.districtId, res.data.info.streetId]
+				this.form.areaDisplay = res.data.info.provinceStr + res.data.info.cityStr + res.data.info.areaStr + res.data.info.streetStr
 			}
 		},
-		a(e){
-			console.log(e);
-		},
 		cityChange(e) {
-			console.log(e);
 			this.form.provinceId = e.province.value
 			this.form.cityId = e.city.value
 			this.form.districtId = e.area.value
-			this.form.areaDisplay = e.province.label + e.city.label + e.area.label
+			this.form.streetId = e.street.value
+			this.form.areaDisplay = e.province.label + e.city.label + e.area.label + e.street.label
 		},
 		submit() {
-			this.$refs.uForm.validate(valid => {
-				if (valid) {
-					console.log(222);
-					this._submit()
-				}
-			});
+			this.$refs.uForm.validate().then(res => {
+				this._submit()
+			}).catch(errors => {
+				uni.showToast({
+					title: '表单请填写完整',
+					icon: 'none'
+				})
+			})
 		},
 		async _submit() {
 			uni.showLoading({
@@ -122,10 +118,12 @@ export default {
 			let res
 			if(this.form.id) {
 				// 修改
-				res = await this.$api.updateAddress(this.form)
+				// https://www.yuque.com/apifm/nu0f75/cv6gh7
+				res = await this.$wxapi.updateAddress(this.form)
 			} else {
 				// 添加
-				res = await this.$api.addAddress(this.form)
+				// https://www.yuque.com/apifm/nu0f75/fcx2mf
+				res = await this.$wxapi.addAddress(this.form)
 			}
 			uni.hideLoading({
 				success: (res) => {},

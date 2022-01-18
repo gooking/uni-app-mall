@@ -1,42 +1,55 @@
 <template>
-	<u-popup v-model="value" mode="bottom" :popup="false" :mask="true" :closeable="true" :safe-area-inset-bottom="true"
-	 close-icon-color="#ffffff" :z-index="uZIndex" :maskCloseAble="maskCloseAble" @close="close">
-		<u-tabs v-if="value" :list="genTabsList" :is-scroll="true" :current="tabsIndex" @change="tabsChange" ref="tabs"></u-tabs>
+	<u-popup :show="value" mode="bottom" round="32rpx" :closeable="true"
+	 :z-index="uZIndex" :closeOnClickOverlay="maskCloseAble" @close="close">
+		<u-tabs v-if="value" :list="genTabsList" :current="tabsIndex" @change="tabsChange"></u-tabs>
 		<view class="area-box">
 			<view class="u-flex" :class="{ 'change':isChange }">
 				<view class="area-item">
 					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
 						<scroll-view :scroll-y="true" style="height: 100%">
 							<u-cell-group>
-								<u-cell-item v-for="(item,index) in provinces" :title="item.label" :arrow="false" :index="index" :key="index"
+								<u-cell v-for="(item,index) in provinces" :key="index" :title="item.label" :name="index"
 								 @click="provinceChange">
 									<u-icon v-if="isChooseP&&province===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
-								</u-cell-item>
+								</u-cell>
 							</u-cell-group>
 						</scroll-view>
 					</view>
 				</view>
-				<view class="area-item">
+				<view v-if="isChooseP" class="area-item">
 					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
 						<scroll-view :scroll-y="true" style="height: 100%">
-							<u-cell-group v-if="isChooseP">
-								<u-cell-item v-for="(item,index) in citys" :title="item.label" :arrow="false" :index="index" :key="index"
+							<u-cell-group>
+								<u-cell v-for="(item,index) in citys" :key="index" :title="item.label" :name="index"
 								 @click="cityChange">
 									<u-icon v-if="isChooseC&&city===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
-								</u-cell-item>
+								</u-cell>
 							</u-cell-group>
 						</scroll-view>
 					</view>
 				</view>
 
-				<view class="area-item">
+				<view v-if="isChooseC" class="area-item">
 					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
 						<scroll-view :scroll-y="true" style="height: 100%">
-							<u-cell-group v-if="isChooseC">
-								<u-cell-item v-for="(item,index) in areas" :title="item.label" :arrow="false" :index="index" :key="index"
+							<u-cell-group>
+								<u-cell v-for="(item,index) in areas" :key="index" :title="item.label" :name="index"
 								 @click="areaChange">
 									<u-icon v-if="isChooseA&&area===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
-								</u-cell-item>
+								</u-cell>
+							</u-cell-group>
+						</scroll-view>
+					</view>
+				</view>
+				
+				<view v-if="isChooseA && level == 4" class="area-item">
+					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
+						<scroll-view :scroll-y="true" style="height: 100%">
+							<u-cell-group>
+								<u-cell v-for="(item,index) in streets" :key="index" :title="item.label" :name="index"
+								 @click="streetChange">
+									<u-icon v-if="isChooseS&&street===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
+								</u-cell>
 							</u-cell-group>
 						</scroll-view>
 					</view>
@@ -85,6 +98,10 @@
 			zIndex: {
 				type: [String, Number],
 				default: 0
+			},
+			level: {
+				type: Number,
+				default: 3
 			}
 		},
 		data() {
@@ -99,6 +116,9 @@
 				isChooseA: false, //是否已经选择了区
 				area: 0, //区级下标
 				areas: [],
+				isChooseS: false, //是否已经选择了街道
+				street: 0, //街道下标
+				streets: [],
 				tabsIndex: 0,
 			}
 		},
@@ -127,6 +147,14 @@
 				}
 				if (this.isChooseA) {
 					tabsList[2]['name'] = this.areas[this.area]['label'];
+					if(this.level == 4) {
+						tabsList[3] = {
+							name: "请选择"
+						};
+					}
+				}
+				if (this.isChooseS && this.level == 4) {
+					tabsList[3]['name'] = this.streets[this.street]['label'];
 				}
 				return tabsList;
 			},
@@ -138,6 +166,7 @@
 		methods: {
 			async init() {
 				// 获取所有的省份
+				// https://www.yuque.com/apifm/nu0f75/anab2a
 				const res = await this.$wxapi.province()
 				this.provinces = []
 				if(res.code == 0) {
@@ -149,14 +178,29 @@
 					})
 				}
 				console.log(this.areaCode);
-				if (this.areaCode.length == 3) {
-					await this.setProvince("", this.areaCode[0]);
-					await this.setCity("", this.areaCode[1]);
-					await this.setArea("", this.areaCode[2]);
-				} else if (this.defaultRegion.length == 3) {
-					await this.setProvince(this.defaultRegion[0], "");
-					await this.setCity(this.defaultRegion[1], "");
-					await this.setArea(this.defaultRegion[2], "");
+				if(this.level == 3) {
+					if (this.areaCode.length == 3) {
+						await this.setProvince("", this.areaCode[0]);
+						await this.setCity("", this.areaCode[1]);
+						await this.setArea("", this.areaCode[2]);
+					} else if (this.defaultRegion.length == 3) {
+						await this.setProvince(this.defaultRegion[0], "");
+						await this.setCity(this.defaultRegion[1], "");
+						await this.setArea(this.defaultRegion[2], "");
+					}
+				}
+				if(this.level == 4) {
+					if (this.areaCode.length == 4) {
+						await this.setProvince("", this.areaCode[0]);
+						await this.setCity("", this.areaCode[1]);
+						await this.setArea("", this.areaCode[2]);
+						await this.setStreet("", this.areaCode[3]);
+					} else if (this.defaultRegion.length == 4) {
+						await this.setProvince(this.defaultRegion[0], "");
+						await this.setCity(this.defaultRegion[1], "");
+						await this.setArea(this.defaultRegion[2], "");
+						await this.setStreet(this.defaultRegion[3], "");
+					}
 				}
 			},
 			async setProvince(label = "", value = "") {
@@ -166,7 +210,7 @@
 				console.log(k);
 				if(k != -1) {
 					const v = this.provinces[k]
-					await this.provinceChange(k)
+					await this.provinceChange({ name: k })
 				}
 			},
 			async setCity(label = "", value = "") {
@@ -175,7 +219,7 @@
 				})
 				if(k != -1) {
 					const v = this.citys[k]
-					await this.cityChange(k)
+					await this.cityChange({ name: k })
 				}
 			},
 			async setArea(label = "", value = "") {
@@ -184,22 +228,51 @@
 				})
 				if(k != -1) {
 					const v = this.areas[k]
-					this.isChooseA = true;
-					this.area = k;
+					if(this.level == 3) {
+						this.isChooseA = true;
+						this.area = k;
+					}
+					if(this.level == 4) {
+						await this.areaChange({ name: k })
+					}
+				}
+			},
+			async setStreet(label = "", value = "") {
+				const k = this.streets.findIndex(v => {
+					return value ? v.value == value : v.label == label
+				})
+				if(k != -1) {
+					const v = this.streets[k]
+					this.isChooseS = true;
+					this.street = k;
 				}
 			},
 			close() {
 				this.$emit('input', false);
 			},
-			tabsChange(index) {
-				this.tabsIndex = index;
+			tabsChange(e) {
+				this.tabsIndex = e.index;
+				if(e.index == 0) {
+					this.provinceChange({ name: this.province })
+				}
+				if(e.index == 1) {
+					this.cityChange({ name: this.city })
+				}
+				if(e.index == 2) {
+					this.areaChange({ name: this.area })
+				}
+				if(e.index == 3) {
+					this.streetChange({ name: this.street })
+				}
 			},
-			async provinceChange(index) {
+			async provinceChange(e) {
+				const index = e.name
 				this.isChooseP = true;
 				this.isChooseC = false;
 				this.isChooseA = false;
+				this.isChooseS = false;
 				this.province = index;
-				// 接口读取
+				// https://www.yuque.com/apifm/nu0f75/kfukig
 				const res = await this.$wxapi.nextRegion(this.provinces[index].value)
 				this.citys = []
 				if(res.code == 0) {
@@ -213,11 +286,13 @@
 				// 接口读取结束
 				this.tabsIndex = 1;
 			},
-			async cityChange(index) {
+			async cityChange(e) {
+				const index = e.name
 				this.isChooseC = true;
 				this.isChooseA = false;
+				this.isChooseS = false;
 				this.city = index;
-				// 接口读取
+				// https://www.yuque.com/apifm/nu0f75/kfukig
 				const res = await this.$wxapi.nextRegion(this.citys[index].value)
 				this.areas = []
 				if(res.code == 0) {
@@ -231,13 +306,44 @@
 				// 接口读取结束
 				this.tabsIndex = 2;
 			},
-			areaChange(index) {
+			async areaChange(e) {
+				const index = e.name
 				this.isChooseA = true;
+				this.isChooseS = false;
 				this.area = index;
+				if(this.level == 3) {
+					let result = {};
+					result.province = this.provinces[this.province];
+					result.city = this.citys[this.city];
+					result.area = this.areas[this.area];
+					this.$emit('city-change', result);
+					this.close();
+				}
+				if(this.level == 4) {
+					// https://www.yuque.com/apifm/nu0f75/kfukig
+					const res = await this.$wxapi.nextRegion(this.areas[index].value)
+					this.streets = []
+					if(res.code == 0) {
+						res.data.forEach(ele => {
+							this.streets.push({
+								label: ele.name,
+								value: ele.id
+							})
+						})
+					}
+					// 接口读取结束
+					this.tabsIndex = 3;
+				}
+			},
+			streetChange(e) {
+				const index = e.name
+				this.isChooseS = true;
+				this.street = index;
 				let result = {};
 				result.province = this.provinces[this.province];
 				result.city = this.citys[this.city];
 				result.area = this.areas[this.area];
+				result.street = this.streets[this.street];
 				this.$emit('city-change', result);
 				this.close();
 			}
@@ -257,13 +363,16 @@
 			transform: translateX(0);
 
 			&.change {
-				transform: translateX(-33.3333333%);
+				transform: translateX(-0%);
 			}
 		}
-
-		.area-item {
-			width: 33.3333333%;
-			height: 800rpx;
+		.u-flex {
+			width: 100vw;
+			display: flex;
+			.area-item {
+				flex: 1;
+				height: 800rpx;
+			}
 		}
 	}
 </style>
