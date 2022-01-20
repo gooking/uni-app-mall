@@ -1,8 +1,8 @@
 <template>
 	<view v-if="orderDetail" class="to-pay-order">
-		<u-section class="shop-section" title="配送地址" :right="false"></u-section>
-		<u-cell-item v-if="orderDetail.logistics" icon="map" :arrow="false" hover-class="none" :title="orderDetail.logistics.linkMan + ' ' + orderDetail.logistics.mobile" :label="orderDetail.logistics.provinceStr + orderDetail.logistics.cityStr + orderDetail.logistics.areaStr + orderDetail.logistics.address"></u-cell-item>
-		<u-section class="shop-section" title="商品信息" :right="false"></u-section>
+		<u-divider text="收货地址"></u-divider>
+		<u-cell v-if="orderDetail.logistics" icon="map" :border="false" :title="orderDetail.logistics.linkMan + ' ' + orderDetail.logistics.mobile" :label="orderDetail.logistics.provinceStr + orderDetail.logistics.cityStr + orderDetail.logistics.areaStr + orderDetail.logistics.address"></u-cell>
+		<u-divider text="商品信息"></u-divider>
 		<view class="order">
 			<view class="item" v-for="(item, index) in orderDetail.goods" :key="'a' + index">
 				<view class="left"><image :src="item.pic" mode="aspectFill"></image></view>
@@ -24,28 +24,20 @@
 				</text>
 			</view>
 		</view>
-		<u-section v-if="orderDetail.orderInfo.remark" class="shop-section" title="订单备注" :right="false"></u-section>
+		<u-divider v-if="orderDetail.orderInfo.remark" text="订单备注"></u-divider>
 		<view v-if="orderDetail.orderInfo.remark" class="remark">
 			{{ orderDetail.orderInfo.remark }}
 		</view>
-		<u-section class="shop-section" title="合计" :right="false"></u-section>
-		<u-cell-item title="商品金额" :value="'¥' + orderDetail.orderInfo.amount" :arrow="false"></u-cell-item>
-		<u-cell-item title="配送费" :value="'¥' + orderDetail.orderInfo.amountLogistics" :arrow="false"></u-cell-item>
-		<u-cell-item title="总计" :value="'¥' + orderDetail.orderInfo.amountReal" :arrow="false"></u-cell-item>
+		<u-divider text="合计"></u-divider>
+		<u-cell :border="false" title="商品金额" :value="'¥' + orderDetail.orderInfo.amount" :arrow="false"></u-cell>
+		<u-cell :border="false" title="快递费" :value="'¥' + orderDetail.orderInfo.amountLogistics" :arrow="false"></u-cell>
+		<u-cell :border="false" title="总计" :value="'¥' + orderDetail.orderInfo.amountReal" :arrow="false"></u-cell>
 		<template v-if="orderDetail.logisticsTraces">
-			<u-section class="shop-section" title="配送信息" :right="false"></u-section>
+			<u-divider text="快递信息"></u-divider>
 			<view class="logisticsTraces">
-				<u-time-line>
-					<u-time-line-item v-for="(item, index) in orderDetail.logisticsTraces" :key="index">
-						<!-- 此处没有自定义左边的内容，会默认显示一个点 -->
-						<template v-slot:content>
-							<view>
-								<view class="u-order-desc">{{ item.AcceptStation }}</view>
-								<view class="u-order-time">{{ item.AcceptTime }}</view>
-							</view>
-						</template>
-					</u-time-line-item>
-				</u-time-line>
+				<u-steps dot direction="column">
+					<u-steps-item v-for="(item, index) in orderDetail.logisticsTraces" :key="index" :title="item.AcceptStation" :desc="item.AcceptTime"></u-steps-item>
+				</u-steps>
 			</view>
 		</template>
 		<view v-if="orderDetail.orderInfo.status == 2" class="submit safe-area-inset-bottom">
@@ -78,7 +70,8 @@
 		},
 		methods: {
 			async _orderDetail(orderId) {
-				const res = await this.$api.orderDetail(this.token, orderId)
+				// https://www.yuque.com/apifm/nu0f75/oamel8
+				const res = await this.$wxapi.orderDetail(this.token, orderId)
 				if (res.code != 0) {
 					uni.showToast({
 						title: res.msg,
@@ -101,7 +94,8 @@
 				})
 			},
 			async _orderDelivery() {
-				const res = await this.$api.orderDelivery(this.token, this.orderDetail.orderInfo.id)
+				// https://www.yuque.com/apifm/nu0f75/vy8eai
+				const res = await this.$wxapi.orderDelivery(this.token, this.orderDetail.orderInfo.id)
 				if(res.code == 0) {
 					uni.showToast({
 						title: '已收到货',
@@ -160,6 +154,7 @@
 			}
 		}
 		.content {
+			flex: 1;
 			.title {
 				font-size: 28rpx;
 				line-height: 50rpx;

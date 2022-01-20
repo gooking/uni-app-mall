@@ -55,7 +55,7 @@
 			<u-cell v-if="userAmount" title="可用余额" :value="'¥' + userAmount.balance" :arrow="false"></u-cell>
 		</view>
 		<view class="submit safe-area-inset-bottom">
-			<u-button type="success" @click="submit" :disabled="!canSubmit">提交订单</u-button>
+			<u-button type="error" @click="submit" :disabled="!canSubmit">提交订单</u-button>
 		</view>
 	</view>
 </template>

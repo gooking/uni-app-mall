@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view class="wrap">
-			<u-sticky>
+			<u-sticky bgColor="#ffffff">
 				<view class="u-tabs-box">
-					<u-tabs activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs>
+					<u-tabs lineColor="#e64340" :list="list" :current="current" @change="change"></u-tabs>
 				</view>
 			</u-sticky>
 			<page-box-empty v-if="!orderList || orderList.length == 0" title="您还没有相关的订单" sub-title="可以去看看有那些想买的～" :show-btn="true" />
@@ -36,7 +36,7 @@
 					</view>
 					<view v-if="item.status == 0" class="bottom">
 						<view class="exchange btn" @click="close(item.id)">取消订单</view>
-						<view class="evaluate btn u-margin-left-24" @click="pay(index)">立即支付</view>
+						<view class="evaluate btn ml24" @click="pay(index)">立即支付</view>
 					</view>
 				</view>
 			</view>
@@ -53,14 +53,20 @@ export default {
 			dataList: undefined,
 			list: [
 				{
+					name: '全部',
+					status: ''
+				},
+				{
 					name: '待付款',
-					count: 0
+					status: '0'
 				},
 				{
-					name: '待发货'
+					name: '待发货',
+					status: '1'
 				},
 				{
-					name: '待收货'
+					name: '待收货',
+					status: '2'
 				},
 			],
 			current: 0,
@@ -68,31 +74,20 @@ export default {
 		};
 	},
 	onLoad(e) {
-		if(!e.status) {
-			e.status = 0
+		if(e.status) {
+			const a = this.list.findIndex(ele => { return ele.status == e.status })
+			if(a != -1) {
+				this.current = a * 1
+			}
 		}
-		this.current = e.status
-		this.change(e.status)
-	},
-	computed: {
-		// 价格小数
-		priceDecimal() {
-			return val => {
-				if (val !== parseInt(val)) return val.slice(-2);
-				else return '00';
-			};
-		},
-		// 价格整数
-		priceInt() {
-			return val => {
-				if (val !== parseInt(val)) return val.split('.')[0];
-				else return val;
-			};
-		}
+		this.change({ index: this.current })
 	},
 	methods: {
 		async _orderStatistics(){
-			const res = await this.$api.orderStatistics(this.token)
+			// https://www.yuque.com/apifm/nu0f75/dapuli
+			const res = await this.$wxapi.orderStatisticsv2({
+				token: this.token
+			})
 			if(res.code == 0) {
 				this.list[0].count = res.data.count_id_no_pay
 				this.list[1].count = res.data.count_id_no_transfer
@@ -102,10 +97,12 @@ export default {
 		},
 		// 页面数据
 		async getOrderList() {
+			const curTab = this.list[this.current]
 			this.orderList = null
-			const res = await this.$api.orderList({
+			// https://www.yuque.com/apifm/nu0f75/uwggsm
+			const res = await this.$wxapi.orderList({
 				token: this.token,
-				status: this.current
+				status: curTab.status
 			})
 			if(res.code == 0) {
 				const goodsMap = res.data.goodsMap
@@ -121,8 +118,8 @@ export default {
 			})
 		},
 		// tab栏切换
-		change(index) {
-			this.current = index
+		change(e) {
+			this.current = e.index
 			this._orderStatistics()
 			this.getOrderList();
 		},
@@ -138,7 +135,8 @@ export default {
 			});
 		},
 		async _close(orderId) {
-			const res = await this.$api.orderClose(this.token, orderId)
+			// https://www.yuque.com/apifm/nu0f75/wh4rrs
+			const res = await this.$wxapi.orderClose(this.token, orderId)
 			if(res.code != 0) {
 				uni.showToast({
 					title: res.msg,
@@ -152,7 +150,8 @@ export default {
 			}
 		},
 		async pay(index) {
-			let res = await this.$api.userAmount(this.token)
+			// https://www.yuque.com/apifm/nu0f75/wrqkcb
+			let res = await this.$wxapi.userAmount(this.token)
 			let balance = 0
 			if(res.code != 0) {
 				uni.showToast({
@@ -164,8 +163,8 @@ export default {
 			const orderInfo = this.orderList[index]
 			const needPay = (orderInfo.amountReal - balance).toFixed(2)
 			if(needPay <= 0) {
-				// 直接调用支付接口
-				const res = await this.$api.orderPay(this.token, orderInfo.id)
+				// 直接调用支付接口 https://www.yuque.com/apifm/nu0f75/lwt2vi
+				const res = await this.$wxapi.orderPay(this.token, orderInfo.id)
 				if(res.code != 0) {
 					uni.showToast({
 						title: res.msg,
@@ -183,7 +182,7 @@ export default {
 				wxpay.wxpay('order', needPay, orderInfo.id, '')
 				// #endif
 				// #ifndef MP-WEIXIN
-				console.log('点击了支付订单')
+				console.log('点击了支付订单') // 需要判断是h5，然后是微信内还是微信外，调用接口是不一样的
 				// #endif
 			}
 		},
@@ -241,6 +240,7 @@ page {
 			}
 		}
 		.content {
+			flex: 1;
 			.title {
 				font-size: 28rpx;
 				line-height: 50rpx;
@@ -309,5 +309,8 @@ page {
 }
 .swiper-item {
 	height: 100%;
+}
+.ml24 {
+	margin-left: 24rpx;
 }
 </style>

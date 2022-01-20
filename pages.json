@@ -84,6 +84,18 @@
 		    "style": {
 				"navigationBarTitleText": "收货地址"
 		    }
+		},
+		{
+		    "path" : "pages/order/index",
+		    "style": {
+				"navigationBarTitleText": "我的订单"
+		    }
+		},
+		{
+		    "path" : "pages/order/detail",
+		    "style": {
+				"navigationBarTitleText": "订单详情"
+		    }
 		}
     ],
 	"globalStyle": {
