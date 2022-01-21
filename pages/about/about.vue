@@ -1,7 +1,7 @@
 <template>
 	<view v-if="resData" class="about">
 		<view class="content">
-			<u-parse :html="resData.info.content"></u-parse>
+			<u-parse :content="resData.info.content"></u-parse>
 		</view>
 	</view>
 </template>
@@ -35,7 +35,8 @@
 		},
 		methods: {
 			async _cmsPage() {
-				const res = await this.$api.cmsPage(this.key)
+				// https://www.yuque.com/apifm/nu0f75/utgp8i
+				const res = await this.$wxapi.cmsPage(this.key)
 				if (res.code != 0) {
 					uni.showToast({
 						title: res.msg,

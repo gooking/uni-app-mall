@@ -96,6 +96,18 @@
 		    "style": {
 				"navigationBarTitleText": "订单详情"
 		    }
+		},
+		{
+		    "path" : "pages/my/index",
+		    "style": {
+				"navigationBarTitleText": "会员中心"
+		    }
+		},
+		{
+		    "path" : "pages/about/about",
+		    "style": {
+				"navigationBarTitleText": ""
+		    }
 		}
     ],
 	"globalStyle": {
@@ -135,7 +147,7 @@
 				"text": "购物车"
 			},
 			{
-				"pagePath": "pages/cart/index",
+				"pagePath": "pages/my/index",
 				"iconPath": "static/images/nav/my-off.png",
 				"selectedIconPath": "static/images/nav/my-on.png",
 				"text": "我的"

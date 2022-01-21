@@ -1,39 +1,95 @@
 <template>
-	<view>
-		<view class="blank-top"></view>
-		<!-- #ifdef MP-WEIXIN || MP-BAIDU || MP-QQ -->
-		<view class="u-flex user-box u-p-l-30 u-p-r-20 u-p-b-30">
-			<view class="u-m-r-10">
-				<open-data type="userAvatarUrl"></open-data>
-			</view>
-			<view class="u-flex-1">
-				<view class="u-font-16 u-p-b-20"><open-data type="userNickName"></open-data></view>
-				<view v-if="userDetail" class="u-font-14 u-tips-color">用户编号:{{ userDetail.base.id }}</view>
+	<view v-if="apiUserInfoMap">
+		<view class="header-box">
+			<image class="avatar" :src="apiUserInfoMap.base.avatarUrl" mode="aspectFill"></image>
+			<view class="r">
+				<view class="uid">用户ID: {{ apiUserInfoMap.base.id }}</view>
+				<view class="nick">{{ apiUserInfoMap.base.nick }}</view>
 			</view>
 		</view>
-		<!-- #endif -->
-		<u-grid :col="3">
-			<u-grid-item @click="go('/pages/order/index?status=0')">
-				<u-icon name="red-packet" :size="46" color="#a78845"></u-icon>
-				<view class="grid-text">待支付</view>
+		<view class="asset">
+			<view class='item' bindtap='goAsset'>
+				<view class="amount">{{balance}}</view>
+				<view>余额</view>
+			</view>
+			<view class='item right' bindtap='goAsset'>
+				<view class="amount">{{freeze}}</view>
+				<view>冻结</view>
+			</view>
+			<view class='item right' bindtap='goScore'>
+				<view class="amount">{{score}}</view>
+				<view>积分</view>
+			</view>
+			<view class='item right' bindtap="gogrowth">
+				<view class="amount">{{growth}}</view>
+				<view>成长值</view>
+			</view>
+		</view>
+		<u-line></u-line>
+		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
+		<u-grid col="3" :border="false" @click="orderGridClick">
+			<u-grid-item name="0">
+				<view class="grid_item">
+					<u-icon name="rmb-circle" size="52rpx"></u-icon>
+					<text class="txt">待付款</text>
+				</view>
 			</u-grid-item>
-			<u-grid-item @click="go('/pages/order/index?status=1')">
-				<u-icon name="car" :size="46" color="#a78845"></u-icon>
-				<view class="grid-text">待发货</view>
+			<u-grid-item name="1">
+				<view class="grid_item">
+					<u-icon name="car" size="52rpx"></u-icon>
+					<text class="txt">待发货</text>
+				</view>
 			</u-grid-item>
-			<u-grid-item @click="go('/pages/order/index?status=2')">
-				<u-icon name="gift" :size="46" color="#a78845"></u-icon>
-				<view class="grid-text">已发货</view>
+			<u-grid-item name="2">
+				<view class="grid_item">
+					<u-icon name="gift" size="52rpx"></u-icon>
+					<text class="txt">待收货</text>
+				</view>
+			</u-grid-item>
+			<!-- <u-grid-item name="3">
+				<view class="grid_item">
+					<u-icon name="thumb-up" size="52rpx"></u-icon>
+					<text class="txt">待评价</text>
+				</view>
+			</u-grid-item> -->
+			<!-- <u-grid-item name="99">
+				<view class="grid_item">
+					<u-icon name="server-man" size="52rpx"></u-icon>
+					<text class="txt">售后</text>
+				</view>
+			</u-grid-item> -->
+		</u-grid>
+		<u-cell icon="grid" title="常用功能"></u-cell>
+		<u-grid col="4" :border="false" @click="go">
+			<u-grid-item name="0">
+				<view class="grid_item">
+					<u-icon name="red-packet" size="52rpx"></u-icon>
+					<text class="txt">资金明细</text>
+				</view>
+			</u-grid-item>
+			<u-grid-item name="0">
+				<view class="grid_item">
+					<u-icon name="red-packet-fill" size="52rpx"></u-icon>
+					<text class="txt">优惠券</text>
+				</view>
+			</u-grid-item>
+			<u-grid-item name="/pages/goods/fav">
+				<view class="grid_item">
+					<u-icon name="heart" size="52rpx"></u-icon>
+					<text class="txt">我的收藏</text>
+				</view>
+			</u-grid-item>
+			<u-grid-item name="/pages/address/index">
+				<view class="grid_item">
+					<u-icon name="map" size="52rpx"></u-icon>
+					<text class="txt">收货地址</text>
+				</view>
 			</u-grid-item>
 		</u-grid>
-		<view class="u-m-t-20">
-			<u-cell-group>
-				<u-cell-item icon="heart" title="我的收藏" @click="go('/pages/goods/fav')"></u-cell-item>
-				<u-cell-item icon="map" title="收货地址" @click="go('/pages/address/index')"></u-cell-item>
-				<u-cell-item icon="server-man" title="关于我们" @click="go('/pages/about/about?key=aboutus')"></u-cell-item>
-			</u-cell-group>
-		</view>
-		<view class="version">version {{ version }}</view>
+		<u-line></u-line>
+		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
+		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
+		<u-cell title="当前版本" :value="version"></u-cell>
 	</view>
 </template>
 
@@ -41,20 +97,54 @@
 	export default {
 		data() {
 			return {
-				userDetail: undefined,
-				pic:'https://uviewui.com/common/logo.png',
-				show:true,
-				version: getApp().globalData.version
+				apiUserInfoMap: undefined,
+				balance: 0,
+				freeze: 0,
+				score: 0,
+				growth: 0,
+				pic: 'https://uviewui.com/common/logo.png',
+				show: true,
+				version: getApp().globalData.version,
+				version: undefined
 			}
 		},
 		onLoad() {
+			this.version = getApp().globalData.version
 			this._userDetail()
+		},
+		onShow() {
+			this._getUserAmount()
 		},
 		methods: {
 			async _userDetail() {
-				const res = await this.$api.userDetail(this.token)
-				if(res.code == 0) {
-					this.userDetail = res.data
+				// https://www.yuque.com/apifm/nu0f75/zgf8pu
+				const res = await this.$wxapi.userDetail(this.token)
+				if (res.code == 0) {
+					if (!res.data.base.avatarUrl) {
+						res.data.base.avatarUrl = '/static/images/empty.jpg'
+					}
+					this.apiUserInfoMap = res.data
+				}
+			},
+			async _getUserAmount() {
+				// https://www.yuque.com/apifm/nu0f75/wrqkcb
+				const res = await this.$wxapi.userAmount(this.token)
+				if (res.code == 0) {
+					this.balance = res.data.balance.toFixed(2),
+						this.freeze = res.data.freeze.toFixed(2),
+						this.score = res.data.score,
+						this.growth = res.data.growth
+				}
+			},
+			orderGridClick(status) {
+				if (status == 99) {
+					uni.navigateTo({
+						url: '/pages/order/index?status=' + status
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/order/index?status=' + status
+					})
 				}
 			},
 			go(url) {
@@ -62,35 +152,189 @@
 					url: url
 				})
 			},
+			clearStorage() {
+				uni.clearStorageSync()
+				uni.showToast({
+					title: '已清除'
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-page{
-	background-color: #ededed;
-}
-.blank-top {
-	height: 88rpx;
-}
-.grid-text {
-	color: #a78845;
-}
-
-.camera{
-	width: 54px;
-	height: 44px;
-	
-	&:active{
-		background-color: #ededed;
+	.header-box {
+		padding: 32rpx;
+		padding-bottom: 64rpx;
+		display: flex;
+		align-items: center;
+		color: #333;
 	}
-}
-.user-box{
-	background-color: #fff;
-}
-.version {
-	margin-top: 64rpx;
-	text-align: center;
-	color: #999999;
-}
+
+	.header-box .avatar {
+		width: 128rpx;
+		height: 128rpx;
+		border-radius: 50%;
+	}
+
+	.header-box .btn {
+		margin-left: 32rpx;
+	}
+
+	.header-box .r {
+		margin-left: 32rpx;
+		font-size: 28rpx;
+	}
+
+	page,
+	view,
+	image,
+	input {
+		display: block;
+		box-sizing: border-box;
+	}
+
+	.container {
+		min-height: 100%;
+		overflow: hidden;
+		overflow-y: hidden;
+	}
+
+	.asset {
+		width: 100vw;
+		display: flex;
+		border-top: 1px solid #eee;
+		padding-top: 20rpx;
+		padding-bottom: 20rpx;
+	}
+
+	.asset .item {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		font-size: 24rpx;
+		line-height: 20px;
+		color: #666;
+	}
+
+	.asset .item .amount {
+		color: #333;
+		font-size: 32rpx;
+		padding-bottom: 12rpx;
+	}
+
+	.asset .right {
+		border-left: 1px solid #eee;
+	}
+
+	.version {
+		width: 100vw;
+		font-size: 24rpx;
+		text-align: center;
+		padding: 32rpx;
+	}
+
+	.to-authorize {
+		padding: 0rpx;
+		margin: 0rpx;
+		background: none;
+		border: none;
+		height: auto;
+		line-height: auto;
+	}
+
+	/* 绑定手机号 */
+	.bind-phone-number {
+		margin: 20rpx;
+		width: 100%;
+	}
+
+	/* flex重新构建菜单 */
+	.menu-item {
+		width: 100vw;
+		height: 104rpx;
+		padding: 0 32rpx;
+		background: #fff;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.menu-item .l {
+		font-size: 34rpx;
+		color: #333;
+		line-height: 104rpx;
+	}
+
+	.menu-item .r {
+		font-size: 32rpx;
+		color: #999;
+		line-height: 104rpx;
+	}
+
+	.menu-item .next {
+		width: 40rpx;
+		height: 40rpx;
+	}
+
+	.menu-item button {
+		margin: 0;
+	}
+
+	.space {
+		width: 100vw;
+		height: 2rpx;
+		background: #F4F5F9;
+	}
+
+	.line {
+		width: 718px;
+		height: 1px;
+		background: #EEEEEE;
+		margin-left: 32rpx;
+	}
+
+
+	.login-box .logo {
+		width: 200rpx;
+		margin: 64rpx 275rpx;
+	}
+
+	.login-box .line {
+		height: 2rpx;
+		width: 686rpx;
+		background-color: #ebedf0;
+		margin: 0 32rpx;
+	}
+
+	.login-box .title {
+		margin: 64rpx 0 0 32rpx;
+		color: #333;
+		font-size: 36rpx;
+	}
+
+	.login-box .profile {
+		margin: 32rpx 0 0 32rpx;
+		color: #999;
+		font-size: 28rpx;
+	}
+
+	.login-box .btn {
+		margin: 88rpx 32rpx;
+	}
+
+	.grid_item {
+		padding: 24rpx 0;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.txt {
+			margin-top: 16rpx;
+			font-size: 26rpx;
+			color: #333;
+		}
+	}
 </style>
