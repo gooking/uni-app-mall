@@ -108,4 +108,21 @@
 <style lang="scss">
 	/*每个页面公共css */
 	@import "@/uni_modules/uview-ui/index.scss";
+	.price-score {
+		display: flex;
+		color: #e64340;
+		font-size: 38rpx;
+		text {
+			padding: 0 4rpx;
+			font-size: 28rpx;
+		}
+		.item {
+			padding: 0 8rpx;
+		}
+		.original {
+			margin-left: 32rpx;
+			color:#aaa;
+			text-decoration:line-through
+		}
+	}
 </style>

@@ -16,17 +16,19 @@
 					</view>
 				</view>
 				<view class="right">
-					<view class="price">
-						<text>￥</text>{{ item.price }}
+					<view class="price-score">
+						<view v-if="item.price" class="item"><text>¥</text>{{item.price}}</view>
+						<view v-if="item.score" class="item"><text>∮</text>{{item.score}}</view>
 					</view>
 					<view class="number">x{{ item.number }}</view>
 				</view>
 			</view>
 			<view class="total">
-				共 {{ goodsNumber }} 件商品 合计:
-				<text class="total-price">
-					<text>￥</text>{{ goodsPrice }}
-				</text>
+				<text>共 {{ goodsNumber }} 件商品 合计:</text>
+				<view class="price-score" style="display: inline-flex;">
+					<view v-if="goodsPrice" class="item"><text>¥</text>{{ goodsPrice }}</view>
+					<view v-if="goodsScore" class="item"><text>∮</text>{{ goodsScore }}</view>
+				</view>
 			</view>
 		</view>
 		<view v-if="orderInfo && orderInfo.couponUserList" class="coupon-box">
@@ -48,11 +50,14 @@
 		</view>
 		<view v-if="orderInfo">
 			<u-divider text="合计"></u-divider>
-			<u-cell title="商品金额" :value="'¥' + orderInfo.amountTotle" :arrow="false"></u-cell>
-			<u-cell title="配送费" :value="'¥' + orderInfo.amountLogistics" :arrow="false"></u-cell>
-			<u-cell title="优惠券" :value="'-¥' + orderInfo.couponAmount" :arrow="false"></u-cell>
-			<u-cell title="总计" :value="'¥' + orderInfo.amountReal" :arrow="false"></u-cell>
-			<u-cell v-if="userAmount" title="可用余额" :value="'¥' + userAmount.balance" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.amountTotle" title="商品金额" :value="'¥' + orderInfo.amountTotle" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.score" title="积分" :value="orderInfo.score" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.amountLogistics" title="运费" :value="'¥' + orderInfo.amountLogistics" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.freightScore" title="运费积分" :value="orderInfo.freightScore" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.couponAmount" title="优惠券" :value="'-¥' + orderInfo.couponAmount" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.amountReal" title="总计" :value="'¥' + orderInfo.amountReal" :arrow="false"></u-cell>
+			<u-cell v-if="userAmount" title="账户可用余额" :value="'¥' + userAmount.balance" :arrow="false"></u-cell>
+			<u-cell v-if="userAmount" title="账户可用积分" :value="userAmount.score" :arrow="false"></u-cell>
 		</view>
 		<view class="submit safe-area-inset-bottom">
 			<u-button type="error" @click="submit" :disabled="!canSubmit">提交订单</u-button>
@@ -72,6 +77,7 @@
 				goodsList: undefined,
 				goodsNumber: 0,
 				goodsPrice: 0,
+				goodsScore: 0,
 				remark: '',
 				canSubmit: false,
 				orderInfo: undefined,
@@ -96,7 +102,8 @@
 				this.goodsList = uni.getStorageSync('goodsList')
 				this.goodsList.forEach(ele => {
 					this.goodsNumber += ele.number
-					this.goodsPrice += ele.price
+					this.goodsPrice += ele.price * ele.number
+					this.goodsScore += ele.score * ele.number
 					this.goodsType = ele.goodsType
 				})
 				this.calculatePrice()
@@ -139,12 +146,14 @@
 							number: ele.number,
 							pic: ele.pic,
 							price: ele.price,
+							score: ele.score,
 							sku: ele.sku, // optionId optionName optionValueId optionValueName
 							additions: ele.additions, // id name pid pname price
 						})
 					})
 					this.goodsNumber = res.data.number
 					this.goodsPrice = res.data.price
+					this.goodsScore = res.data.score
 					this.calculatePrice()
 				}
 			},
@@ -162,12 +171,14 @@
 							number: ele.number,
 							pic: ele.pic,
 							price: ele.price,
+							score: 0,
 							sku: ele.sku, // optionId optionName optionValueId optionValueName
 							additions: ele.additions, // id name pid pname price
 						})
 					})
 					this.goodsNumber = res.data.number
 					this.goodsPrice = res.data.price
+					this.goodsScore = 0
 					this.calculatePrice()
 				}
 			},
@@ -421,15 +432,6 @@
 			margin-top: 20rpx;
 			text-align: right;
 			font-size: 24rpx;
-
-			.total-price {
-				text {
-					font-size: 26rpx;
-				}
-
-				font-size: 38rpx;
-				color: #e64340;
-			}
 		}
 
 		.bottom {

@@ -20,8 +20,9 @@
 					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
-					<view class="price-box">
-						<view class="price">￥{{item.minPrice}} <text v-if="item.originalPrice">￥{{item.originalPrice}}</text></view>
+					<view class="price-score">
+						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
+						<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
 					</view>
 				</view>
 				
@@ -36,10 +37,9 @@
 					<u--text class="goods-title" :text="item.name" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u--text>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
-					<view style='display:flex;'>
-						<view class="goods-price">¥ {{item.minPrice}}</view>
-						<view v-if="item.originalPrice && item.originalPrice > 0" class="goods-price"
-							style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+					<view class="price-score">
+						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
+						<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
 					</view>
 				</view>
 			</view>

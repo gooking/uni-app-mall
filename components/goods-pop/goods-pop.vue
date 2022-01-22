@@ -8,9 +8,9 @@
 				<view v-if="goodsDetail.basicInfo.numberSells" class="t2">已售:{{ goodsDetail.basicInfo.numberSells }}
 				</view>
 				<view class="price">
-					<font>¥</font>{{ price }}
+					<view v-if="price"><font>¥</font>{{ price }}</view>
 					<view v-if="score">
-						<font>+￠</font>{{ score }}
+						<font>￠</font>{{ score }}
 					</view>
 				</view>
 			</view>
@@ -38,7 +38,14 @@
 			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
 		</view>
 		<u-line></u-line>
-		<view class="btns">
+		<view v-if="goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" class="btns">
+			<view class="btn">
+				<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
+					@click="tobuy">
+				</u-button>
+			</view>
+		</view>
+		<view v-else class="btns">
 			<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 			<view class="icon-btn">
 				<u-icon name="chat" size="48rpx"></u-icon>
@@ -473,12 +480,17 @@
 					goodsType = 1
 					goodsId = this.goodsDetail.basicInfo.yyId
 				}
+				if(this.goodsDetail.basicInfo.supplyType == 'jdJoycityPoints') {
+					goodsType = 2
+					goodsId = this.goodsDetail.basicInfo.yyIdStr
+				}
 				const goodsList = [{
 					goodsId,
 					goodsName: this.goodsDetail.basicInfo.name,
-					number: 1,
+					number: this.buyNumber,
 					pic: this.goodsDetail.basicInfo.pic,
 					price: this.goodsDetail.basicInfo.minPrice,
+					score: this.goodsDetail.basicInfo.minScore,
 					sku: [], // optionId optionName optionValueId optionValueName
 					additions: [], // id name pid pname price
 					goodsType

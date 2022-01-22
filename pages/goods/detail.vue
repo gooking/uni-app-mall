@@ -7,8 +7,11 @@
 				<view id="basic">
 					<u-swiper :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx"></u-swiper>
 					<view class="price-share">
-						<view class="price">￥{{goodsDetail.basicInfo.minPrice}} <text
-								v-if="goodsDetail.basicInfo.originalPrice">￥{{goodsDetail.basicInfo.originalPrice}}</text>
+						<view class="price-score">
+							<view v-if="goodsDetail.basicInfo.minPrice" class="item">
+								<text>¥</text>{{goodsDetail.basicInfo.minPrice}}</view>
+							<view v-if="goodsDetail.basicInfo.minScore" class="item">
+								<text>∮</text>{{goodsDetail.basicInfo.minScore}}</view>
 						</view>
 						<!-- #ifdef MP -->
 						<view class="btns">
@@ -40,7 +43,8 @@
 					<u-divider text="详细介绍"></u-divider>
 					<view class="content">
 						<view v-if="wxintroduction">
-							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx" height="auto"></u--image>
+							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"
+								height="auto"></u--image>
 						</view>
 						<u-parse v-else :content="goodsDetail.content"></u-parse>
 					</view>
@@ -50,13 +54,16 @@
 					<view v-if="reputationList" class="reputation-box">
 						<view v-for="(item,index) in reputationList" :key="index" class="album">
 							<view class="album__avatar">
-								<u--image class="image" :src="item.user.avatarUrl" shape="circle" width="120rpx" height="120rpx"></u--image>
+								<u--image class="image" :src="item.user.avatarUrl" shape="circle" width="120rpx"
+									height="120rpx"></u--image>
 							</view>
 							<view class="album__content">
 								<u--text :text="item.user.nick" type="primary" bold size="17"></u--text>
 								<u-rate v-model="item.goods.goodReputation"></u-rate>
-								<u--text margin="8rpx 0 8rpx 0" size="26rpx" color="#666666" :text="item.goods.goodReputationRemark"></u--text>
-								<u--text margin="0 0 8rpx 0" size="24rpx" color="#666666" :text="item.goods.dateReputation"></u--text>
+								<u--text margin="8rpx 0 8rpx 0" size="26rpx" color="#666666"
+									:text="item.goods.goodReputationRemark"></u--text>
+								<u--text margin="0 0 8rpx 0" size="24rpx" color="#666666"
+									:text="item.goods.dateReputation"></u--text>
 								<!-- <u-album v-if="item.reputationPics" :urls="urls2"></u-album> -->
 								<view style="height: 32rpx;"></view>
 							</view>
@@ -77,7 +84,14 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view class="bottom-btns">
+			<view v-if="goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" class="bottom-btns">
+				<view class="btn">
+					<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
+						@click="_showGoodsPop">
+					</u-button>
+				</view>
+			</view>
+			<view v-else class="bottom-btns">
 				<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 				<view class="icon-btn">
 					<u-icon name="chat" size="48rpx"></u-icon>
@@ -119,16 +133,20 @@
 	export default {
 		data() {
 			return {
-				tabs: [{
-					viewId: 'basic',
-					name: '商品信息',
-				}, {
-					viewId: 'content',
-					name: '详细介绍',
-				}, {
-					viewId: 'reputation',
-					name: '用户评价',
-				}],
+				tabs: [
+					{
+						viewId: 'basic',
+						name: '商品信息',
+					},
+					{
+						viewId: 'content',
+						name: '详细介绍',
+					},
+					// {
+					// 	viewId: 'reputation',
+					// 	name: '用户评价',
+					// },
+				],
 				curViewId: 'basic',
 				goodsDetail: undefined,
 				jdGoodsDetail: undefined,
@@ -183,8 +201,11 @@
 				// 检测是否收藏
 				this.goodsFavCheck()
 				this._reputationList()
-				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+				if (this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
 					this.jdvopGoodsDetail(this.goodsDetail.basicInfo.yyId)
+				}
+				if (this.goodsDetail.basicInfo.supplyType == 'jdJoycityPoints') {
+					this.joycityPointsGoodsDetail(this.goodsDetail.basicInfo.yyIdStr)
 				}
 			},
 			async jdvopGoodsDetail(skuId) {
@@ -205,21 +226,47 @@
 				this.goodsDetail.basicInfo.originalPrice = this.jdGoodsDetail.price.priceJd
 				this.goodsDetail.basicInfo.name = this.jdGoodsDetail.price.skuName
 				if (this.jdGoodsDetail.info.wxintroduction) {
-				  this.wxintroduction = JSON.parse(this.jdGoodsDetail.info.wxintroduction)
+					this.wxintroduction = JSON.parse(this.jdGoodsDetail.info.wxintroduction)
 				}
 				this.jdvopGoodsSkuImages(skuId)
 			},
 			async jdvopGoodsSkuImages(skuId) {
 				// https://www.yuque.com/apifm/nu0f75/pvcu30
-			    const res = await this.$wxapi.jdvopGoodsSkuImages(skuId)
-			    if (res.code == 0) {
+				const res = await this.$wxapi.jdvopGoodsSkuImages(skuId)
+				if (res.code == 0) {
 					const pics = res.data
 					pics.forEach(ele => {
 						ele.pic = this.jdGoodsDetail.imageDomain + ele.path
 					})
 					this.goodsDetail.pics = pics
-			    }
-			  },
+				}
+			},
+			async joycityPointsGoodsDetail(skuId) {
+				const res = await this.$wxapi.joycityPointsGoodsDetail(skuId)
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 3000)
+					return
+				}
+				const pics = []
+				res.data.providerImgUrls.split(',').forEach(ele => {
+					pics.push({
+						pic: ele
+					})
+				})
+				this.goodsDetail.pics = pics
+				this.goodsDetail.basicInfo.name = res.data.goodsName
+				this.goodsDetail.basicInfo.minPrice = 0
+				this.goodsDetail.basicInfo.minScore = res.data.goodsPrice
+				this.goodsDetail.basicInfo.originalPrice = res.data.suggestedPrice
+				// this.goodsDetail.content = res.data.usageGuide
+				this.wxintroduction = res.data.pics
+			},
 			goCart() {
 				uni.switchTab({
 					url: "/pages/cart/index"
@@ -404,6 +451,12 @@
 
 	.content {
 		margin-top: 32rpx;
+		image {
+			height: auto;
+		}
+		div {
+			height: auto;
+		}
 	}
 
 	.bottom-btns {

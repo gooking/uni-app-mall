@@ -31,13 +31,11 @@
 						<view class="goods-info">
 							<u--text class="t" :lines="3" :text="item.name" @click="goDetail(item)"></u--text>
 							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
-							<view class="price">
-								<font>¥</font>{{ item.minPrice }}
-								<view v-if="item.gotScore">
-									<font>+￠</font>{{ item.gotScore }}
-								</view>
+							<view class="price-score">
+								<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
+								<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
 							</view>
-							<view class="addCar">
+							<view v-if="item.supplyType != 'jdJoycityPoints'" class="addCar">
 								<u-icon v-if="item.propertyIds || item.hasAddition" name="plus-circle" color="#e64340"
 									size="48rpx" @click="_showGoodsPop(item)"></u-icon>
 								<u-icon v-else name="shopping-cart" color="#e64340" size="64rpx" @click="addCart(item)">
