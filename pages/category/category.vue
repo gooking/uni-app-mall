@@ -230,7 +230,6 @@
 				})
 			},
 			search(v) {
-				console.log(v);
 				uni.navigateTo({
 					url: '/pages/goods/list?kw=' + v,
 				})

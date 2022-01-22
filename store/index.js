@@ -37,7 +37,7 @@ const store = new Vuex.Store({
 		},
 		app_show_pic_version: lifeData.app_show_pic_version ? lifeData.app_show_pic_version : '',
 		referrer: lifeData.referrer ? lifeData.referrer : '',
-		token: lifeData.token ? lifeData.token : '18f589f4-ac07-4d40-9129-4a54fc57a2ac',
+		token: lifeData.token ? lifeData.token : 'ff179f98-8db8-424e-9187-323d9691430d',
 		uid: lifeData.uid ? lifeData.uid : '2518576',
 		cartNumber: 0
 	},

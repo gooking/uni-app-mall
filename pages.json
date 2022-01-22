@@ -108,6 +108,30 @@
 		    "style": {
 				"navigationBarTitleText": ""
 		    }
+		},
+		{
+		    "path" : "pages/my/balance",
+		    "style": {
+				"navigationBarTitleText": "我的资产"
+		    }
+		},
+		{
+		    "path" : "pages/score/index",
+		    "style": {
+				"navigationBarTitleText": "我的积分"
+		    }
+		},
+		{
+		    "path" : "pages/coupons/index",
+		    "style": {
+				"navigationBarTitleText": "优惠券"
+		    }
+		},
+		{
+		    "path" : "pages/search/index",
+		    "style": {
+				"navigationBarTitleText": "搜一搜"
+		    }
 		}
     ],
 	"globalStyle": {
@@ -135,7 +159,7 @@
 				"text": "分类"
 			},
 			{
-				"pagePath": "pages/category/category",
+				"pagePath": "pages/coupons/index",
 				"iconPath": "static/images/nav/coupon-off.png",
 				"selectedIconPath": "static/images/nav/coupon-on.png",
 				"text": "优惠券"

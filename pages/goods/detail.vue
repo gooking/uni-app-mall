@@ -40,7 +40,7 @@
 					<u-divider text="详细介绍"></u-divider>
 					<view class="content">
 						<view v-if="wxintroduction">
-							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"></u--image>
+							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx" height="auto"></u--image>
 						</view>
 						<u-parse v-else :content="goodsDetail.content"></u-parse>
 					</view>

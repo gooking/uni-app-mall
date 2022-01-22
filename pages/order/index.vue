@@ -70,7 +70,6 @@ export default {
 				},
 			],
 			current: 0,
-			tabsHeight: 0,
 		};
 	},
 	onLoad(e) {

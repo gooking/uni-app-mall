@@ -1,10 +1,12 @@
 <template>
 	<view class="notice-detail">
 		<u-empty v-if="!noticeDetail" mode="list" text="暂无数据" marginTop="200rpx" />
-		<u-cell :title="noticeDetail.title" :label="noticeDetail.dateAdd"></u-cell>
-		<u-line class="l"></u-line>
-		<view class="content">
-			<u-parse :content="noticeDetail.content"></u-parse>
+		<view v-if="noticeDetail">
+			<u-cell :title="noticeDetail.title" :label="noticeDetail.dateAdd"></u-cell>
+			<u-line class="l"></u-line>
+			<view class="content">
+				<u-parse :content="noticeDetail.content"></u-parse>
+			</view>
 		</view>
 	</view>
 </template>

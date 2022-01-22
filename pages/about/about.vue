@@ -57,6 +57,9 @@
 .about {
 	.content {
 		padding: 32rpx;
+		font-size: 28rpx;
+		line-height: 48rpx;
+		color: #333;
 	}
 }
 </style>

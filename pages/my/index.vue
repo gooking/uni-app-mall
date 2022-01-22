@@ -8,22 +8,22 @@
 			</view>
 		</view>
 		<view class="asset">
-			<view class='item' bindtap='goAsset'>
+			<view class='item' @click="go('/pages/my/balance')">
 				<view class="amount">{{balance}}</view>
 				<view>余额</view>
 			</view>
-			<view class='item right' bindtap='goAsset'>
+			<view class='item right' @click="go('/pages/my/balance')">
 				<view class="amount">{{freeze}}</view>
 				<view>冻结</view>
 			</view>
-			<view class='item right' bindtap='goScore'>
+			<view class='item right' @click="go('/pages/score/index')">
 				<view class="amount">{{score}}</view>
 				<view>积分</view>
 			</view>
-			<view class='item right' bindtap="gogrowth">
+			<!-- <view class='item right' bindtap="gogrowth">
 				<view class="amount">{{growth}}</view>
 				<view>成长值</view>
-			</view>
+			</view> -->
 		</view>
 		<u-line></u-line>
 		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
@@ -61,13 +61,13 @@
 		</u-grid>
 		<u-cell icon="grid" title="常用功能"></u-cell>
 		<u-grid col="4" :border="false" @click="go">
-			<u-grid-item name="0">
+			<u-grid-item name="/pages/my/balance">
 				<view class="grid_item">
 					<u-icon name="red-packet" size="52rpx"></u-icon>
 					<text class="txt">资金明细</text>
 				</view>
 			</u-grid-item>
-			<u-grid-item name="0">
+			<u-grid-item name="switchTab:/pages/coupons/index">
 				<view class="grid_item">
 					<u-icon name="red-packet-fill" size="52rpx"></u-icon>
 					<text class="txt">优惠券</text>
@@ -90,6 +90,9 @@
 		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
 		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
 		<u-cell title="当前版本" :value="version"></u-cell>
+		<view class="btn-block">
+			<u-button type="error" text="退出" @click="loginout"></u-button>
+		</view>
 	</view>
 </template>
 
@@ -148,16 +151,34 @@
 				}
 			},
 			go(url) {
-				uni.navigateTo({
-					url: url
-				})
+				if(url.indexOf('switchTab:') != -1) {
+					uni.switchTab({
+						url: url.substring(10)
+					})
+				} else {
+					uni.navigateTo({
+						url: url
+					})
+				}
 			},
 			clearStorage() {
 				uni.clearStorageSync()
 				uni.showToast({
 					title: '已清除'
 				})
+				uni.reLaunch({
+				    url: '../index/index'
+				})
 			},
+			async loginout() {
+				// https://www.yuque.com/apifm/nu0f75/mg77aq
+				await this.$wxapi.loginout(this.token)
+				this.$u.vuex('token', '')
+				this.$u.vuex('uid', '')
+				uni.reLaunch({
+				    url: '../index/index'
+				})
+			}
 		}
 	}
 </script>
@@ -336,5 +357,8 @@
 			font-size: 26rpx;
 			color: #333;
 		}
+	}
+	.btn-block {
+		padding: 32rpx;
 	}
 </style>
