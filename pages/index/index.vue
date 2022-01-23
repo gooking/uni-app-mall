@@ -1,17 +1,17 @@
 <template>
 	<view class="index">
-		<u-sticky bgColor="#00FF00"></u-sticky><!-- TODO h5 下会把内容遮住 -->
-		<view class="top-box" :style="headerMarginTopStyle">
-			<view class="t">{{ sysconfigMap.mallName }}</view>
-			<view class="search">
-				<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" :disabled="true" @click="goSearch">
-				</u-search>
+		<u-sticky bgColor="#FFFFFF" customNavHeight="0">
+			<view class="top-box" :style="headerMarginTopStyle">
+				<view class="t">{{ sysconfigMap.mallName }}</view>
+				<view class="search">
+					<u-search placeholder="输入关键词搜索" v-model="kw" :showAction="false" :disabled="true" @click="goSearch">
+					</u-search>
+				</view>
+				<!--  #ifdef  MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ -->
+				<view class="mp-btn" :style="menuButtonInfoStyle"></view>
+				<!--  #endif -->
 			</view>
-			<!--  #ifdef  MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ -->
-			<view class="mp-btn" :style="menuButtonInfoStyle"></view>
-			<!--  #endif -->
-		</view>
-
+		</u-sticky>
 		<u-cell v-if="shopInfo" icon="map" :title="shopInfo.name" value="切换门店" url="/pages/shop/select" clickable
 			isLink></u-cell>
 		<view class="swiper">
@@ -181,7 +181,7 @@
 	export default {
 		data() {
 			return {
-				headerMarginTopStyle: 'margin-top:32rpx',
+				headerMarginTopStyle: 'margin-top:0',
 				kw: '',
 				menuButtonInfoStyle: '',
 				shopInfo: undefined,
@@ -449,6 +449,7 @@
 <style scoped lang="scss">
 	.index {
 		.top-box {
+			padding: 16rpx 8rpx;
 			display: flex;
 			align-items: center;
 			background-color: #FFFFFF;

@@ -56,6 +56,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/goods/list-vop",
+		    "style": {
+				"navigationBarTitleText":"商品列表"
+		    }
+		},
+		{
 		    "path" : "pages/goods/fav",
 		    "style": {
 				"navigationBarTitleText":"我的收藏"

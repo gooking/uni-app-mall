@@ -51,6 +51,8 @@
 	export default {
 		data() {
 			return {
+				cid1: '',
+				cid2: '',
 				kw: '',
 				orderBy: '',
 				categoryId: '',
@@ -61,18 +63,19 @@
 						name: '综合',
 					},
 					{
-						code: 'addedDown',
+						code: 'winsdate_desc',
 						name: '新品',
 					},
 					{
-						code: 'ordersDown',
+						code: 'sort_totalsales15_desc',
 						name: '销售'
 					},
 					{
-						code: 'priceUp',
+						code: 'price_asc',
 						name: '价格'
 					},
 				],
+				imageDomain: undefined,
 				goods: undefined,
 				showmod: 1
 			}
@@ -88,7 +91,8 @@
 		},
 		onLoad(e) {
 			this.kw = e.kw ? e.kw : ''
-			this.categoryId = e.categoryId ? e.categoryId : ''
+			this.cid1 = e.cid1 ? e.cid1 : ''
+			this.cid2 = e.cid2 ? e.cid2 : ''
 			this._goods()
 		},
 		onShow() {
@@ -126,18 +130,25 @@
 				this._goods()
 			},
 			async _goods() {
-				// https://www.yuque.com/apifm/nu0f75/wg5t98
 				uni.showLoading({
 					title: ''
 				})
-				const res = await this.$wxapi.goodsv2({
+				// https://www.yuque.com/apifm/nu0f75/gqmtgw
+				const res = await this.$wxapi.jdvopGoodsList({
 					page: this.page,
-					k: this.kw,
-					orderBy: this.orderBy ? this.orderBy : '',
-					categoryId: this.categoryId ? this.categoryId : '',
+					keyword: this.kw,
+					sortType: this.orderBy ? this.orderBy : '',
+					cid1: this.cid1 ? this.cid1 : '',
+					cid2: this.cid2 ? this.cid2 : '',
 				})
 				uni.hideLoading()
 				if (res.code == 0) {
+					this.imageDomain = res.data.imageDomain
+					res.data.result.forEach(ele => {
+						ele.pic = this.imageDomain + ele.pic
+						ele.name = ele.skuName
+						ele.minPrice = ele.priceSale
+					})
 					if (this.page == 1) {
 						this.goods = res.data.result
 					} else {
