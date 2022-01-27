@@ -27,7 +27,7 @@
 		</view>
 		<u-line></u-line>
 		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
-		<u-grid col="3" :border="false" @click="orderGridClick">
+		<u-grid col="5" :border="false" @click="orderGridClick">
 			<u-grid-item name="0">
 				<view class="grid_item">
 					<u-icon name="rmb-circle" size="52rpx"></u-icon>
@@ -46,18 +46,18 @@
 					<text class="txt">待收货</text>
 				</view>
 			</u-grid-item>
-			<!-- <u-grid-item name="3">
+			<u-grid-item name="3">
 				<view class="grid_item">
 					<u-icon name="thumb-up" size="52rpx"></u-icon>
 					<text class="txt">待评价</text>
 				</view>
-			</u-grid-item> -->
-			<!-- <u-grid-item name="99">
+			</u-grid-item>
+			<u-grid-item name="99">
 				<view class="grid_item">
 					<u-icon name="server-man" size="52rpx"></u-icon>
 					<text class="txt">售后</text>
 				</view>
-			</u-grid-item> -->
+			</u-grid-item>
 		</u-grid>
 		<u-cell icon="grid" title="常用功能"></u-cell>
 		<u-grid col="4" :border="false" @click="go">

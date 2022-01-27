@@ -7,7 +7,7 @@
 					<image :src="item.pic" mode="aspectFill"></image>
 				</view>
 				<view class="content">
-					<view class="title u-line-2">{{ item.goodsName }}</view>
+					<view class="title u-line-3">{{ item.goodsName }}</view>
 					<view class="type">
 						<text v-for="(item2, index2) in item.sku"
 							:key="'b' + index2">{{ item2.optionName }}:{{ item2.optionValueName }}/</text>

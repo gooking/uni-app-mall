@@ -22,21 +22,31 @@
 							<view v-if="item2.property" class="type">{{ item2.property }}</view>
 						</view>
 						<view class="right">
-							<view class="price">
-								￥{{ item2.amountSingle }}
+							<view class="price-score">
+								<view v-if="item2.amountSingle" class="item"><text>¥</text>{{item2.amountSingle}}</view>
+								<view v-if="item2.score" class="item"><text>∮</text>{{item2.score}}</view>
 							</view>
 							<view class="number">x{{ item2.number }}</view>
 						</view>
 					</view>
 					<view class="total">
 						共{{ item.goodsNumber }}件商品 合计:
-						<text class="total-price">
-							￥{{ item.amountReal }}
-						</text>
+						<view class="price-score" style="display: inline-flex;">
+							<view v-if="item.amountReal" class="item"><text>¥</text>{{item.amountReal}}</view>
+							<view v-if="item.score" class="item"><text>∮</text>{{item.score}}</view>
+						</view>
 					</view>
 					<view v-if="item.status == 0" class="bottom">
 						<view class="exchange btn" @click="close(item.id)">取消订单</view>
 						<view class="evaluate btn ml24" @click="pay(index)">立即支付</view>
+					</view>
+					<view v-if="item.status > 0 && !item.isEnd" class="bottom">
+						<view v-if="item.refundStatus == 1" class="btn-box">
+							<u-button type="error" plain size="small" shape="circle" text="撤销售后" @click="refundCancel(item)"></u-button>
+						</view>
+						<view v-else class="btn-box">
+							<u-button type="error" plain size="small" shape="circle" text="退换货" @click="refund(item)"></u-button>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -68,6 +78,14 @@ export default {
 					name: '待收货',
 					status: '2'
 				},
+				{
+					name: '待评价',
+					status: '3'
+				},
+				{
+					name: '售后',
+					status: '99'
+				},
 			],
 			current: 0,
 		};
@@ -98,11 +116,17 @@ export default {
 		async getOrderList() {
 			const curTab = this.list[this.current]
 			this.orderList = null
-			// https://www.yuque.com/apifm/nu0f75/uwggsm
-			const res = await this.$wxapi.orderList({
+			const postData = {
 				token: this.token,
 				status: curTab.status
-			})
+			}
+			if(curTab.status == 99) {
+				// 售后订单
+				postData.refundStatus = 1
+				postData.status = ''
+			}
+			// https://www.yuque.com/apifm/nu0f75/uwggsm
+			const res = await this.$wxapi.orderList(postData)
 			if(res.code == 0) {
 				const goodsMap = res.data.goodsMap
 				res.data.orderList.forEach(ele => {
@@ -190,6 +214,38 @@ export default {
 				url: './detail?id=' + orderId
 			})
 		},
+		async refund(item) {
+			uni.navigateTo({
+				url: '../refund/apply?orderId=' + item.id
+			})
+		},
+		async refundCancel(item) {
+			uni.showModal({
+			    title: '请确认',
+			    content: '确定要撤销售后吗？',
+			    success: res => {
+			        if (res.confirm) {
+			            this._refundCancel(item)
+			        }
+			    }
+			});
+		},
+		async _refundCancel(item) {
+			// https://www.yuque.com/apifm/nu0f75/bq6e6r
+			const res = await this.$wxapi.refundApplyCancel(this.token, item.id)
+			if(res.code == 0) {
+				uni.showToast({
+					title: '已撤销',
+					icon: 'none'
+				})
+				this.getOrderList();
+			} else {
+				uni.showToast({
+					title: res.msg,
+					icon: 'none'
+				})
+			}
+		}
 	}
 };
 </script>
@@ -311,5 +367,8 @@ page {
 }
 .ml24 {
 	margin-left: 24rpx;
+}
+.btn-box {
+	width: 160rpx;
 }
 </style>

@@ -138,6 +138,12 @@
 		    "style": {
 				"navigationBarTitleText": "搜一搜"
 		    }
+		},
+		{
+		    "path" : "pages/refund/apply",
+		    "style": {
+				"navigationBarTitleText": "申请售后"
+		    }
 		}
     ],
 	"globalStyle": {
