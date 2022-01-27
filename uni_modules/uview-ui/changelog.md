@@ -1,3 +1,28 @@
+## 2.0.24（2022-01-25）
+# uView2.0重磅发布，利剑出鞘，一统江湖
+
+1. 修复swiper在current指定非0时缩放有误
+2. 修复u-icon添加stop属性的时候报错
+3. 优化遗留的通过正则判断rpx单位的问题
+4. 优化Layout布局 vue使用gutter时，会超出固定区域
+5. 优化search组件高度单位问题（rpx -> px）
+6. 修复u-image slot 加载和错误的图片失去了高度
+7. 修复u-index-list中footer插槽与header插槽存在性判断错误
+8. 修复部分机型下u-popup关闭时会闪烁
+9. 修复u-image在nvue-app下失去宽高
+10. 修复u-popup运行报错
+11. 修复u-tooltip报错
+12. 修复box-sizing在app下的警告
+13. 修复u-navbar在小程序中报运行时错误
+14. 其他修复
+## 2.0.23（2022-01-24）
+# uView2.0重磅发布，利剑出鞘，一统江湖
+
+1. 修复image组件在hx3.3.9的nvue下可能会显示异常的问题
+2. 修复col组件gutter参数带rpx单位处理不正确的问题
+3. 修复text组件单行时无法显示省略号的问题
+4. navbar添加titleStyle参数
+5. 升级到hx3.3.9可消除nvue下控制台样式警告的问题
 ## 2.0.22（2022-01-19）
 # uView2.0重磅发布，利剑出鞘，一统江湖
 

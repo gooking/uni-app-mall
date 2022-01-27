@@ -45,10 +45,9 @@
 				<slot name="center">
 					<text
 						class="u-line-1 u-navbar__content__title"
-						:style="{
+						:style="[{
 							width: $u.addUnit(titleWidth),
-							...$u.addStyle(titleStyle)
-						}"
+						}, $u.addStyle(titleStyle)]"
 					>{{ title }}</text>
 				</slot>
 				<view
@@ -177,7 +176,7 @@
 			&__right {
 				right: 0;
 
-				&__txet {
+				&__text {
 					font-size: 15px;
 					margin-left: 3px;
 				}
