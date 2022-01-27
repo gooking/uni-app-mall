@@ -17,12 +17,15 @@
 			<view v-for="(item, index) in goods" :key="index" class="list" @click="toDetailsTap">
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
-					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
+					<view class="goods-title u-line-3 pt16" @click="goDetail(item)">
+						<u-tag v-if="item.supplyType == 'vop_jd' || item.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
+						<text class="goods-title">{{ item.name }}</text>
+					</view>
 					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
 						color="#c95060"></u--text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
-						<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
+						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
 					</view>
 				</view>
 				
@@ -39,7 +42,7 @@
 						color="#c95060"></u--text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
-						<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
+						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
 					</view>
 				</view>
 			</view>

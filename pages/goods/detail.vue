@@ -11,7 +11,7 @@
 							<view v-if="goodsDetail.basicInfo.minPrice" class="item">
 								<text>¥</text>{{goodsDetail.basicInfo.minPrice}}</view>
 							<view v-if="goodsDetail.basicInfo.minScore" class="item">
-								<text>∮</text>{{goodsDetail.basicInfo.minScore}}</view>
+								<text><image class="score-icon" src="/static/images/score.png"></image></text>{{goodsDetail.basicInfo.minScore}}</view>
 						</view>
 						<!-- #ifdef MP -->
 						<view class="btns">
@@ -26,8 +26,9 @@
 						</view>
 						<!-- #endif -->
 					</view>
-					<view class="title">
-						{{ goodsDetail.basicInfo.name }}
+					<view class="goods-title u-line-3 pt16">
+						<u-tag v-if="goodsDetail.basicInfo.supplyType == 'vop_jd' || goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
+						<text class="goods-title">{{ goodsDetail.basicInfo.name }}</text>
 					</view>
 					<view v-if="goodsDetail.basicInfo.characteristic" class="title-sub">
 						{{ goodsDetail.basicInfo.characteristic }}

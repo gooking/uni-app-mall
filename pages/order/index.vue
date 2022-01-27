@@ -24,7 +24,7 @@
 						<view class="right">
 							<view class="price-score">
 								<view v-if="item2.amountSingle" class="item"><text>¥</text>{{item2.amountSingle}}</view>
-								<view v-if="item2.score" class="item"><text>∮</text>{{item2.score}}</view>
+								<view v-if="item2.score" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item2.score}}</view>
 							</view>
 							<view class="number">x{{ item2.number }}</view>
 						</view>
@@ -33,7 +33,7 @@
 						共{{ item.goodsNumber }}件商品 合计:
 						<view class="price-score" style="display: inline-flex;">
 							<view v-if="item.amountReal" class="item"><text>¥</text>{{item.amountReal}}</view>
-							<view v-if="item.score" class="item"><text>∮</text>{{item.score}}</view>
+							<view v-if="item.score" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.score}}</view>
 						</view>
 					</view>
 					<view v-if="item.status == 0" class="bottom">

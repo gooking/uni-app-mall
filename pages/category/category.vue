@@ -29,11 +29,14 @@
 						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx"
 							@click="goDetail(item)"></u--image>
 						<view class="goods-info">
-							<u--text class="t" :lines="3" :text="item.name" @click="goDetail(item)"></u--text>
+							<view class="goods-title u-line-3 pt16" @click="goDetail(item)">
+								<u-tag v-if="item.supplyType == 'vop_jd' || item.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
+								<text class="goods-title">{{ item.name }}</text>
+							</view>
 							<view v-if="item.numberSells" class="t2">已售:{{ item.numberSells }}</view>
 							<view class="price-score">
 								<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
-								<view v-if="item.minScore" class="item"><text>∮</text>{{item.minScore}}</view>
+								<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
 							</view>
 							<view v-if="item.supplyType != 'jdJoycityPoints'" class="addCar">
 								<u-icon v-if="item.propertyIds || item.hasAddition" name="plus-circle" color="#e64340"

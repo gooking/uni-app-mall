@@ -124,5 +124,20 @@
 			color:#aaa;
 			text-decoration:line-through
 		}
+		.score-icon {
+			width: 28rpx;
+			height: 28rpx;
+		}
+	}
+	.goods-title-tag {
+		display: inline-flex !important;
+		margin-right: 24rpx;
+	}
+	.goods-title {
+		color: #333;
+		font-size: 28rpx;
+	}
+	.pt16 {
+		padding-top: 16rpx !important;
 	}
 </style>
