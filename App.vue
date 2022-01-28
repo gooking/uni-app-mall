@@ -3,6 +3,8 @@
 	const TTAUTH = require('@/common/ttauth.js')
 	export default {
 		globalData: {
+			h5Domain: 'https://flpt.jxsupplier.com',
+			goLogin: false,
 			subDomain: 'jdjf0115',
 			merchantId: '42151',
 			version: '0.0.1',
@@ -28,7 +30,13 @@
 			if (e && e.query && e.query.inviter_id) {
 				this.$u.vuex('referrer', e.query.inviter_id)
 			}
-			this.autoLogin()
+			if (e && e.query && e.query.code) {
+				// 微信登陆
+				this.wxmpLogin(e.query.code)
+				return
+			} else {
+				this.autoLogin()
+			}
 		},
 		onHide: function() {
 			// console.log('App Hide，app不再展现在前台')
@@ -85,22 +93,66 @@
 				// 自动登陆
 				// #ifdef MP-WEIXIN
 				const isLogined = await WXAUTH.checkHasLogined()
-				if(!isLogined) {
+				if (!isLogined) {
 					await WXAUTH.authorize()
 					await WXAUTH.bindSeller()
 				}
-				// #endif
-				// #ifdef MP-TOUTIAO
-				const isLogined = await TTAUTH.checkHasLogined()
-				if(!isLogined) {
-					await TTAUTH.authorize()
-					await TTAUTH.bindSeller()
-				}
-				// #endif
 				setTimeout(() => {
 					uni.$emit('loginOK', {})
 				}, 500)
+				// #endif
+				// #ifdef MP-TOUTIAO
+				const isLogined = await TTAUTH.checkHasLogined()
+				if (!isLogined) {
+					await TTAUTH.authorize()
+					await TTAUTH.bindSeller()
+				}
+				setTimeout(() => {
+					uni.$emit('loginOK', {})
+				}, 500)
+				// #endif
+				// #ifdef H5
+				// TODO 后续需要判断是不是在微信内部打开
+				const isLogined = await this.checkHasLoginedH5()
+				if (!isLogined) {
+					// https://www.yuque.com/apifm/nu0f75/fpvc3m
+					const res = await this.$wxapi.siteStatistics()
+					const wxMpAppid = res.data.wxMpAppid
+					let _domian = this.globalData.h5Domain + '/pages/index/index'
+					_domian = encodeURIComponent(_domian)
+					console.log(_domian);
+					if (!this.globalData.goLogin) {
+						this.globalData.goLogin = true
+						window.parent.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+							wxMpAppid + '&redirect_uri=' + _domian +
+							'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+					}
+				}
+				// #endif
 			},
+			async checkHasLoginedH5() {
+				if (!this.token) {
+					return false
+				}
+				// https://www.yuque.com/apifm/nu0f75/mp9f59
+				const res = await this.$wxapi.checkToken(this.token)
+				if (res.code != 0) {
+					this.$u.vuex('token', '')
+					return false
+				}
+				return true
+			},
+			async wxmpLogin(code) {
+				// https://www.yuque.com/apifm/nu0f75/lh6cd3
+				const res = await this.$wxapi.wxmpAuth({
+					code
+				})
+				if (res.code == 0) {
+					this.$u.vuex('token', res.data.token)
+					this.$u.vuex('uid', res.data.uid)
+					this.$u.vuex('openid', res.data.openid)
+				}
+			}
 		}
 	}
 </script>
@@ -108,35 +160,43 @@
 <style lang="scss">
 	/*每个页面公共css */
 	@import "@/uni_modules/uview-ui/index.scss";
+
 	.price-score {
 		display: flex;
 		color: #e64340;
 		font-size: 38rpx;
+
 		text {
 			padding: 0 4rpx;
 			font-size: 28rpx;
 		}
+
 		.item {
 			padding: 0 8rpx;
 		}
+
 		.original {
 			margin-left: 32rpx;
-			color:#aaa;
-			text-decoration:line-through
+			color: #aaa;
+			text-decoration: line-through
 		}
+
 		.score-icon {
 			width: 28rpx;
 			height: 28rpx;
 		}
 	}
+
 	.goods-title-tag {
 		display: inline-flex !important;
 		margin-right: 24rpx;
 	}
+
 	.goods-title {
 		color: #333;
 		font-size: 28rpx;
 	}
+
 	.pt16 {
 		padding-top: 16rpx !important;
 	}

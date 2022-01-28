@@ -1,2 +1,4 @@
 .DS_Store
 .hbuilderx/
+deployh5.sh
+unpackage
