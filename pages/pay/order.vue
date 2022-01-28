@@ -262,6 +262,24 @@
 			async submit() {
 				this.canSubmit = false
 				if (!this.goodsList || this.goodsList.length == 0) {
+					this.canSubmit = true
+					return
+				}
+				// 判断余额和积分是否足够
+				if(!this.orderInfo || !this.userAmount) {
+					uni.showToast({
+						title: '请稍后',
+						icon: 'none'
+					})
+					this.canSubmit = true
+					return
+				}
+				if(this.userAmount.score < this.orderInfo.score) {
+					uni.showToast({
+						title: '可用积分不足',
+						icon: 'none'
+					})
+					this.canSubmit = true
 					return
 				}
 				// https://www.yuque.com/apifm/nu0f75/qx4w98
@@ -318,10 +336,43 @@
 					// #ifdef MP-WEIXIN
 					wxpay.wxpay('order', needPay, orderInfo.id, '订单列表页面路径')
 					// #endif
-					// #ifndef MP-WEIXIN
-					console.log('跳转到订单列表');
-					uni.redirectTo({
-						url: "../order/index?status=0"
+					// #ifdef H5
+					// TODO 需要区分是公众号支付还是h5支付
+					// https://www.yuque.com/apifm/nu0f75/mghxuo
+					const res = await this.$wxapi.wxpayJsapi({
+						token: this.token,
+						money: needPay,
+						remark: '支付订单 ：' + orderInfo.id,
+						payName: '支付订单 ：' + orderInfo.id,
+						nextAction: `{type: 0, id: ${orderInfo.id}}`
+					})
+					if(res.code != 0) {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						})
+						uni.redirectTo({
+							url: "../order/index?status=0"
+						})
+						return
+					}
+					window.WeixinJSBridge.invoke(
+					  'getBrandWCPayRequest', {
+						'appId': res.data.appid,
+						'timeStamp': res.data.timeStamp,
+						'nonceStr': res.data.nonceStr,
+						'package': 'prepay_id=' + res.data.prepayId,
+						'signType': 'MD5',
+						'paySign': res.data.sign
+					  },
+					  function(res) {
+						if (res.err_msg === 'get_brand_wcpay_request:ok') {
+						  this.change(1)
+						} else {
+							uni.redirectTo({
+								url: "../order/index?status=0"
+							})
+						}
 					})
 					// #endif
 				}

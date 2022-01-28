@@ -184,6 +184,29 @@
 
 <script>
 	const TOOLS = require('@/common/tools')
+	
+	const jweixin = require('jweixin-module')
+	jweixin.ready(() => { // 需在用户可能点击分享按钮前就先调用
+	  jweixin.updateAppMessageShareData({
+	    title: '京栖无限企福平台', // 分享标题
+	    desc: '京栖无限企福平台', // 分享描述
+	    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	    imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
+	    success: function() {
+	      // 设置成功
+	    }
+	  })
+	  jweixin.updateTimelineShareData({
+	    title: '京栖无限企福平台', // 分享标题
+	    desc: '京栖无限企福平台', // 分享描述
+	    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
+	    success: function() {
+	      // 设置成功
+	    }
+	  })
+	})
+	
 	export default {
 		data() {
 			return {
@@ -237,15 +260,16 @@
 			this._kanjiaList()
 			this._pingtuanList()
 			this._goods()
+			this.jssdkSign()
 		},
 		onShow() {
 			this.shopInfo = uni.getStorageSync('shopInfo')
 			this._goodsDynamic()
 			TOOLS.showTabBarBadge()
-			const refreshIndex = wx.getStorageSync('refreshIndex')
+			const refreshIndex = uni.getStorageSync('refreshIndex')
 			if (refreshIndex) {
 				this.onPullDownRefresh()
-				wx.removeStorageSync('refreshIndex')
+				uni.removeStorageSync('refreshIndex')
 			}
 		},
 		created() {},
@@ -270,9 +294,22 @@
 			this._kanjiaList()
 			this._pingtuanList()
 			this._goods()
-			wx.stopPullDownRefresh()
+			uni.stopPullDownRefresh()
 		},
 		methods: {
+			async jssdkSign() {
+			      const res = await this.$wxapi.jssdkSign(window.location.href)
+			      if (res.code === 0) {
+			        jweixin.config({
+			          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			          appId: res.data.appid, // 必填，公众号的唯一标识
+			          timestamp: res.data.timestamp, // 必填，生成签名的时间戳
+			          nonceStr: res.data.noncestr, // 必填，生成签名的随机串
+			          signature: res.data.sign, // 必填，签名
+			          jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的JS接口列表
+			        })
+			      }
+			    },
 			goSearch() {
 				uni.navigateTo({
 					url: '/pages/search/index'
