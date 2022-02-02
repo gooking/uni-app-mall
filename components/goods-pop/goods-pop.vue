@@ -117,7 +117,7 @@
 			// 	console.log('最新值是：'+newVal,"原来的值是："+ oldVal);
 			// },
 			goodsDetail: {
-				// deep: true,
+				deep: true,
 				immediate: true,
 				handler(newVal, oldName) {
 					this._initData()
@@ -302,17 +302,25 @@
 			},
 			goCart() {
 				this.close()
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					uni.setStorageSync('cart_tabIndex', 1)
+				}
 				uni.switchTab({
 					url: "/pages/cart/index"
 				})
 			},
 			async goodsFavCheck() {
-				// https://www.yuque.com/apifm/nu0f75/ugf7y9
-				const res = await this.$wxapi.goodsFavCheckV2({
+				const data = {
 					token: this.token,
 					type: 0,
 					goodsId: this.goodsDetail.basicInfo.id
-				})
+				}
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					data.type = 1
+					data.goodsId = this.goodsDetail.basicInfo.yyId
+				}
+				// https://www.yuque.com/apifm/nu0f75/ugf7y9
+				const res = await this.$wxapi.goodsFavCheckV2(data)
 				if (res.code == 0) {
 					this.faved = true
 				} else {
@@ -320,13 +328,18 @@
 				}
 			},
 			async addFav() {
+				const data = {
+					token: this.token,
+					type: 0,
+					goodsId: this.goodsDetail.basicInfo.id
+				}
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					data.type = 1
+					data.goodsId = this.goodsDetail.basicInfo.yyId
+				}
 				if (this.faved) {
 					// 取消收藏 https://www.yuque.com/apifm/nu0f75/zy4sil
-					const res = await this.$wxapi.goodsFavDeleteV2({
-						token: this.token,
-						type: 0,
-						goodsId: this.goodsDetail.basicInfo.id
-					})
+					const res = await this.$wxapi.goodsFavDeleteV2(data)
 					if (res.code == 0) {
 						this.faved = false
 					} else {
@@ -336,12 +349,14 @@
 						})
 					}
 				} else {
+					const extJsonStr = {
+						pic: this.goodsDetail.basicInfo.pic,
+						goodsName: this.goodsDetail.basicInfo.name,
+						supplyType: this.goodsDetail.basicInfo.supplyType
+					}
+					data.extJsonStr = JSON.stringify(extJsonStr)
 					// 加入收藏 https://www.yuque.com/apifm/nu0f75/mr1471
-					const res = await this.$wxapi.goodsFavAdd({
-						token: this.token,
-						type: 0,
-						goodsId: this.goodsDetail.basicInfo.id
-					})
+					const res = await this.$wxapi.goodsFavAdd(data)
 					if (res.code == 0) {
 						this.faved = true
 					} else {

@@ -144,6 +144,12 @@
 		    "style": {
 				"navigationBarTitleText": "申请售后"
 		    }
+		},
+		{
+		    "path" : "pages/login/login",
+		    "style": {
+				"navigationBarTitleText": "登陆"
+		    }
 		}
     ],
 	"globalStyle": {

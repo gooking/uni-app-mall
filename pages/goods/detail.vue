@@ -170,7 +170,7 @@
 					this.$u.vuex('referrer', scene.split(',')[1])
 				}
 			}
-			this._goodsDetail(e.id)
+			this._goodsDetail(e.id, e.supplyType, e.yyId)
 		},
 		onShow() {
 
@@ -185,20 +185,35 @@
 
 		},
 		methods: {
-			async _goodsDetail(goodsId) {
-				// https://www.yuque.com/apifm/nu0f75/vuml8a
-				const res = await this.$wxapi.goodsDetail(goodsId, this.token)
-				if (res.code != 0) {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					})
-					setTimeout(() => {
-						uni.navigateBack()
-					}, 3000)
-					return
+			async _goodsDetail(goodsId, supplyType, yyId) {
+				if(goodsId) {
+					// https://www.yuque.com/apifm/nu0f75/vuml8a
+					const res = await this.$wxapi.goodsDetail(goodsId, this.token)
+					if (res.code != 0) {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						})
+						setTimeout(() => {
+							uni.navigateBack()
+						}, 3000)
+						return
+					}
+					this.goodsDetail = res.data
+				} else {
+					// 不是api工厂商品
+					this.goodsDetail = {
+						basicInfo: {
+							yyId: yyId,
+							yyIdStr: yyId,
+							supplyType: supplyType,
+							pic: '',
+							name: '',
+							stores: 999999
+						},
+						pics: []
+					}
 				}
-				this.goodsDetail = res.data
 				// 检测是否收藏
 				this.goodsFavCheck()
 				this._reputationList()
@@ -226,6 +241,7 @@
 				this.goodsDetail.basicInfo.minPrice = this.jdGoodsDetail.price.priceSale
 				this.goodsDetail.basicInfo.originalPrice = this.jdGoodsDetail.price.priceJd
 				this.goodsDetail.basicInfo.name = this.jdGoodsDetail.price.skuName
+				this.goodsDetail.basicInfo.pic = this.jdGoodsDetail.imageDomain + this.jdGoodsDetail.price.pic
 				if (this.jdGoodsDetail.info.wxintroduction) {
 					this.wxintroduction = JSON.parse(this.jdGoodsDetail.info.wxintroduction)
 				}
@@ -269,17 +285,25 @@
 				this.wxintroduction = res.data.pics
 			},
 			goCart() {
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					uni.setStorageSync('cart_tabIndex', 1)
+				}
 				uni.switchTab({
 					url: "/pages/cart/index"
 				})
 			},
 			async goodsFavCheck() {
-				// https://www.yuque.com/apifm/nu0f75/ugf7y9
-				const res = await this.$wxapi.goodsFavCheckV2({
+				const data = {
 					token: this.token,
 					type: 0,
 					goodsId: this.goodsDetail.basicInfo.id
-				})
+				}
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					data.type = 1
+					data.goodsId = this.goodsDetail.basicInfo.yyId
+				}
+				// https://www.yuque.com/apifm/nu0f75/ugf7y9
+				const res = await this.$wxapi.goodsFavCheckV2(data)
 				if (res.code == 0) {
 					this.faved = true
 				} else {
@@ -287,13 +311,18 @@
 				}
 			},
 			async addFav() {
+				const data = {
+					token: this.token,
+					type: 0,
+					goodsId: this.goodsDetail.basicInfo.id
+				}
+				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+					data.type = 1
+					data.goodsId = this.goodsDetail.basicInfo.yyId
+				}
 				if (this.faved) {
 					// 取消收藏 https://www.yuque.com/apifm/nu0f75/zy4sil
-					const res = await this.$wxapi.goodsFavDeleteV2({
-						token: this.token,
-						type: 0,
-						goodsId: this.goodsDetail.basicInfo.id
-					})
+					const res = await this.$wxapi.goodsFavDeleteV2(data)
 					if (res.code == 0) {
 						this.faved = false
 					} else {
@@ -303,12 +332,14 @@
 						})
 					}
 				} else {
+					const extJsonStr = {
+						pic: this.goodsDetail.basicInfo.pic,
+						goodsName: this.goodsDetail.basicInfo.name,
+						supplyType: this.goodsDetail.basicInfo.supplyType
+					}
+					data.extJsonStr = JSON.stringify(extJsonStr)
 					// 加入收藏 https://www.yuque.com/apifm/nu0f75/mr1471
-					const res = await this.$wxapi.goodsFavAdd({
-						token: this.token,
-						type: 0,
-						goodsId: this.goodsDetail.basicInfo.id
-					})
+					const res = await this.$wxapi.goodsFavAdd(data)
 					if (res.code == 0) {
 						this.faved = true
 					} else {

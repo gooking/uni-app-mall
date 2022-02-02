@@ -170,7 +170,7 @@
 			},
 			goDetail(item) {
 				uni.navigateTo({
-					url: '/pages/goods/detail?id=' + item.id
+					url: '/pages/goods/detail?supplyType=vop_jd&yyId=' + item.skuId
 				})
 			}
 		}

@@ -113,6 +113,11 @@
 
 		},
 		onShow() {
+			const cart_tabIndex = uni.getStorageSync('cart_tabIndex')
+			if(cart_tabIndex == 1) {
+				this.tabIndex = 1
+				uni.removeStorageSync('cart_tabIndex')
+			}
 			if(this.tabIndex == 0) {
 				this._shippingCarInfo()
 			}

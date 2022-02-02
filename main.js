@@ -18,7 +18,6 @@ App.mpType = 'app'
 
 Vue.use(uView)
 
-// WXAPI.init('tz')
 Vue.prototype.$wxapi = WXAPI
 
 // 引入uView提供的对vuex的简写法文件

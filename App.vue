@@ -7,7 +7,7 @@
 			goLogin: false,
 			subDomain: 'jdjf0115',
 			merchantId: '42151',
-			version: '0.0.1',
+			version: '0.0.2',
 			sysconfigkeys: 'mallName,shopMod,share_profile'
 		},
 		onLaunch: function() {
@@ -112,20 +112,28 @@
 				}, 500)
 				// #endif
 				// #ifdef H5
-				// TODO 后续需要判断是不是在微信内部打开
 				const isLogined = await this.checkHasLoginedH5()
 				if (!isLogined) {
-					// https://www.yuque.com/apifm/nu0f75/fpvc3m
-					const res = await this.$wxapi.siteStatistics()
-					const wxMpAppid = res.data.wxMpAppid
-					let _domian = this.globalData.h5Domain + '/pages/index/index'
-					_domian = encodeURIComponent(_domian)
-					console.log(_domian);
-					if (!this.globalData.goLogin) {
-						this.globalData.goLogin = true
-						window.parent.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-							wxMpAppid + '&redirect_uri=' + _domian +
-							'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+					// 判断是普通浏览器还是微信浏览器
+					const ua = window.navigator.userAgent.toLowerCase();
+					console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+						// https://www.yuque.com/apifm/nu0f75/fpvc3m
+						const res = await this.$wxapi.siteStatistics()
+						const wxMpAppid = res.data.wxMpAppid
+						let _domian = this.globalData.h5Domain + '/pages/index/index'
+						_domian = encodeURIComponent(_domian)
+						console.log(_domian);
+						if (!this.globalData.goLogin) {
+							this.globalData.goLogin = true
+							window.parent.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+								wxMpAppid + '&redirect_uri=' + _domian +
+								'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+						}
+					} else {
+						uni.navigateTo({
+							url: "/pages/login/login"
+						})
 					}
 				}
 				// #endif
@@ -151,6 +159,9 @@
 					this.$u.vuex('token', res.data.token)
 					this.$u.vuex('uid', res.data.uid)
 					this.$u.vuex('openid', res.data.openid)
+					setTimeout(() => {
+						uni.$emit('loginOK', {})
+					}, 500)
 				}
 			}
 		}

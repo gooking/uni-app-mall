@@ -1,7 +1,8 @@
 <template>
 	<view>
+		<page-box-empty v-if="!goods || goods.length == 0" title="暂无收藏记录" sub-title="可以去看看有那些想买的～" :show-btn="true" />
 		<view class="goods-container">
-			<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
+			<view v-for="(item, index) in goods" :key="index" class="goods-box">
 				<view class="img-box">
 					<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				</view>
@@ -49,6 +50,20 @@
 					page: this.page
 				})
 				if (res.code == 0) {
+					res.data.forEach(ele => {
+						if(ele.json) {
+							const jsonStr = JSON.parse(ele.json)
+							if(jsonStr.pic) {
+								ele.pic = jsonStr.pic
+							}
+							if(jsonStr.goodsName) {
+								ele.goodsName = jsonStr.goodsName
+							}
+							if(jsonStr.supplyType) {
+								ele.supplyType = jsonStr.supplyType
+							}
+						}
+					})
 					if (this.page == 1) {
 						this.goods = res.data
 					} else {
@@ -77,11 +92,13 @@
 				})
 			},
 			async _deleteFav(index, item) {
-				// https://www.yuque.com/apifm/nu0f75/zy4sil
-				const res = await this.$wxapi.goodsFavDeleteV2({
+				const data = {
 					token: this.token,
-					id: item.id
-				})
+					id: item.id,
+					type: item.type
+				}
+				// https://www.yuque.com/apifm/nu0f75/zy4sil
+				const res = await this.$wxapi.goodsFavDeleteV2(data)
 				if(res.code == 0) {
 					uni.showToast({
 						title: '取消收藏'
@@ -95,9 +112,15 @@
 				}
 			},
 			goDetail(item) {
-				uni.navigateTo({
-					url: '/pages/goods/detail?id=' + item.goodsId
-				})
+				if(item.supplyType == 'vop_jd') {
+					uni.navigateTo({
+						url: '/pages/goods/detail?supplyType=vop_jd&yyId=' + item.goodsId
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/goods/detail?id=' + item.goodsId
+					})
+				}
 			}
 		}
 	}

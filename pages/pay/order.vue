@@ -337,43 +337,68 @@
 					wxpay.wxpay('order', needPay, orderInfo.id, '订单列表页面路径')
 					// #endif
 					// #ifdef H5
-					// TODO 需要区分是公众号支付还是h5支付
-					// https://www.yuque.com/apifm/nu0f75/mghxuo
-					const res = await this.$wxapi.wxpayJsapi({
-						token: this.token,
-						money: needPay,
-						remark: '支付订单 ：' + orderInfo.id,
-						payName: '支付订单 ：' + orderInfo.id,
-						nextAction: `{type: 0, id: ${orderInfo.id}}`
-					})
-					if(res.code != 0) {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
+					const ua = window.navigator.userAgent.toLowerCase();
+					console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+						// 微信内置浏览器支付，调用 JSAPI 支付
+						// https://www.yuque.com/apifm/nu0f75/mghxuo
+						const res = await this.$wxapi.wxpayJsapi({
+							token: this.token,
+							money: needPay,
+							remark: '支付订单 ：' + orderInfo.id,
+							payName: '支付订单 ：' + orderInfo.id,
+							nextAction: `{type: 0, id: ${orderInfo.id}}`
 						})
-						uni.redirectTo({
-							url: "../order/index?status=0"
-						})
-						return
-					}
-					window.WeixinJSBridge.invoke(
-					  'getBrandWCPayRequest', {
-						'appId': res.data.appid,
-						'timeStamp': res.data.timeStamp,
-						'nonceStr': res.data.nonceStr,
-						'package': 'prepay_id=' + res.data.prepayId,
-						'signType': 'MD5',
-						'paySign': res.data.sign
-					  },
-					  function(res) {
-						if (res.err_msg === 'get_brand_wcpay_request:ok') {
-						  this.change(1)
-						} else {
+						if(res.code != 0) {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							})
 							uni.redirectTo({
 								url: "../order/index?status=0"
 							})
+							return
 						}
-					})
+						window.WeixinJSBridge.invoke(
+						  'getBrandWCPayRequest', {
+							'appId': res.data.appid,
+							'timeStamp': res.data.timeStamp,
+							'nonceStr': res.data.nonceStr,
+							'package': 'prepay_id=' + res.data.prepayId,
+							'signType': 'MD5',
+							'paySign': res.data.sign
+						  },
+						  function(res) {
+							if (res.err_msg === 'get_brand_wcpay_request:ok') {
+							  this.change(1)
+							} else {
+								uni.redirectTo({
+									url: "../order/index?status=0"
+								})
+							}
+						})
+					} else {
+						// 普通浏览器，调用h5支付
+						// https://www.yuque.com/apifm/nu0f75/pv7gll
+						const res = await this.$wxapi.wxpayH5({
+							token: this.token,
+							money: needPay,
+							remark: '支付订单 ：' + orderInfo.id,
+							payName: '支付订单 ：' + orderInfo.id,
+							nextAction: `{type: 0, id: ${orderInfo.id}}`
+						})
+						if(res.code != 0) {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							})
+							uni.redirectTo({
+								url: "../order/index?status=0"
+							})
+							return
+						}
+						location.href = res.data.mweb_url
+					}
 					// #endif
 				}
 			},

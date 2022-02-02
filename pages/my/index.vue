@@ -94,6 +94,12 @@
 			<u-button type="error" text="退出" @click="loginout"></u-button>
 		</view>
 	</view>
+	<view v-else>
+		<u-empty mode="permission" text="请先登陆" marginTop="88rpx"></u-empty>
+		<view class="submit">
+			<u-button type="success" @click="goLogin">立即登陆</u-button>
+		</view>
+	</view>
 </template>
 
 <script>
@@ -113,9 +119,9 @@
 		},
 		onLoad() {
 			this.version = getApp().globalData.version
-			this._userDetail()
 		},
 		onShow() {
+			this._userDetail()
 			this._getUserAmount()
 		},
 		methods: {
@@ -178,6 +184,9 @@
 				uni.reLaunch({
 				    url: '../index/index'
 				})
+			},
+			goLogin() {
+				getApp().autoLogin()
 			}
 		}
 	}
@@ -359,6 +368,9 @@
 		}
 	}
 	.btn-block {
+		padding: 32rpx;
+	}
+	.submit {
 		padding: 32rpx;
 	}
 </style>
