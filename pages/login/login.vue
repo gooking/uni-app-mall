@@ -13,6 +13,10 @@
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">登陆</u-button>
+			<view class="text-btns">
+				<view @click="goReg">注册新账户</view>
+				<view @click="goResetpwd">忘记登陆密码？</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -60,6 +64,7 @@
 			// https://www.yuque.com/apifm/nu0f75/xrg5e0
 			async submit() {
 				const res = await this.$wxapi.login_mobile(this.form.mobile, this.form.pwd, 'tianshitongzhuang', 'h5')
+				console.log(res);
 				if(res.code != 0) {
 					uni.showToast({
 						title: res.msg,
@@ -73,7 +78,17 @@
 					uni.$emit('loginOK', {})
 					uni.navigateBack()
 				}, 500)
-			}
+			},
+			goReg() {
+				uni.redirectTo({
+					url: '/pages/login/reg'
+				})
+			},
+			goResetpwd() {
+				uni.navigateTo({
+					url: '/pages/login/resetpwd'
+				})
+			},
 		}
 	}
 </script>
@@ -83,5 +98,12 @@
 }
 .submit {
 	padding: 32rpx;
+}
+.text-btns {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 16rpx;
+	font-size: 28rpx;
+	color: #333;
 }
 </style>

@@ -150,6 +150,18 @@
 		    "style": {
 				"navigationBarTitleText": "登陆"
 		    }
+		},
+		{
+		    "path" : "pages/login/reg",
+		    "style": {
+				"navigationBarTitleText": "注册新用户"
+		    }
+		},
+		{
+		    "path" : "pages/login/resetpwd",
+		    "style": {
+				"navigationBarTitleText": "忘记密码找回"
+		    }
 		}
     ],
 	"globalStyle": {
