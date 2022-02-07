@@ -116,9 +116,41 @@
 		    }
 		},
 		{
-		    "path" : "pages/my/balance",
+		    "path" : "pages/asset/balance",
 		    "style": {
 				"navigationBarTitleText": "我的资产"
+		    }
+		},
+		{
+		    "path" : "pages/asset/cashlog",
+		    "style": {
+				"navigationBarTitleText": "资金明细",
+				"enablePullDownRefresh": true
+		    }
+		},
+		{
+		    "path" : "pages/asset/recharge",
+		    "style": {
+				"navigationBarTitleText": "在线充值"
+		    }
+		},
+		{
+		    "path" : "pages/asset/bindCard",
+		    "style": {
+				"navigationBarTitleText": "绑定提现银行卡"
+		    }
+		},
+		{
+		    "path" : "pages/asset/widthdraw",
+		    "style": {
+				"navigationBarTitleText": "申请提现"
+		    }
+		},
+		{
+		    "path" : "pages/asset/withdrawlog",
+		    "style": {
+				"navigationBarTitleText": "提现记录",
+				"enablePullDownRefresh": true
 		    }
 		},
 		{

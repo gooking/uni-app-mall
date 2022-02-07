@@ -177,7 +177,6 @@
 						})
 					})
 				}
-				console.log(this.areaCode);
 				if(this.level == 3) {
 					if (this.areaCode.length == 3) {
 						await this.setProvince("", this.areaCode[0]);

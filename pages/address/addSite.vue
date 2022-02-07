@@ -76,7 +76,6 @@ export default {
 		this.$refs.uForm.setRules(this.rules);
 	},
 	onLoad(e) {
-		console.log(e);
 		if(e.id) {
 			this._addressDetail(e.id)
 		}

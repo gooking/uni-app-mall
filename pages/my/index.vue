@@ -8,11 +8,11 @@
 			</view>
 		</view>
 		<view class="asset">
-			<view class='item' @click="go('/pages/my/balance')">
+			<view class='item' @click="go('/pages/asset/balance')">
 				<view class="amount">{{balance}}</view>
 				<view>余额</view>
 			</view>
-			<view class='item right' @click="go('/pages/my/balance')">
+			<view class='item right' @click="go('/pages/asset/balance')">
 				<view class="amount">{{freeze}}</view>
 				<view>冻结</view>
 			</view>
@@ -61,7 +61,7 @@
 		</u-grid>
 		<u-cell icon="grid" title="常用功能"></u-cell>
 		<u-grid col="4" :border="false" @click="go">
-			<u-grid-item name="/pages/my/balance">
+			<u-grid-item name="/pages/asset/cashlog">
 				<view class="grid_item">
 					<u-icon name="red-packet" size="52rpx"></u-icon>
 					<text class="txt">资金明细</text>
