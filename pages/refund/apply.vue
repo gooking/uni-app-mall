@@ -2,7 +2,13 @@
 	<view>
 		<view class="form-box">
 			<u--form ref="uForm" label-width="130rpx" :model="form">
-				<u-form-item label="售后类型" prop="type" required>
+				<u-form-item v-if="orderType == 5" label="售后类型" prop="type" required>
+					<u-radio-group v-model="form.type" placement="row">
+						<u-radio v-for="item in supportAfsTypeList" :key="item" :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" :label="item == 10 ? '退货' : '换货'" :name="item">
+						</u-radio>
+					</u-radio-group>
+				</u-form-item>
+				<u-form-item v-else label="售后类型" prop="type" required>
 					<u-radio-group v-model="form.type" placement="row">
 						<u-radio :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" label="仅退款" :name="0">
 						</u-radio>
@@ -13,7 +19,7 @@
 					</u-radio-group>
 				</u-form-item>
 				<u-cell v-if="orderSet && orderSet.afterSaleAddress && (form.type == 1 || form.type == 2)" title="寄回地址" required :label="orderSet.afterSaleAddress" value="复制" isLink clickable @click="cp(orderSet.afterSaleAddress)"></u-cell>
-				<u-form-item label="收货情况" prop="logisticsStatus" required>
+				<u-form-item v-if="orderType != 5" label="收货情况" prop="logisticsStatus" required>
 					<u-radio-group v-model="form.logisticsStatus" placement="row">
 						<u-radio :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" label="未收到货" :name="0">
 						</u-radio>
@@ -21,7 +27,12 @@
 						</u-radio>
 					</u-radio-group>
 				</u-form-item>
-				<u-form-item label="售后原因" prop="reason" required>
+				<u-form-item v-if="orderType == 5" label="售后原因" prop="reason" required>
+					<u-radio-group v-model="form.reason" placement="column">
+						<u-radio v-for="(item,index) in joycityPointsSearchAfsApplyReasonList" :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" :label="item.applyReasonName" :name="item.applyReasonName"></u-radio>
+					</u-radio-group>
+				</u-form-item>
+				<u-form-item v-else label="售后原因" prop="reason" required>
 					<u-radio-group v-model="form.reason" placement="column">
 						<u-radio v-for="(item,index) in reasons" :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" :label="item" :name="item"></u-radio>
 					</u-radio-group>
@@ -100,16 +111,26 @@
 					"发票问题",
 				],
 				pics: [],
-				orderSet: undefined
+				orderSet: undefined,
+				orderType: 0, // 0 普通订单 1 周期订单 2 扫码点餐订单 3 京东vop订单 4 从区管进货 5 京东权益订单
+				supportAfsTypeList: undefined,
+				joycityPointsSearchAfsApplyReasonList: undefined,
+				afsGoodsId: undefined
 			};
 		},
 		onReady() {
 			this.$refs.uForm.setRules(this.rules);
 		},
 		onLoad(e) {
+			this.orderType = uni.getStorageSync('orderType')
+			this.supportAfsTypeList = uni.getStorageSync('supportAfsTypeList') // 京东权益订单，支持的售后类型列表 10-退货 20-换货
+			this.afsGoodsId = uni.getStorageSync('afsGoodsId') // 京东权益订单，售后的商品编号
 			this.form.orderId = e.orderId
-			this.form.reason = this.reasons[0]
 			this._orderSet()
+			if(this.orderType == 5) {
+				this.form.type = this.supportAfsTypeList[0]
+				this._joycityPointsSearchAfsApplyReasonList()
+			}
 		},
 		mounted() {},
 		methods: {
@@ -118,6 +139,22 @@
 				if(res.code == 0) {
 					this.orderSet = res.data
 				}
+			},
+			async _joycityPointsSearchAfsApplyReasonList(afsType) {
+				const res = await this.$wxapi.joycityPointsSearchAfsApplyReasonList({
+					token: this.token,
+					afsType: this.form.type,
+					orderId: this.form.orderId,
+					goodsId: this.afsGoodsId
+				})
+				if(res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				this.joycityPointsSearchAfsApplyReasonList = res.data
 			},
 			// 删除图片
 			deletePic(event) {

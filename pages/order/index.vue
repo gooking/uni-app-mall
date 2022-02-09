@@ -280,6 +280,40 @@
 				})
 			},
 			async refund(item) {
+				if(item.type == 5) {
+					// 判断是否可售后
+					const goodsId = item.goodsList[0].goodsIdStr
+					uni.setStorageSync('afsGoodsId', goodsId) // 京东权益订单，售后的商品编号
+					const res = await this.$wxapi.joycityPointsCanApplyAfterSale({
+						token: this.token,
+						orderId: item.id,
+						goodsId
+					})
+					if(res.code != 0) {
+						uni.showToast({
+							title: res.msg,
+							icon: 'none'
+						})
+						return
+					}
+					if(!res.data.canApply) {
+						uni.showToast({
+							title: res.data.cannotApplyTip,
+							icon: 'none'
+						})
+						return
+					}
+					if(res.data.supportMethod == 2) {
+						uni.showToast({
+							title: '请联系客服进行售后:' + res.data.afsHotLine,
+							icon: 'none'
+						})
+						return
+					}
+					// 可申请的售后类型保存到 storage
+					uni.setStorageSync('supportAfsTypeList', res.data.supportAfsTypeList) // 支持的售后类型列表 10-退货 20-换货
+				}
+				uni.setStorageSync('orderType', item.type)
 				uni.navigateTo({
 					url: '../refund/apply?orderId=' + item.id
 				})

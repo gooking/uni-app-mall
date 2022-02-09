@@ -5,8 +5,8 @@
 		globalData: {
 			h5Domain: 'https://flpt.jxsupplier.com',
 			goLogin: false,
-			subDomain: 'tz', // jdjf0115
-			merchantId: '951', // 42151
+			subDomain: 'jdjf0115', // jdjf0115
+			merchantId: '42151', // 42151
 			version: '0.0.2',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min'
 		},
@@ -184,6 +184,8 @@
 
 		.item {
 			padding: 0 8rpx;
+			display: flex;
+			align-items: center;
 		}
 
 		.original {
