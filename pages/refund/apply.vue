@@ -3,7 +3,7 @@
 		<view class="form-box">
 			<u--form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item v-if="orderType == 5" label="售后类型" prop="type" required>
-					<u-radio-group v-model="form.type" placement="row">
+					<u-radio-group v-model="form.type" placement="row" @change="typeChange">
 						<u-radio v-for="item in supportAfsTypeList" :key="item" :customStyle="{marginBottom: '8rpx', marginRight: '8rpx'}" :label="item == 10 ? '退货' : '换货'" :name="item">
 						</u-radio>
 					</u-radio-group>
@@ -93,6 +93,7 @@
 					type: 0,
 					logisticsStatus: 0,
 					orderId: undefined,
+					reasonId: undefined,
 					reason: undefined,
 					remark: undefined,
 				},
@@ -140,6 +141,10 @@
 					this.orderSet = res.data
 				}
 			},
+			typeChange(e) {
+				this._joycityPointsSearchAfsApplyReasonList()
+				this.form.reason = null
+			},
 			async _joycityPointsSearchAfsApplyReasonList(afsType) {
 				const res = await this.$wxapi.joycityPointsSearchAfsApplyReasonList({
 					token: this.token,
@@ -152,6 +157,7 @@
 						title: res.msg,
 						icon: 'none'
 					})
+					this.joycityPointsSearchAfsApplyReasonList = null
 					return
 				}
 				this.joycityPointsSearchAfsApplyReasonList = res.data
@@ -165,6 +171,27 @@
 				this.pics = this.pics.concat(event.file)
 			},
 			submit() {
+				if(this.orderType == 5) {
+					// 京东权益订单
+					const reasonItem = this.joycityPointsSearchAfsApplyReasonList.find(ele => {
+						return ele.applyReasonName == this.form.reason
+					})
+					if(!reasonItem) {
+						uni.showToast({
+							title: '请选择售后原因',
+							icon: 'none'
+						})
+						return
+					}
+					this.form.reasonId = reasonItem.applyReasonId
+					if(!this.form.remark) {
+						uni.showToast({
+							title: '备注信息不能为空',
+							icon: 'none'
+						})
+						return
+					}
+				}
 				this.$refs.uForm.validate().then(res => {
 					this._submit()
 				}).catch(errors => {

@@ -150,11 +150,12 @@
 				}
 				// https://www.yuque.com/apifm/nu0f75/iu8731
 				const res = await this.$wxapi.resetPwdUseMobileCode(this.form.mobile, this.form.pwd, this.form.code)
+				if(res.code == 10000) {
+					uni.$u.toast('当前用户不存在，请先注册');
+					return
+				}
 				if(res.code != 0) {
-					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					})
+					uni.$u.toast(res.msg);
 					return
 				}
 				uni.navigateBack()
