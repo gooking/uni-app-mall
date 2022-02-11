@@ -1,6 +1,9 @@
 <template>
 	<view class="index">
 		<u-sticky bgColor="#FFFFFF" customNavHeight="0">
+			<!--  #ifdef  APP-PLUS -->
+			<view class="app-status-bar-height"></view>
+			<!--  #endif -->
 			<view class="top-box" :style="headerMarginTopStyle">
 				<view class="t">{{ sysconfigMap.mallName }}</view>
 				<view class="search">
@@ -184,29 +187,32 @@
 
 <script>
 	const TOOLS = require('@/common/tools')
-	
-	const jweixin = require('jweixin-module')
-	jweixin.ready(() => { // 需在用户可能点击分享按钮前就先调用
-	  jweixin.updateAppMessageShareData({
-	    title: '京栖无限企福平台', // 分享标题
-	    desc: '京栖无限企福平台', // 分享描述
-	    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-	    imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
-	    success: function() {
-	      // 设置成功
-	    }
-	  })
-	  jweixin.updateTimelineShareData({
-	    title: '京栖无限企福平台', // 分享标题
-	    desc: '京栖无限企福平台', // 分享描述
-	    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-		imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
-	    success: function() {
-	      // 设置成功
-	    }
-	  })
-	})
-	
+	// #ifdef H5
+	const ua = window.navigator.userAgent.toLowerCase()
+	if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+		const jweixin = require('jweixin-module')
+		jweixin.ready(() => { // 需在用户可能点击分享按钮前就先调用
+		  jweixin.updateAppMessageShareData({
+		    title: '京栖无限企福平台', // 分享标题
+		    desc: '京栖无限企福平台', // 分享描述
+		    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		    imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
+		    success: function() {
+		      // 设置成功
+		    }
+		  })
+		  jweixin.updateTimelineShareData({
+		    title: '京栖无限企福平台', // 分享标题
+		    desc: '京栖无限企福平台', // 分享描述
+		    link: 'https://flpt.jxsupplier.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			imgUrl: 'https://dcdn.it120.cc/2022/01/26/02235d13-1ea8-4cd1-af00-1b219b5b07f9.jpeg', // 分享图标
+		    success: function() {
+		      // 设置成功
+		    }
+		  })
+		})
+	}
+	// #endif
 	export default {
 		data() {
 			return {
@@ -485,11 +491,20 @@
 				uni.navigateTo({
 					url: '/pages/goods/detail?id=' + item.id
 				})
+			},
+			goCoupons() {
+				uni.switchTab({
+					url: '/pages/coupons/index'
+				})
 			}
 		}
 	}
 </script>
 <style scoped lang="scss">
+	.app-status-bar-height {
+		width: 100%;
+		height: var(--status-bar-height);
+	}
 	.index {
 		.top-box {
 			padding: 16rpx 8rpx;

@@ -1,7 +1,7 @@
 {
-    "name" : "tianshitongzhuang",
+    "name" : "天使童装",
     "appid" : "__UNI__151F11E",
-    "description" : "多平台快速开发的UI框架",
+    "description" : "天使童装",
     "versionName" : "0.0.1",
     "versionCode" : 1,
     "transformPx" : false,
@@ -25,8 +25,8 @@
         "compilerVersion" : 3,
         "modules" : {
             "Webview-x5" : {},
-            "Push" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "Payment" : {}
         },
         "distribute" : {
             "android" : {
@@ -44,6 +44,7 @@
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
                     "<uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
                     "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
@@ -54,12 +55,18 @@
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ]
             },
             "ios" : {
-                "idfa" : false
+                "idfa" : false,
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:static-80ab3332-a88f-4a44-8486-06fa7fc6392f.bspapp.com" ]
+                    }
+                }
             },
             "sdkConfigs" : {
                 "ad" : {},
@@ -70,6 +77,13 @@
                     "amap" : {
                         "appkey_ios" : "f9548782d26ef6412d9db1dd37220394",
                         "appkey_android" : "0550ad69eb6ffc604b53a5e79fc7b9ff"
+                    }
+                },
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "1",
+                        "UniversalLinks" : "https://static-80ab3332-a88f-4a44-8486-06fa7fc6392f.bspapp.com/uni-universallinks/__UNI__151F11E/"
                     }
                 }
             },
@@ -167,5 +181,6 @@
         "devServer" : {
             "https" : false
         }
-    }
+    },
+    "_spaceID" : "80ab3332-a88f-4a44-8486-06fa7fc6392f"
 }

@@ -506,8 +506,8 @@
 					pic: this.goodsDetail.basicInfo.pic,
 					price: this.goodsDetail.basicInfo.minPrice,
 					score: this.goodsDetail.basicInfo.minScore,
-					sku: [], // optionId optionName optionValueId optionValueName
-					additions: [], // id name pid pname price
+					sku, // optionId optionName optionValueId optionValueName
+					additions: goodsAddition, // id name pid pname price
 					goodsType
 				}]
 				uni.setStorageSync('goodsList', goodsList)

@@ -160,6 +160,19 @@
 		    }
 		},
 		{
+		    "path" : "pages/score/logs",
+		    "style": {
+				"navigationBarTitleText": "积分明细",
+				"enablePullDownRefresh": true
+		    }
+		},
+		{
+		    "path" : "pages/score/excharge",
+		    "style": {
+				"navigationBarTitleText": "积分券兑换积分"
+		    }
+		},
+		{
 		    "path" : "pages/coupons/index",
 		    "style": {
 				"navigationBarTitleText": "优惠券"

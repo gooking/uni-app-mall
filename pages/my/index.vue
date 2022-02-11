@@ -186,7 +186,14 @@
 				})
 			},
 			goLogin() {
+				// #ifdef MP || H5
 				getApp().autoLogin()
+				// #endif
+				// #ifndef MP || H5
+				uni.navigateTo({
+					url: '/pages/login/login'
+				})
+				// #endif
 			}
 		}
 	}

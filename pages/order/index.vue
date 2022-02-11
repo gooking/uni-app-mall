@@ -272,6 +272,20 @@
 						location.href = res.data.mweb_url
 					}
 					// #endif
+					// #ifdef APP-PLUS
+					uni.requestPayment({
+						provider: 'wxpay', // alipay wxpay baidu appleiap
+						orderInfo: { // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
+							
+						},
+						success: res => {
+							console.log(res);
+						},
+						fail: err => {
+							console.error(err);
+						}
+					})
+					// #endif
 				}
 			},
 			godetail(orderId) {
