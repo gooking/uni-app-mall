@@ -273,6 +273,16 @@
 					}
 					// #endif
 					// #ifdef APP-PLUS
+					// TODO SDK 地址
+					const res = await this.$wxapi.wxpayApp({
+						token: this.token,
+						appid: getApp().globalData.wxpayOpenAppId,
+						money: needPay,
+						remark: '支付订单 ：' + orderInfo.id,
+						payName: '支付订单 ：' + orderInfo.id,
+						nextAction: `{type: 0, id: ${orderInfo.id}}`
+					})
+					console.log(res);
 					uni.requestPayment({
 						provider: 'wxpay', // alipay wxpay baidu appleiap
 						orderInfo: { // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
@@ -282,7 +292,7 @@
 							console.log(res);
 						},
 						fail: err => {
-							console.error(err);
+							console.log(err);
 						}
 					})
 					// #endif

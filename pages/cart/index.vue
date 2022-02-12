@@ -1,6 +1,6 @@
 <template>
 	<view class="cart">
-		<u-tabs :list="tabs" :current="tabIndex" lineColor="#e64340" @click="tabclick"></u-tabs>
+		<u-tabs v-if="sysconfigMap.shopping_cart_vop_open == '1'" :list="tabs" :current="tabIndex" lineColor="#e64340" @click="tabclick"></u-tabs>
 		<page-box-empty v-if="tabIndex == 0 && (!shippingCarInfo || shippingCarInfo.number == 0)" title="您还没有挑选任何商品" sub-title="可以去看看有那些想买的～" :show-btn="true" />
 		<page-box-empty v-if="tabIndex == 1 && (!jdvopCartInfo || jdvopCartInfo.number == 0)" title="您还没有挑选任何商品" sub-title="可以去看看有那些想买的～" :show-btn="true" />
 		<view v-if="tabIndex == 0 && shippingCarInfo" class="order">

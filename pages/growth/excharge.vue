@@ -2,8 +2,8 @@
 	<view>
 		<view class="form-box">
 			<u--form ref="uForm" label-width="130rpx" :model="form">
-				<u-form-item label="券号" prop="number" required>
-					<u--input v-model="form.number" clearable focus placeholder="请输入积分券号码"></u--input>
+				<u-form-item label="消耗积分" prop="deductionScore" required>
+					<u--input v-model="form.deductionScore" type="number" clearable focus placeholder="请输入积分数量"></u--input>
 				</u-form-item>
 			</u--form>
 		</view>
@@ -18,15 +18,16 @@
 		data() {
 			return {
 				rules: {
-					number: [{
+					deductionScore: [{
 						required: true,
+						type: 'number',
 						message: '不能为空',
 						// 可以单个或者同时写两个触发验证方式 
 						trigger: ['change', 'blur'],
 					}],
 				},
 				form: {
-					number: undefined
+					deductionScore: undefined
 				},
 			}
 		},
@@ -57,8 +58,8 @@
 				})
 			},
 			async _submit() {
-				// https://www.yuque.com/apifm/nu0f75/pdg67o
-				const res = await this.$wxapi.scoreExchange(this.token, this.form.number)
+				// https://www.yuque.com/apifm/nu0f75/sq3tzp
+				const res = await this.$wxapi.exchangeScoreToGrowth(this.token, this.form.deductionScore)
 				console.log(res);
 				if(res.code != 0) {
 					uni.showToast({

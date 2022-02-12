@@ -193,6 +193,12 @@
 			},
 			// 弹出商品购买弹窗
 			async _showGoodsPop(item) {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				// https://www.yuque.com/apifm/nu0f75/vuml8a
 				const res = await this.$wxapi.goodsDetail(item.id, this.token)
 				if (res.code != 0) {
@@ -206,6 +212,12 @@
 				this.showGoodsPop = true
 			},
 			async addCart(item) {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				let res
 				if(item.supplyType == 'vop_jd') {
 					// https://www.yuque.com/apifm/nu0f75/yum741

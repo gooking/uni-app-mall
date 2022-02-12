@@ -173,6 +173,25 @@
 		    }
 		},
 		{
+		    "path" : "pages/growth/index",
+		    "style": {
+				"navigationBarTitleText": "我的成长值"
+		    }
+		},
+		{
+		    "path" : "pages/growth/logs",
+		    "style": {
+				"navigationBarTitleText": "成长值明细",
+				"enablePullDownRefresh": true
+		    }
+		},
+		{
+		    "path" : "pages/growth/excharge",
+		    "style": {
+				"navigationBarTitleText": "积分兑换成长值"
+		    }
+		},
+		{
 		    "path" : "pages/coupons/index",
 		    "style": {
 				"navigationBarTitleText": "优惠券"

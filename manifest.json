@@ -82,7 +82,7 @@
                 "payment" : {
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "1",
+                        "appid" : "wx9b04553fd8c7b9c3",
                         "UniversalLinks" : "https://static-80ab3332-a88f-4a44-8486-06fa7fc6392f.bspapp.com/uni-universallinks/__UNI__151F11E/"
                     }
                 }

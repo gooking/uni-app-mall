@@ -311,6 +311,12 @@
 				}
 			},
 			async addFav() {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				const data = {
 					token: this.token,
 					type: 0,

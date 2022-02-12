@@ -20,10 +20,10 @@
 				<view class="amount">{{score}}</view>
 				<view>积分</view>
 			</view>
-			<!-- <view class='item right' bindtap="gogrowth">
+			<view v-if="sysconfigMap.open_growth == '1'" class='item right' @click="go('/pages/growth/index')">
 				<view class="amount">{{growth}}</view>
 				<view>成长值</view>
-			</view> -->
+			</view>
 		</view>
 		<u-line></u-line>
 		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
@@ -186,8 +186,18 @@
 				})
 			},
 			goLogin() {
-				// #ifdef MP || H5
+				// #ifdef MP
 				getApp().autoLogin()
+				// #endif
+				// #ifdef H5
+				const ua = window.navigator.userAgent.toLowerCase();
+				if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+					getApp().autoLogin()
+				} else {
+					uni.navigateTo({
+						url: '/pages/login/login'
+					})
+				}
 				// #endif
 				// #ifndef MP || H5
 				uni.navigateTo({

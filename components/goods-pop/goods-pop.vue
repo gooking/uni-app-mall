@@ -328,6 +328,12 @@
 				}
 			},
 			async addFav() {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				const data = {
 					token: this.token,
 					type: 0,
@@ -399,6 +405,12 @@
 				return true
 			},
 			async addCart() {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				if (!this.checkOk()) {
 					return
 				}
@@ -457,6 +469,12 @@
 				TOOLS.showTabBarBadge()
 			},
 			async tobuy() {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				if (!this.checkOk()) {
 					return
 				}

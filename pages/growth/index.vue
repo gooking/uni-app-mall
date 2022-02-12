@@ -1,14 +1,13 @@
 <template>
 	<view>
 		<view class="score">
-		  <view>可用积分</view>
+		  <view>当前成长值</view>
 		  <view class="price-score">
-		  	<view class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{ score }}</view>
+		  	<view class="item"><text>€</text>{{ growth }}</view>
 		  </view>
 		</view>
-		<u-cell title="积分券兑换积分" isLink url="/pages/score/excharge"></u-cell>
 		<u-cell title="积分兑换成长值" isLink url="/pages/growth/excharge"></u-cell>
-		<u-cell title="积分明细" isLink url="/pages/score/logs"></u-cell>		
+		<u-cell title="成长值明细" isLink url="/pages/growth/logs"></u-cell>		
 	</view>
 </template>
 
@@ -16,7 +15,7 @@
 	export default {
 		data() {
 			return {
-				score: 0
+				growth: 0
 			}
 		},
 		created() {
@@ -38,7 +37,7 @@
 			async _userAmount() {
 				const res = await this.$wxapi.userAmount(this.token)
 				if (res.code == 0) {
-					this.score = res.data.score
+					this.growth = res.data.growth
 				}
 			},
 		}

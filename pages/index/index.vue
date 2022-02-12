@@ -37,7 +37,7 @@
 		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title" mode="link"
 			url="/pages/notice/list"></u-notice-bar>
 		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true"
-			:src="adPosition['index-live-pic'].val" width="100vw" radius="32rpx" mode="widthFix"
+			:src="adPosition['index-live-pic'].val" width="100vw" height="auto" radius="32rpx" mode="widthFix"
 			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
 		<view v-if="miaoshaGoods" class="miaoshaGoods">
 			<view class="ttt">

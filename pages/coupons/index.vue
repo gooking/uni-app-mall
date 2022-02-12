@@ -98,7 +98,7 @@
 
 		},
 		methods: {
-			tabchange(e) {
+			async tabchange(e) {
 				this.current = e.index
 				if (this.current == 0) {
 					this._coupons()
@@ -133,6 +133,12 @@
 				}
 			},
 			async getCounpon(item, pwd) {
+				if(!await getApp().checkHasLoginedH5()) {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+					return
+				}
 				this.curItem = item
 				this.couponPwdShow = false
 				if (item.pwd && !pwd) {

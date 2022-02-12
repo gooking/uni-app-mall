@@ -8,7 +8,8 @@
 			subDomain: 'tz', // jdjf0115
 			merchantId: '951', // 42151
 			version: '0.0.2',
-			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min'
+			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open',
+			wxpayOpenAppId: 'wx9b04553fd8c7b9c3' // 微信开放平台的移动端应用appID
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n
@@ -116,8 +117,8 @@
 				if (!isLogined) {
 					// 判断是普通浏览器还是微信浏览器
 					const ua = window.navigator.userAgent.toLowerCase();
-					console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
 					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+						// 微信内置浏览器打开的
 						// https://www.yuque.com/apifm/nu0f75/fpvc3m
 						const res = await this.$wxapi.siteStatistics()
 						const wxMpAppid = res.data.wxMpAppid
@@ -131,9 +132,10 @@
 								'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 						}
 					} else {
-						uni.navigateTo({
-							url: "/pages/login/login"
-						})
+						// 其他浏览器打开的， 按需登陆，不能直接跳转到登陆界面
+						// uni.navigateTo({
+						// 	url: "/pages/login/login"
+						// })
 					}
 				}
 				// #endif
