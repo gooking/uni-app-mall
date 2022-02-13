@@ -6,6 +6,7 @@
 		  	<view class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{ score }}</view>
 		  </view>
 		</view>
+		<u-cell title="签到赚积分" isLink url="/pages/score/sign"></u-cell>
 		<u-cell title="积分券兑换积分" isLink url="/pages/score/excharge"></u-cell>
 		<u-cell title="积分兑换成长值" isLink url="/pages/growth/excharge"></u-cell>
 		<u-cell title="积分明细" isLink url="/pages/score/logs"></u-cell>		

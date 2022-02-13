@@ -221,4 +221,7 @@
 	.form-box {
 		padding: 32rpx;
 	}
+	.mt32 {
+		margin-top: 32rpx;
+	}
 </style>

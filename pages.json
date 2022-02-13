@@ -173,6 +173,19 @@
 		    }
 		},
 		{
+		    "path" : "pages/score/sign",
+		    "style": {
+				"navigationBarTitleText": "每日签到"
+		    }
+		},
+		{
+		    "path" : "pages/score/signlog",
+		    "style": {
+				"navigationBarTitleText": "签到记录",
+				"enablePullDownRefresh": true
+		    }
+		},
+		{
 		    "path" : "pages/growth/index",
 		    "style": {
 				"navigationBarTitleText": "我的成长值"
