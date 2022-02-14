@@ -57,9 +57,9 @@
 				// https://www.yuque.com/apifm/nu0f75/wrqkcb
 				const res = await this.$wxapi.userAmount(this.token)
 				if (res.code == 0) {
-					this.balance = res.data.balance.toFixed(2),
-					this.freeze = res.data.freeze.toFixed(2),
-					this.totleConsumed = res.data.totleConsumed.toFixed(2),
+					this.balance = res.data.balance.toFixed(2)
+					this.freeze = res.data.freeze.toFixed(2)
+					this.totleConsumed = res.data.totleConsumed.toFixed(2)
 					this.score = res.data.score
 				}
 			},

@@ -26,6 +26,7 @@
 			</view>
 		</view>
 		<u-line></u-line>
+		<u-cell icon="rmb-circle" title="优惠买单" isLink clickable url="/pages/pay/maidan"></u-cell>
 		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
 		<u-grid col="5" :border="false" @click="orderGridClick">
 			<u-grid-item name="0">

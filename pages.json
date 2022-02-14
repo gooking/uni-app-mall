@@ -50,6 +50,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/pay/maidan",
+		    "style": {
+				"navigationBarTitleText":"优惠买单"
+		    }
+		},
+		{
 		    "path" : "pages/goods/list",
 		    "style": {
 				"navigationBarTitleText":"商品列表"
