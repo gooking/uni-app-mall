@@ -1,5 +1,24 @@
 <template>
 	<view v-if="orderDetail" class="to-pay-order">
+		<u-cell-group title="订单信息">
+			<u-cell title="订单ID" :value="orderDetail.orderInfo.id"></u-cell>
+			<u-cell title="订单号" :value="orderDetail.orderInfo.orderNumber"></u-cell>
+			<u-cell v-if="orderDetail.orderInfo.type == 5" title="京东订单号" :value="orderDetail.orderInfo.orderNumberOuter"></u-cell>
+		</u-cell-group>
+		<u-cell-group v-if="refundApplyInfo" title="用户申请售后信息">
+			<u-cell title="售后类型" :value="refundApplyInfo.baseInfo.typeStr"></u-cell>
+			<u-cell title="售后原因" :value="refundApplyInfo.baseInfo.reason"></u-cell>
+			<u-cell v-if="refundApplyInfo.baseInfo.outerOrderId" title="售后订单号" :value="refundApplyInfo.baseInfo.outerOrderId"></u-cell>
+			<u-cell title="申请时间" :value="refundApplyInfo.baseInfo.dateAdd"></u-cell>
+			<u-cell v-if="refundApplyInfo.baseInfo.remark" title="备注" :value="refundApplyInfo.baseInfo.remark"></u-cell>
+			<u-cell title="状态" :value="refundApplyInfo.baseInfo.statusStr"></u-cell>
+		</u-cell-group>
+		<view class="refundApplyInfo-pics" v-if="refundApplyInfo && refundApplyInfo.pics">
+			<u-album :urls="refundApplyInfo.pics" keyName="pic" multipleSize="125"></u-album>
+		</view>
+		<u-cell-group v-if="joycityPointsAfterSaleOrderInfo" title="售后进度">
+			<u-cell v-for="(item,index) in joycityPointsAfterSaleOrderInfo.afsLogs" :title="item.operator + item.operationDesc" :label="item.createdTime"></u-cell>
+		</u-cell-group>
 		<u-divider text="收货地址"></u-divider>
 		<u-cell v-if="orderDetail.logistics" icon="map" :border="false" :title="orderDetail.logistics.linkMan + ' ' + orderDetail.logistics.mobile" :label="orderDetail.logistics.provinceStr + orderDetail.logistics.cityStr + orderDetail.logistics.areaStr + orderDetail.logistics.address"></u-cell>
 		<u-divider text="商品信息"></u-divider>
@@ -51,6 +70,8 @@
 		data() {
 			return {
 				orderDetail: undefined,
+				refundApplyInfo: undefined,
+				joycityPointsAfterSaleOrderInfo: undefined
 			}
 		},
 		created() {
@@ -81,6 +102,9 @@
 					return
 				}
 				this.orderDetail = res.data
+				if(res.data.orderInfo.refundStatus != 0 || res.data.orderInfo.hasRefund) {
+					this.refundApplyDetail()
+				}
 			},
 			async orderDelivery() {
 				uni.showModal({
@@ -106,6 +130,25 @@
 						title: res.msg,
 						icon: 'none'
 					})
+				}
+			},
+			async refundApplyDetail() {
+				// https://www.yuque.com/apifm/nu0f75/rgng3x
+				const res = await this.$wxapi.refundApplyDetail(this.token, this.orderDetail.orderInfo.id)
+				if(res.code == 0) {
+					this.refundApplyInfo = res.data[0]
+					if(this.orderDetail.orderInfo.type == 5) {
+						this.joycityPointsSearchAfsOrderDetail(this.refundApplyInfo.baseInfo.outerOrderId)
+					}
+				}
+			},
+			async joycityPointsSearchAfsOrderDetail(afterSaleId) {
+				const res = await this.$wxapi.joycityPointsSearchAfsOrderDetail({
+					token: this.token,
+					afterSaleId
+				})
+				if(res.code == 0) {
+					this.joycityPointsAfterSaleOrderInfo = res.data
 				}
 			}
 		}
@@ -250,5 +293,8 @@
 	.u-order-time {
 		color: rgb(200, 200, 200);
 		font-size: 26rpx;
+	}
+	.refundApplyInfo-pics {
+		padding: 16rpx;
 	}
 </style>

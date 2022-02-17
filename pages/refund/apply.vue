@@ -191,6 +191,13 @@
 						})
 						return
 					}
+					if(!this.pics || this.pics.length == 0) {
+						uni.showToast({
+							title: '请拍照并上传照片',
+							icon: 'none'
+						})
+						return
+					}
 				}
 				this.$refs.uForm.validate().then(res => {
 					this._submit()
