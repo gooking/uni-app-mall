@@ -3,7 +3,7 @@
 		<u-empty v-if="!noticeDetail" mode="list" text="暂无数据" marginTop="200rpx" />
 		<view v-if="noticeDetail">
 			<u-cell :title="noticeDetail.title" :label="noticeDetail.dateAdd"></u-cell>
-			<u-line class="l"></u-line>
+			<view class="l"><u-line></u-line></view>
 			<view class="content">
 				<u-parse :content="noticeDetail.content"></u-parse>
 			</view>

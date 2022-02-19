@@ -41,12 +41,12 @@
 			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
 		<view v-if="miaoshaGoods" class="miaoshaGoods">
 			<view class="ttt">
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 				<view class="content">
 					<image src="/static/images/miaosha.png"></image>
 					<text>限时秒杀</text>
 				</view>
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 			</view>
 			<view v-for="(item, index) in miaoshaGoods" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
@@ -74,12 +74,12 @@
 		</view>
 		<view v-if="goodsRecommend" class="goodsRecommend">
 			<view class="ttt">
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 				<view class="content">
 					<image src="/static/images/recommend.png"></image>
 					<text>爆款推荐</text>
 				</view>
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 			</view>
 			<view class="goods-container">
 				<view v-for="(item, index) in goodsRecommend" :key="index" class="goods-box" bindtap="toDetailsTap">
@@ -105,12 +105,12 @@
 		</view>
 		<view v-if="kanjiaList" class="miaoshaGoods">
 			<view class="ttt">
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 				<view class="content">
 					<image src="/static/images/kanjia.png"></image>
 					<text>疯狂砍价</text>
 				</view>
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 			</view>
 			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
@@ -128,12 +128,12 @@
 		</view>
 		<view v-if="pingtuanList" class="miaoshaGoods">
 			<view class="ttt">
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 				<view class="content">
 					<image src="/static/images/pingtuan.png"></image>
 					<text>全民拼团</text>
 				</view>
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 			</view>
 			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
@@ -150,12 +150,12 @@
 		</view>
 		<view v-if="goods" class="goodsRecommend">
 			<view class="ttt">
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 				<view class="content">
 					<image src="/static/images/goodslist.png"></image>
 					<text>商品列表</text>
 				</view>
-				<u-line class="l"></u-line>
+				<view class="l"><u-line></u-line></view>
 			</view>
 			<view class="goods-container">
 				<view v-for="(item, index) in goods" :key="index" class="goods-box" bindtap="toDetailsTap">
@@ -610,6 +610,7 @@
 
 			.l {
 				flex: 1;
+				display: inline-block;
 			}
 
 			.content {
