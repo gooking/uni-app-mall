@@ -116,6 +116,31 @@
 					location.href = res.data.mweb_url
 				}
 				// #endif
+				// #ifdef APP-PLUS
+				// https://www.yuque.com/apifm/nu0f75/uvauoz
+				const res = await this.$wxapi.wxpayApp({
+					token: this.token,
+					appid: getApp().globalData.wxpayOpenAppId,
+					money: this.amount,
+					remark: '在线充值',
+					payName: '在线充值'
+				})
+				uni.requestPayment({
+					provider: 'wxpay', // alipay wxpay baidu appleiap
+					orderInfo: res.data, // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
+					success: res => {
+						uni.navigateTo({
+							url: "/pages/asset/balance"
+						})
+					},
+					fail: err => {
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
+						})
+					}
+				})
+				// #endif
 			}
 		}
 	}

@@ -272,7 +272,7 @@
 					}
 					// #endif
 					// #ifdef APP-PLUS
-					// TODO SDK 地址
+					// https://www.yuque.com/apifm/nu0f75/uvauoz
 					const res = await this.$wxapi.wxpayApp({
 						token: this.token,
 						appid: getApp().globalData.wxpayOpenAppId,
@@ -281,17 +281,17 @@
 						payName: '支付订单 ：' + orderInfo.id,
 						nextAction: `{type: 0, id: ${orderInfo.id}}`
 					})
-					console.log(res);
 					uni.requestPayment({
 						provider: 'wxpay', // alipay wxpay baidu appleiap
-						orderInfo: { // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
-							
-						},
+						orderInfo: res.data, // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
 						success: res => {
-							console.log(res);
+							this.change(1)
 						},
 						fail: err => {
-							console.log(err);
+							uni.showToast({
+								title: '支付失败',
+								icon: 'none'
+							})
 						}
 					})
 					// #endif

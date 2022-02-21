@@ -64,7 +64,6 @@
 			async submit() {
 				// https://www.yuque.com/apifm/nu0f75/xrg5e0
 				const res = await this.$wxapi.login_mobile(this.form.mobile, this.form.pwd, 'tianshitongzhuang', 'h5')
-				console.log(res);
 				if(res.code != 0) {
 					uni.showToast({
 						title: res.msg,
