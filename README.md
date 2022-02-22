@@ -6,10 +6,26 @@
 
 我希望可以持续的将本项目一直开源维护下去，但是毕竟个人精力有限，所以非常希望大家可以一同加入到开发工作中来，群策群力，一起把这个项目真正的长期做下去
 
-# 天使童装项目
+<img src="https://7.s2m.cc/2022/02/10/d7a52fb7-e123-483b-80ac-1d4227d4f758.png" height="160px">
+
+# 天使童装小程序原生项目
+
+想了解微信小程序原生项目的可以点击下面的链接：
 
 - [ GitHub地址 https://github.com/EastWorld/wechat-app-mall ](https://github.com/EastWorld/wechat-app-mall)
 - [ 码云地址 https://gitee.com/javazj/wechat-app-mall ](https://gitee.com/javazj/wechat-app-mall)
+
+## 扫码体验
+
+如果觉得本项目对你有帮助，欢迎打赏～
+
+| 微信小程序 | h5
+| :------: | :------: |
+| <img src="https://www.it120.cc/images/tz.jpg" height="250px"> | <img src="https://7.s2m.cc/2022/02/22/5cd37f0d-cd24-47f0-95c2-da168fe91548.png" height="250px"> |
+
+| Android | ios
+| :------: | :------: |
+| <img src="https://7.s2m.cc/2022/02/22/dee83513-bb5a-4a5c-afab-18a0c57f13a9.png" height="250px"> | <img src="https://7.s2m.cc/2022/02/22/dee83513-bb5a-4a5c-afab-18a0c57f13a9.png" height="250px"> |
 
 # 特别感谢
 
