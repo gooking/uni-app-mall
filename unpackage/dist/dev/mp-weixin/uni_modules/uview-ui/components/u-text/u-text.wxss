@@ -19,6 +19,7 @@ view.data-v-50004b49, scroll-view.data-v-50004b49, swiper-item.data-v-50004b49 {
   align-items: center;
   flex-wrap: nowrap;
   flex: 1;
+  width: 100%;
 }
 .u-text__price.data-v-50004b49 {
   font-size: 14px;

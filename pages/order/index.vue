@@ -64,7 +64,7 @@
 </template>
 
 <script>
-	const wxpay = require('@/common/wxpay.js')
+	const PAY = require('@/common/pay.js')
 	export default {
 		data() {
 			return {
@@ -213,88 +213,19 @@
 					}
 				} else {
 					// 发起在线支付
-					// #ifdef MP-WEIXIN
-					wxpay.wxpay('order', needPay, orderInfo.id, '')
-					// #endif
-					// #ifdef H5
-					const ua = window.navigator.userAgent.toLowerCase();
-					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-						// https://www.yuque.com/apifm/nu0f75/mghxuo
-						res = await this.$wxapi.wxpayJsapi({
-							token: this.token,
-							money: needPay,
-							remark: '支付订单 ：' + orderInfo.id,
-							payName: '支付订单 ：' + orderInfo.id,
-							nextAction: `{type: 0, id: ${orderInfo.id}}`
+					PAY.pay('wxpay', {
+						appid: getApp().globalData.wxpayOpenAppId
+					}, needPay, '支付订单 ：' + orderInfo.id, '支付订单 ：' + orderInfo.id, {
+						type: 0,
+						id: orderInfo.id
+					}, () => {
+						this.change(1)
+					}, () => {
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
 						})
-						if(res.code != 0) {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-							return
-						}
-						window.WeixinJSBridge.invoke(
-						  'getBrandWCPayRequest', {
-							'appId': res.data.appid,
-							'timeStamp': res.data.timeStamp,
-							'nonceStr': res.data.nonceStr,
-							'package': 'prepay_id=' + res.data.prepayId,
-							'signType': 'MD5',
-							'paySign': res.data.sign
-						  },
-						  function(res) {
-							if (res.err_msg === 'get_brand_wcpay_request:ok') {
-							  this.change(1)
-							}
-						})
-					} else {
-						// 普通浏览器，调用h5支付
-						// https://www.yuque.com/apifm/nu0f75/pv7gll
-						const res = await this.$wxapi.wxpayH5({
-							token: this.token,
-							money: needPay,
-							remark: '支付订单 ：' + orderInfo.id,
-							payName: '支付订单 ：' + orderInfo.id,
-							nextAction: `{type: 0, id: ${orderInfo.id}}`
-						})
-						if(res.code != 0) {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-							uni.redirectTo({
-								url: "../order/index?status=0"
-							})
-							return
-						}
-						location.href = res.data.mweb_url
-					}
-					// #endif
-					// #ifdef APP-PLUS
-					// https://www.yuque.com/apifm/nu0f75/uvauoz
-					const res = await this.$wxapi.wxpayApp({
-						token: this.token,
-						appid: getApp().globalData.wxpayOpenAppId,
-						money: needPay,
-						remark: '支付订单 ：' + orderInfo.id,
-						payName: '支付订单 ：' + orderInfo.id,
-						nextAction: `{type: 0, id: ${orderInfo.id}}`
 					})
-					uni.requestPayment({
-						provider: 'wxpay', // alipay wxpay baidu appleiap
-						orderInfo: res.data, // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
-						success: res => {
-							this.change(1)
-						},
-						fail: err => {
-							uni.showToast({
-								title: '支付失败',
-								icon: 'none'
-							})
-						}
-					})
-					// #endif
 				}
 			},
 			godetail(orderId) {

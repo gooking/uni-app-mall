@@ -11,6 +11,7 @@
     "u-line": "/uni_modules/uview-ui/components/u-line/u-line",
     "u-count-down": "/uni_modules/uview-ui/components/u-count-down/u-count-down",
     "u-button": "/uni_modules/uview-ui/components/u-button/u-button",
+    "u-tag": "/uni_modules/uview-ui/components/u-tag/u-tag",
     "u--text": "/uni_modules/uview-ui/components/u--text/u--text",
     "u-line-progress": "/uni_modules/uview-ui/components/u-line-progress/u-line-progress",
     "u-overlay": "/uni_modules/uview-ui/components/u-overlay/u-overlay",

@@ -17,6 +17,10 @@ view.data-v-042b391e, scroll-view.data-v-042b391e, swiper-item.data-v-042b391e {
   position: relative;
   transition: opacity 0.5s ease-in-out;
 }
+.u-image__image.data-v-042b391e {
+  width: 100%;
+  height: 100%;
+}
 .u-image__loading.data-v-042b391e, .u-image__error.data-v-042b391e {
   position: absolute;
   top: 0px;

@@ -7,8 +7,8 @@
     "u-line": "/uni_modules/uview-ui/components/u-line/u-line",
     "u-tag": "/uni_modules/uview-ui/components/u-tag/u-tag",
     "u-number-box": "/uni_modules/uview-ui/components/u-number-box/u-number-box",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button",
     "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
-    "u-badge": "/uni_modules/uview-ui/components/u-badge/u-badge",
-    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+    "u-badge": "/uni_modules/uview-ui/components/u-badge/u-badge"
   }
 }

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-	const wxpay = require('@/common/wxpay.js')
+	const PAY = require('@/common/pay.js')
 	export default {
 		data() {
 			return {
@@ -62,85 +62,16 @@
 					return
 				}
 				// 发起在线支付
-				// #ifdef MP-WEIXIN
-				wxpay.wxpay('recharge', this.amount, 0, '/pages/asset/balance')
-				// #endif
-				// #ifdef H5
-				const ua = window.navigator.userAgent.toLowerCase();
-				if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-					// https://www.yuque.com/apifm/nu0f75/mghxuo
-					res = await this.$wxapi.wxpayJsapi({
-						token: this.token,
-						money: this.amount,
-						remark: '在线充值',
-						payName: '在线充值'
+				PAY.pay('wxpay', {
+					appid: getApp().globalData.wxpayOpenAppId
+				}, this.amount, '在线充值', '在线充值', null, () => {
+					uni.navigateBack()
+				}, () => {
+					uni.showToast({
+						title: '支付失败',
+						icon: 'none'
 					})
-					if(res.code != 0) {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						})
-						return
-					}
-					window.WeixinJSBridge.invoke(
-					  'getBrandWCPayRequest', {
-						'appId': res.data.appid,
-						'timeStamp': res.data.timeStamp,
-						'nonceStr': res.data.nonceStr,
-						'package': 'prepay_id=' + res.data.prepayId,
-						'signType': 'MD5',
-						'paySign': res.data.sign
-					  },
-					  function(res) {
-						if (res.err_msg === 'get_brand_wcpay_request:ok') {
-						  uni.navigateBack()
-						}
-					})
-				} else {
-					// 普通浏览器，调用h5支付
-					// https://www.yuque.com/apifm/nu0f75/pv7gll
-					const res = await this.$wxapi.wxpayH5({
-						token: this.token,
-						money: this.amount,
-						remark: '在线充值',
-						payName: '在线充值'
-					})
-					if(res.code != 0) {
-						uni.showToast({
-							title: res.msg,
-							icon: 'none'
-						})
-						uni.navigateBack()
-						return
-					}
-					location.href = res.data.mweb_url
-				}
-				// #endif
-				// #ifdef APP-PLUS
-				// https://www.yuque.com/apifm/nu0f75/uvauoz
-				const res = await this.$wxapi.wxpayApp({
-					token: this.token,
-					appid: getApp().globalData.wxpayOpenAppId,
-					money: this.amount,
-					remark: '在线充值',
-					payName: '在线充值'
 				})
-				uni.requestPayment({
-					provider: 'wxpay', // alipay wxpay baidu appleiap
-					orderInfo: res.data, // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
-					success: res => {
-						uni.navigateTo({
-							url: "/pages/asset/balance"
-						})
-					},
-					fail: err => {
-						uni.showToast({
-							title: '支付失败',
-							icon: 'none'
-						})
-					}
-				})
-				// #endif
 			}
 		}
 	}

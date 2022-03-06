@@ -4,7 +4,12 @@
  * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
+.app-status-bar-height.data-v-57280228 {
+  width: 100%;
+  height: 25px;
+}
 .index .top-box.data-v-57280228 {
+  padding: 16rpx 8rpx;
   display: flex;
   align-items: center;
   background-color: #FFFFFF;
@@ -78,6 +83,7 @@
 }
 .index .ttt .l.data-v-57280228 {
   flex: 1;
+  display: inline-block;
 }
 .index .ttt .content.data-v-57280228 {
   display: flex;
@@ -232,5 +238,8 @@
 }
 .index .adPositionIndexPop .close.data-v-57280228 {
   margin-top: 32rpx;
+}
+.blank.data-v-57280228 {
+  height: 32rpx;
 }
 

@@ -6,9 +6,12 @@
  */
 /*每个页面公共css */
 .u-line-1 {
+  display: -webkit-box !important;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical !important;
 }
 .u-line-2 {
   display: -webkit-box !important;
@@ -230,5 +233,48 @@
   height: 0 !important;
   -webkit-appearance: none;
   background: transparent;
+}
+.price-score {
+  display: flex;
+  color: #e64340;
+  font-size: 38rpx;
+}
+.price-score text {
+  padding: 0 4rpx;
+  font-size: 28rpx;
+}
+.price-score .item {
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+.price-score .original {
+  margin-left: 32rpx;
+  color: #aaa;
+  text-decoration: line-through;
+}
+.price-score .score-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+.goods-title-tag {
+  display: inline-flex !important;
+  margin-right: 24rpx;
+}
+.goods-title {
+  color: #333;
+  font-size: 28rpx;
+}
+.pt16 {
+  padding-top: 16rpx !important;
+}
+.submit-btn {
+  padding: 32rpx;
+}
+.form-box {
+  padding: 32rpx;
+}
+.mt32 {
+  margin-top: 32rpx;
 }
 

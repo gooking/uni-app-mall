@@ -9,6 +9,7 @@
 					<u-radio-group v-model="form.payType">
 						<u-radio label="余额支付" :name="0"></u-radio>
 						<u-radio :customStyle="{marginLeft: '16rpx'}" label="微信支付" :name="1"></u-radio>
+						<u-radio v-if="openAlipayProvider" :customStyle="{marginLeft: '16rpx'}" label="支付宝" :name="2"></u-radio>
 					</u-radio-group>
 				</u-form-item>
 			</u--form>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+	const PAY = require('@/common/pay.js')
 	export default {
 		data() {
 			return {
@@ -53,7 +55,8 @@
 					amount: undefined,
 					payType: 0
 				},
-				payBillDiscounts: undefined
+				payBillDiscounts: undefined,
+				openAlipayProvider: false
 			}
 		},
 		created() {
@@ -68,6 +71,10 @@
 		onLoad(e) {
 			this._payBillDiscounts()
 			this._userAmount()
+			this.openAlipayProvider = getApp().globalData.openAlipayProvider
+			// #ifdef MP-WEIXIN
+			this.openAlipayProvider = false
+			// #endif
 		},
 		onShow() {
 
@@ -122,94 +129,24 @@
 							url: '/pages/asset/cashlog'
 						})
 					}, 1000);
-				}
-				if(this.form.payType == 1) {
-					// 微信支付
-					// #ifdef H5
-					const ua = window.navigator.userAgent.toLowerCase();
-					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-						// https://www.yuque.com/apifm/nu0f75/mghxuo
-						res = await this.$wxapi.wxpayJsapi({
-							token: this.token,
-							money: this.form.amount,
-							remark: '优惠买单',
-							payName: '优惠买单',
-							nextAction: `{type: 4, shopId: '', money: ${this.form.amount}}`
-						})
-						if(res.code != 0) {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-							return
-						}
-						window.WeixinJSBridge.invoke(
-						  'getBrandWCPayRequest', {
-							'appId': res.data.appid,
-							'timeStamp': res.data.timeStamp,
-							'nonceStr': res.data.nonceStr,
-							'package': 'prepay_id=' + res.data.prepayId,
-							'signType': 'MD5',
-							'paySign': res.data.sign
-						  },
-						  function(res) {
-							if (res.err_msg === 'get_brand_wcpay_request:ok') {
-							  uni.navigateTo({
-							  	url: '/pages/asset/cashlog'
-							  })
-							}
-						})
-					} else {
-						// 普通浏览器，调用h5支付
-						// https://www.yuque.com/apifm/nu0f75/pv7gll
-						const res = await this.$wxapi.wxpayH5({
-							token: this.token,
-							money: this.form.amount,
-							remark: '优惠买单',
-							payName: '优惠买单',
-							nextAction: `{type: 4, shopId: '', money: ${this.form.amount}}`
-						})
-						if(res.code != 0) {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							})
-							return
-						}
-						location.href = res.data.mweb_url
-					}
-					// #endif
-					// #ifdef MP-WEIXIN
-					wxpay.wxpay('paybill', this.form.amount, 0, '/pages/asset/cashlog', {
+				} else {
+					const provider = this.form.payType == 1 ? 'wxpay' : 'alipay'
+					PAY.pay(provider, {
+						appid: getApp().globalData.wxpayOpenAppId
+					}, this.form.amount, '优惠买单', '优惠买单', {
+						type: 4,
+						shopId: '',
 						money: this.form.amount
+					}, () => {
+						uni.navigateTo({
+							url: "/pages/asset/cashlog"
+						})
+					}, () => {
+						uni.showToast({
+							title: '支付失败',
+							icon: 'none'
+						})
 					})
-					// #endif
-					// #ifdef APP-PLUS
-					// https://www.yuque.com/apifm/nu0f75/uvauoz
-					const res = await this.$wxapi.wxpayApp({
-						token: this.token,
-						appid: getApp().globalData.wxpayOpenAppId,
-						money: this.form.amount,
-						remark: '优惠买单',
-						payName: '优惠买单',
-						nextAction: `{type: 4, shopId: '', money: ${this.form.amount}}`
-					})
-					uni.requestPayment({
-						provider: 'wxpay', // alipay wxpay baidu appleiap
-						orderInfo: res.data, // https://uniapp.dcloud.io/api/plugins/payment?id=orderinfo
-						success: res => {
-							uni.navigateTo({
-								url: "/pages/asset/cashlog"
-							})
-						},
-						fail: err => {
-							uni.showToast({
-								title: '支付失败',
-								icon: 'none'
-							})
-						}
-					})
-					// #endif
 				}
 			},
 		}

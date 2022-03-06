@@ -29,6 +29,7 @@ view.data-v-0a306a29, scroll-view.data-v-0a306a29, swiper-item.data-v-0a306a29 {
   border-width: 1px;
   border-color: transparent;
   border-style: solid;
+  overflow: hidden;
 }
 .u-search__content__icon.data-v-0a306a29 {
   display: flex;
