@@ -91,5 +91,6 @@
       "desc": "为你推荐附近的门店"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

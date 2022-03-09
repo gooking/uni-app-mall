@@ -235,7 +235,7 @@
 			},
 			async refund(item) {
 				if(item.type == 5) {
-					// 判断是否可售后
+					// 京东权益订单，判断是否可售后
 					const goodsId = item.goodsList[0].goodsIdStr
 					uni.setStorageSync('afsGoodsId', goodsId) // 京东权益订单，售后的商品编号
 					const res = await this.$wxapi.joycityPointsCanApplyAfterSale({
