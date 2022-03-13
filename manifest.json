@@ -2,8 +2,8 @@
     "name" : "天使童装",
     "appid" : "__UNI__F2EA85C",
     "description" : "天使童装",
-    "versionName" : "1.0.0",
-    "versionCode" : 100,
+    "versionName" : "1.0.1",
+    "versionCode" : 101,
     "transformPx" : false,
     "app-plus" : {
         "optimization" : {
@@ -81,9 +81,12 @@
                 },
                 "payment" : {
                     "weixin" : {
-                        "__platform__" : [ "android" ],
+                        "__platform__" : [ "ios", "android" ],
                         "appid" : "wx9b04553fd8c7b9c3",
                         "UniversalLinks" : "https://static-80ab3332-a88f-4a44-8486-06fa7fc6392f.bspapp.com/uni-universallinks/__UNI__151F11E/"
+                    },
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
                     }
                 }
             },

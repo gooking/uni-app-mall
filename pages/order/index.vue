@@ -220,7 +220,7 @@
 						id: orderInfo.id
 					}, () => {
 						this.change(1)
-					}, () => {
+					}, (err) => {
 						uni.showToast({
 							title: '支付失败',
 							icon: 'none'

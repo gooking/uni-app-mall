@@ -141,7 +141,7 @@
 						uni.navigateTo({
 							url: "/pages/asset/cashlog"
 						})
-					}, () => {
+					}, (err) => {
 						uni.showToast({
 							title: '支付失败',
 							icon: 'none'
