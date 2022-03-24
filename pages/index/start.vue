@@ -37,6 +37,7 @@
 			if (app_show_pic_version && app_show_pic_version == getApp().globalData.version) {
 				this.goNextPage()
 			} else {
+				console.log(4);
 				// 显示启动图轮播
 				this.showBanners()
 			}
@@ -53,7 +54,7 @@
 						url: '/pages/shop/select',
 					});
 				} else {
-					wx.switchTab({
+					qq.switchTab({
 						url: '/pages/index/index',
 					});
 				}

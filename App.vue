@@ -1,13 +1,14 @@
 <script>
 	const WXAUTH = require('@/common/wxauth.js')
 	const TTAUTH = require('@/common/ttauth.js')
+	const QQAUTH = require('@/common/qqauth.js')
 	export default {
 		globalData: {
 			h5Domain: 'https://flpt.jxsupplier.com',
 			goLogin: false,
-			subDomain: 'tz', // jdjf0115
-			merchantId: '951', // 42151
-			version: '1.0.1',
+			subDomain: 'qqtg', // jdjf0115
+			merchantId: '11', // 42151
+			version: '1.1.0',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open',
 			wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID
 			openAlipayProvider: true, // 是否开通支付宝支付
@@ -98,6 +99,16 @@
 				if (!isLogined) {
 					await WXAUTH.authorize()
 					await WXAUTH.bindSeller()
+				}
+				setTimeout(() => {
+					uni.$emit('loginOK', {})
+				}, 500)
+				// #endif
+				// #ifdef MP-QQ
+				const isLogined = await QQAUTH.checkHasLogined()
+				if (!isLogined) {
+					await QQAUTH.authorize()
+					await QQAUTH.bindSeller()
 				}
 				setTimeout(() => {
 					uni.$emit('loginOK', {})

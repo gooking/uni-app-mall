@@ -8,9 +8,9 @@
 				<view v-if="goodsDetail.basicInfo.numberSells" class="t2">已售:{{ goodsDetail.basicInfo.numberSells }}
 				</view>
 				<view class="price">
-					<view v-if="price"><font>¥</font>{{ price }}</view>
+					<view v-if="price"><text>¥</text>{{ price }}</view>
 					<view v-if="score">
-						<font>￠</font>{{ score }}
+						<text>￠</text>{{ score }}
 					</view>
 				</view>
 			</view>
@@ -19,22 +19,25 @@
 		<view v-for="(item,index) in goodsDetail.properties" :key="item.id" v-if="!item.hidden" class="skuList">
 			<view class="t">{{ item.name }}</view>
 			<view class="items">
-				<u-tag v-for="(item2,index2) in item.childsCurGoods" :key="item2.id" class="item" :show="!item2.hidden"
-					:type="item2.selected ? 'error' : 'info'" :plain="item2.selected ? false : true" :text="item2.name"
-					@click="skuSelect(index, index2)"></u-tag>
+				<view v-for="(item2,index2) in item.childsCurGoods" :key="item2.id" class="item">
+					<u-tag :show="!item2.hidden"
+						:type="item2.selected ? 'error' : 'info'" :plain="item2.selected ? false : true" :text="item2.name"
+						@click="skuSelect(index, index2)"></u-tag>
+				</view>
 			</view>
 		</view>
 		<view v-for="(item,index) in goodsAddition" :key="item.id" class="skuList">
 			<view class="t">{{ item.name }}</view>
 			<view class="items">
-				<u-tag v-for="(item2,index2) in item.items" :key="item2.id" class="item"
-					:type="item2.selected ? 'error' : 'info'" :plain="item2.selected ? false : true" :text="item2.name"
-					@click="additionSelect(index, index2)"></u-tag>
+				<view v-for="(item2,index2) in item.items" :key="item2.id" class="item">
+					<u-tag :type="item2.selected ? 'error' : 'info'" :plain="item2.selected ? false : true" :text="item2.name"
+						@click="additionSelect(index, index2)"></u-tag>
+				</view>
 			</view>
 		</view>
 		<u-line v-if="goodsAddition || goodsDetail.properties" class="sku-space"></u-line>
 		<view class="buy-number">
-			<font>购买数量</font>
+			<text>购买数量</text>
 			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
 		</view>
 		<u-line></u-line>
@@ -490,7 +493,9 @@
 					this.goodsDetail.properties.forEach(ele => {
 						sku.push({
 							optionId: ele.id,
-							optionValueId: ele.selectedChild.id
+							optionValueId: ele.selectedChild.id,
+							optionName: ele.name,
+							optionValueName: ele.selectedChild.name,
 						})
 					})
 				}
@@ -501,7 +506,9 @@
 							if (item.selected) {
 								goodsAddition.push({
 									id: item.id,
-									pid: item.pid
+									pid: item.pid,
+									name: ele.name,
+									pname: item.name,
 								})
 							}
 						})

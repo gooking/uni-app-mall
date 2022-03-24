@@ -2,8 +2,8 @@
     "name" : "天使童装",
     "appid" : "__UNI__F2EA85C",
     "description" : "天使童装",
-    "versionName" : "1.0.1",
-    "versionCode" : 101,
+    "versionName" : "1.1.0",
+    "versionCode" : 110,
     "transformPx" : false,
     "app-plus" : {
         "optimization" : {
@@ -151,7 +151,7 @@
         "optimization" : {
             "subPackages" : true
         },
-        "appid" : "15646153"
+        "appid" : "1110971857"
     },
     "mp-baidu" : {
         "usingComponents" : true,

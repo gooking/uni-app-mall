@@ -233,15 +233,6 @@
 		margin-left: 32rpx;
 		font-size: 28rpx;
 	}
-
-	page,
-	view,
-	image,
-	input {
-		display: block;
-		box-sizing: border-box;
-	}
-
 	.container {
 		min-height: 100%;
 		overflow: hidden;
