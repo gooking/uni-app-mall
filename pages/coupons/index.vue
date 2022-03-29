@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<u-sticky bgColor="#ffffff">
-			<u-tabs lineColor="#e64340" :list="tabs" :current="current" @change="tabchange"></u-tabs>
+			<u-subsection activeColor="#e64340" :list="tabs" :current="current" @change="tabchange"></u-subsection>
 		</u-sticky>
 		<page-box-empty v-if="!coupons || coupons.length == 0" title="暂无优惠券" sub-title="可以去看看可领取优惠券哦～"
 			:show-btn="false" />
@@ -99,7 +99,7 @@
 		},
 		methods: {
 			async tabchange(e) {
-				this.current = e.index
+				this.current = e
 				if (this.current == 0) {
 					this._coupons()
 				}

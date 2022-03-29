@@ -247,6 +247,70 @@
 		    }
 		}
     ],
+	"subPackages": [
+		{
+			"root": "packageFx",
+			"pages": [
+				{
+					"path": "index/index",
+					"style": {
+						"navigationBarTitleText": "分销中心"
+					}
+				},
+				{
+					"path": "apply/index",
+					"style": {
+						"navigationBarTitleText": "成为分销商"
+					}
+				},
+				{
+					"path": "apply/form",
+					"style": {
+						"navigationBarTitleText": "申请成为分销商"
+					}
+				},
+				{
+					"path": "myusers/index",
+					"style": {
+						"navigationBarTitleText": "我的团队",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path": "commisionLog/index",
+					"style": {
+						"navigationBarTitleText": "推广订单"
+					}
+				},
+				{
+					"path": "report/team",
+					"style": {
+						"navigationBarTitleText": "团队月报表",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path": "report/city",
+					"style": {
+						"navigationBarTitleText": "合伙人月报表",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path": "myusers/myusers-detail",
+					"style": {
+						"navigationBarTitleText": "用户详情"
+					}
+				}
+			]
+		}
+	],
+	"preloadRule": {
+		"PackageFx/index/index": {
+			"network": "all",
+			"packages": ["__APP__"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "",

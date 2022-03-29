@@ -10,7 +10,7 @@
 				</view>
 				<!--  #endif -->
 			</view>
-			<u-tabs :list="tabs" lineColor="#e64340" @click="paixu"></u-tabs>
+			<u-subsection activeColor="#e64340" :list="tabs" :current="activetab" @change="paixu"></u-subsection>
 		</u-sticky>
 		<page-box-empty v-if="!goods || goods.length == 0" title="暂无商品" sub-title="当前类目下无法帮你找到合适的商品" :show-btn="true" />
 		<view v-if="showmod == 0" class="goodslist">
@@ -57,6 +57,7 @@
 	export default {
 		data() {
 			return {
+				activetab: 0,
 				kw: '',
 				orderBy: '',
 				categoryId: '',
@@ -127,7 +128,8 @@
 				})
 			},
 			paixu(item) {
-				this.orderBy = this.tabs[item.index].code
+				this.activetab = item
+				this.orderBy = this.tabs[item].code
 				this.page = 1
 				this._goods()
 			},

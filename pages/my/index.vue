@@ -88,6 +88,15 @@
 			</u-grid-item>
 		</u-grid>
 		<u-line></u-line>
+		<u-gap height="5" bgColor="#EAEBEC"></u-gap>
+		<u-cell-group title="三级分销">
+			<u-cell v-if="!apiUserInfoMap.base.isSeller" title="成为分销商" isLink url="/packageFx/apply/index"></u-cell>
+			<u-cell v-else title="分销中心" isLink url="/packageFx/index/index"></u-cell>
+			<u-cell v-if="apiUserInfoMap.base.isSeller" title="我的团队" isLink url="/packageFx/myusers/index"></u-cell>
+			<u-cell v-if="apiUserInfoMap.base.isSeller" title="推广订单" isLink url="/packageFx/commisionLog/index"></u-cell>
+		</u-cell-group>
+		<u-gap height="5" bgColor="#EAEBEC"></u-gap>
+  
 		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
 		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
 		<u-cell title="当前版本" :value="version"></u-cell>
