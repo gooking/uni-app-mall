@@ -50,11 +50,11 @@
 				const shopMod = this.sysconfigMap.shopMod
 				this.$u.vuex('app_show_pic_version', getApp().globalData.version)
 				if (shopMod == 1) {
-					wx.redirectTo({
+					uni.redirectTo({
 						url: '/pages/shop/select',
 					});
 				} else {
-					qq.switchTab({
+					uni.switchTab({
 						url: '/pages/index/index',
 					});
 				}
