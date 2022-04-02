@@ -41,14 +41,7 @@
 			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
 		</view>
 		<u-line></u-line>
-		<view v-if="goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" class="btns">
-			<view class="btn">
-				<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
-					@click="tobuy">
-				</u-button>
-			</view>
-		</view>
-		<view v-else class="btns">
+		<view class="btns">
 			<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 			<view class="icon-btn">
 				<u-icon name="chat" size="48rpx"></u-icon>

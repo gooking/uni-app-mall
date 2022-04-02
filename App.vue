@@ -8,10 +8,10 @@
 			goLogin: false,
 			subDomain: 'tz', // jdjf0115
 			merchantId: '951', // 42151
-			version: '1.1.0',
+			version: '1.2.0',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open',
 			wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID
-			openAlipayProvider: true, // 是否开通支付宝支付
+			openAlipayProvider: false, // 是否开通支付宝支付
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n

@@ -90,7 +90,6 @@
 			this.cartType = e.cartType
 			if (e.mod == 'cart') {
 				if (e.cartType == 'apifm') {
-					this.goodsType = 0
 					this.readCartApifm()
 				}
 				if (e.cartType == 'jdvop') {
@@ -136,12 +135,24 @@
 				// https://www.yuque.com/apifm/nu0f75/awql14
 				const res = await this.$wxapi.shippingCarInfo(this.token)
 				if (res.code == 0) {
+					let supplyType = ''
+					let supplyTypeHasEmpty = false // 是否有空类型
+					let supplyTypeCanBuy = true // 是否允许下单
 					this.goodsList = []
 					// .filter(ele => { return ele.selected })
 					res.data.items.forEach(ele => {
+						if(!ele.supplyType) {
+							supplyTypeHasEmpty = true
+						}
+						if(!supplyType && ele.supplyType) {
+							supplyType = ele.supplyType
+						}
+						if(supplyType && supplyType != ele.supplyType) {
+							supplyTypeCanBuy = false
+						}
 						this.goodsList.push({
 							key: ele.key,
-							goodsId: ele.goodsId,
+							goodsId: ele.supplyType == 'jdJoycityPoints' ? ele.yyIdStr : ele.goodsId,
 							goodsName: ele.name,
 							number: ele.number,
 							pic: ele.pic,
@@ -151,6 +162,21 @@
 							additions: ele.additions, // id name pid pname price
 						})
 					})
+					if(supplyTypeHasEmpty && supplyType) {
+						supplyTypeCanBuy = false
+					}
+					if(!supplyTypeCanBuy) {
+						uni.showToast({
+							title: supplyType + '商品不能和其他商品一起下单',
+							icon: 'none'
+						})
+						return
+					}
+					if(supplyType == 'jdJoycityPoints') {
+						this.goodsType = 2
+					} else {
+						this.goodsType = 0
+					}
 					this.goodsNumber = res.data.number
 					this.goodsPrice = res.data.price
 					this.goodsScore = res.data.score

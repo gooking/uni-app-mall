@@ -85,14 +85,7 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view v-if="goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" class="bottom-btns">
-				<view class="btn">
-					<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
-						@click="_showGoodsPop">
-					</u-button>
-				</view>
-			</view>
-			<view v-else class="bottom-btns">
+			<view class="bottom-btns">
 				<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 				<view class="icon-btn">
 					<u-icon name="chat" size="48rpx"></u-icon>

@@ -2,18 +2,18 @@
 	<view>
 		<u-empty mode="permission" text="注册开通新账号" marginTop="88rpx"></u-empty>
 		<view class="form-box">
-			<u--form ref="uForm" label-width="150rpx" :model="form">
+			<u-form ref="uForm" label-width="150rpx" :model="form">
 				<u-form-item label="手机号码" prop="mobile" required>
-					<u--input v-model="form.mobile" type="number" clearable maxlength="11" focus placeholder="请输入手机号码"></u--input>
+					<u-input v-model="form.mobile" type="number" clearable maxlength="11" focus placeholder="请输入手机号码"></u-input>
 				</u-form-item>
 				<u-form-item label="图片验证码" prop="imgcode" required>
-					<u--input v-model="form.imgcode" type="number" clearable maxlength="4" focus placeholder="请输入图片验证码"></u--input>
+					<u-input v-model="form.imgcode" type="number" clearable maxlength="4" focus placeholder="请输入图片验证码"></u-input>
 					<view slot="right">
-						<u--image :showLoading="true" :src="imgsrc" width="200rpx" height="80rpx" @click="changeImgCode"></u--image>
+						<u-image :showLoading="true" :src="imgsrc" width="200rpx" height="80rpx" @click="changeImgCode"></u-image>
 					</view>
 				</u-form-item>
 				<u-form-item label="短信验证码" prop="code" required>
-					<u--input v-model="form.code" type="number" clearable maxlength="4" focus placeholder="请输入短信验证码"></u--input>
+					<u-input v-model="form.code" type="number" clearable maxlength="4" focus placeholder="请输入短信验证码"></u-input>
 					<view slot="right" style="padding-left: 24rpx;">
 						<u-toast ref="uToast"></u-toast>
 						<u-code :seconds="seconds" @end="end" @start="start" ref="uCode" keepRunning @change="codeChange"></u-code>
@@ -23,7 +23,7 @@
 				<u-form-item label="设置密码" prop="pwd" required>
 					<u--input v-model="form.pwd" type="password" clearable placeholder="请输入登陆密码"></u--input>
 				</u-form-item>
-			</u--form>
+			</u-form>
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">立即注册</u-button>
