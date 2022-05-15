@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view>
-		  <image style="width:750rpx;height:486rpx" mode="aspectFit" src="../../static/images/index-top-bg.png" ></image>
+		  <image style="width:750rpx;height:486rpx" mode="aspectFit" src="https://dcdn.it120.cc/static/yidianan/index-top-bg.png" ></image>
 		</view>
 			
 		<!-- 如果当前用户是分销商 -->
@@ -74,11 +74,11 @@
 			
 			<u-cell-group title="分销信息" customStyle="padding: 0 24rpx;">
 				<u-form-item label="我的邀请码" labelWidth="100">
-					<u--input v-model="apiUserInfoMap.base.id" disabled clearable inputAlign="center" >
+					<u-input v-model="apiUserInfoMap.base.id" disabled clearable inputAlign="center" >
 						<template >
 							<u-button slot="suffix" @tap="copyContent(apiUserInfoMap.base.id)" text="复制" type="success" size="mini"></u-button>
 						</template>
-					</u--input>
+					</u-input>
 				</u-form-item>
 			
 				<u-cell title="我的团队" value="查看" isLink url="../myusers/index"></u-cell>

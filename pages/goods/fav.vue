@@ -6,7 +6,7 @@
 				<view class="img-box">
 					<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				</view>
-				<u--text class="goods-title" :text="item.goodsName" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u--text>
+				<u-text class="goods-title" :text="item.goodsName" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u-text>
 				<view class="delete">
 					<u-icon name="trash" color="#F20C32" size="48rpx" @click="deleteFav(index, item)"></u-icon>
 				</view>

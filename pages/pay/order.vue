@@ -46,7 +46,7 @@
 			isLink
 			url="/pages/address/index"></u-cell>
 		<view class="remark">
-			<u--textarea v-model="remark" placeholder="订单备注(选填)" ></u--textarea>
+			<u-textarea v-model="remark" placeholder="订单备注(选填)" ></u-textarea>
 		</view>
 		<view v-if="orderInfo">
 			<u-divider text="合计"></u-divider>
@@ -229,7 +229,6 @@
 					}
 					goodsJsonStr.push({
 						goodsId: g.goodsId,
-						number: g.number,
 						number: g.number,
 						propertyChildIds,
 						goodsAdditionList

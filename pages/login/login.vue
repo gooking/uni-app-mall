@@ -2,14 +2,14 @@
 	<view>
 		<u-empty mode="permission" text="请先登陆" marginTop="88rpx"></u-empty>
 		<view class="form-box">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="手机号码" prop="mobile" required>
-					<u--input v-model="form.mobile" type="number" clearable maxlength="11" focus placeholder="请输入手机号码"></u--input>
+					<u-input v-model="form.mobile" type="number" clearable maxlength="11" focus placeholder="请输入手机号码"></u-input>
 				</u-form-item>
 				<u-form-item label="密码" prop="pwd" required>
-					<u--input v-model="form.pwd" type="password" clearable placeholder="请输入密码"></u--input>
+					<u-input v-model="form.pwd" type="password" clearable placeholder="请输入密码"></u-input>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">登陆</u-button>

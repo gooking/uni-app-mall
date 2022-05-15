@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<u-modal :show="couponPwdShow" :closeOnClickOverlay="true" title="请输入口令" @confirm="getCounpon(curItem, couponPwd)" @close="couponPwdShow = false">
-			<u--input placeholder="请输入优惠券口令" v-model="couponPwd"></u--input>
+			<u-input placeholder="请输入优惠券口令" v-model="couponPwd"></u-input>
 		</u-modal>
 	</view>
 </template>

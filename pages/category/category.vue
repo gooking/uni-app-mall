@@ -26,8 +26,8 @@
 					@scrolltolower="goodsGoBottom">
 					<u-empty v-if="!goodsList" mode="list" text="暂无商品" marginTop="200rpx" />
 					<view v-for="(item, index) in goodsList" :key="index" class="goodsList">
-						<u--image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx"
-							@click="goDetail(item)"></u--image>
+						<u-image showLoading lazyLoad :src="item.pic" radius="16rpx" width="240rpx" height="240rpx"
+							@click="goDetail(item)"></u-image>
 						<view class="goods-info">
 							<view class="goods-title u-line-3 pt16" @click="goDetail(item)">
 								<u-tag v-if="item.supplyType == 'vop_jd' || item.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>

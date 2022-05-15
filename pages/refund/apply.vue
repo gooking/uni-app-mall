@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item v-if="orderType == 3" label="售后商品" prop="skuId" required @click="goodsPickerShow = true">
-					<u--input
+					<u-input
 						v-model="form.skuName"
 						readonly
 						placeholder="请选择售后商品"
 						border="none"
-					></u--input>
+					></u-input>
 					<u-icon slot="right" name="arrow-right"></u-icon>
 					<u-picker v-if="orderDetail && orderDetail.goods" :show="goodsPickerShow" :columns="[orderDetail.goods]" keyName="goodsName" @cancel="goodsPickerShow=false" @confirm="goodsPickerSelect"></u-picker>
 				</u-form-item>
@@ -73,7 +73,7 @@
 					</u-radio-group>
 				</u-form-item>
 				<u-form-item label="备注" prop="remark">
-					<u--textarea v-model="form.remark" placeholder="请输入备注信息" ></u--textarea>
+					<u-textarea v-model="form.remark" placeholder="请输入备注信息" ></u-textarea>
 				</u-form-item>
 				<u-form-item label="拍照上传">
 					<u-upload
@@ -84,7 +84,7 @@
 						multiple
 					></u-upload>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">保存</u-button>
@@ -334,6 +334,13 @@
 					uni.showToast({
 						title: '提交成功，请耐心等待客服处理',
 					})
+					// 将已售后的订单id保存到storage，订单列表页面特殊处理
+					let refundApplyedOrderIds = uni.getStorageSync('refundApplyedOrderIds')
+					if(!refundApplyedOrderIds) {
+						refundApplyedOrderIds = []
+					}
+					refundApplyedOrderIds.push(this.form.orderId)
+					uni.setStorageSync('refundApplyedOrderIds', refundApplyedOrderIds)
 					uni.navigateBack()
 				}
 			},

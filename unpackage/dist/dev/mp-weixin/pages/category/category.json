@@ -4,7 +4,7 @@
     "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
     "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
     "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
-    "u--image": "/uni_modules/uview-ui/components/u--image/u--image",
+    "u-image": "/uni_modules/uview-ui/components/u-image/u-image",
     "u-tag": "/uni_modules/uview-ui/components/u-tag/u-tag",
     "goods-pop": "/components/goods-pop/goods-pop"
   }

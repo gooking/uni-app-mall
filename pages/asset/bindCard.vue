@@ -1,30 +1,30 @@
 <template>
 	<view v-if="!userBankInfo && userBankInfoOk">
 		<view class="form-box">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="银行名称" prop="bankName" required>
 					<picker class="input-select" mode="selector" v-model="userBankSelectBanksIndex" :range="userBankSelectBanks" range-key="bankName" @change="userBankSelectBanksChange">
 						<view @click="userBankSelectBanksShow = true">
-							<u--input v-model="form.bankName" readonly placeholder="请选择开户银行" suffixIcon="arrow-right"></u--input>
+							<u-input v-model="form.bankName" readonly placeholder="请选择开户银行" suffixIcon="arrow-right"></u-input>
 						</view>
 					</picker>
 				</u-form-item>
 				<u-form-item label="所在地区" prop="areaDisplay" required>
 					<view class="input-select" @click="showRegion = true">
-						<u--input v-model="form.areaDisplay" readonly placeholder="请选择省市区县、乡镇信息" suffixIcon="arrow-right"></u--input>
+						<u-input v-model="form.areaDisplay" readonly placeholder="请选择省市区县、乡镇信息" suffixIcon="arrow-right"></u-input>
 					</view>
 					<city-select v-model="showRegion" :area-code="areaCode" :level="4" @city-change="cityChange"></city-select>
 				</u-form-item>
 				<u-form-item label="开户行" prop="bankBranch" required>
-					<u--input v-model="form.bankBranch" clearable placeholder="请输入开户支行名称"></u--input>
+					<u-input v-model="form.bankBranch" clearable placeholder="请输入开户支行名称"></u-input>
 				</u-form-item>
 				<u-form-item label="姓名" prop="name" required>
-					<u--input v-model="form.name" clearable placeholder="请输入银行开户姓名"></u--input>
+					<u-input v-model="form.name" clearable placeholder="请输入银行开户姓名"></u-input>
 				</u-form-item>
 				<u-form-item label="银行账号" prop="bankCardNumber" required>
-					<u--input v-model="form.bankCardNumber" type="number" clearable placeholder="请输入银行账号"></u--input>
+					<u-input v-model="form.bankCardNumber" type="number" clearable placeholder="请输入银行账号"></u-input>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">立即绑定</u-button>
@@ -35,10 +35,10 @@
 		<u-cell title="开户银行" :value="userBankInfo.info.bankName"></u-cell>
 		<u-cell title="支行" :value="userBankInfo.info.bankBranch"></u-cell>
 		<u-cell title="姓名">
-			<u--text slot="value" mode="name" :text="userBankInfo.info.name" format="encrypt" align="right"></u--text>
+			<u-text slot="value" mode="name" :text="userBankInfo.info.name" format="encrypt" align="right"></u-text>
 		</u-cell>
 		<u-cell title="账号">
-			<u--text slot="value" mode="name" :text="userBankInfo.info.bankCardNumber" format="encrypt" align="right"></u--text>
+			<u-text slot="value" mode="name" :text="userBankInfo.info.bankCardNumber" format="encrypt" align="right"></u-text>
 		</u-cell>
 		<view class="submit-btn">
 			<u-button type="error" @click="userBankUnBind">解除绑定</u-button>

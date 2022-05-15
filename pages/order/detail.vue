@@ -23,7 +23,7 @@
 		<u-cell v-if="orderDetail.logistics" icon="map" :border="false" :title="orderDetail.logistics.linkMan + ' ' + orderDetail.logistics.mobile" :label="orderDetail.logistics.provinceStr + orderDetail.logistics.cityStr + orderDetail.logistics.areaStr + orderDetail.logistics.address"></u-cell>
 		<u-divider text="商品信息"></u-divider>
 		<view class="order">
-			<view class="item" v-for="(item, index) in orderDetail.goods" :key="'a' + index">
+			<view class="item" v-for="(item, index) in orderDetail.goods" :key="item.id">
 				<view class="left"><image :src="item.pic" mode="aspectFill"></image></view>
 				<view class="content">
 					<view class="title u-line-2">{{ item.goodsName }}</view>

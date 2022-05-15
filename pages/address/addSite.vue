@@ -1,24 +1,27 @@
 <template>
 	<view class="wrap">
 		<view class="top">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
+			<u-cell title="一键读取小程序收获地址" :isLink="true" @click="chooseAddress"></u-cell>
+			<!-- #endif -->
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="收货人" prop="linkMan" required>
-					<u--input v-model="form.linkMan" clearable placeholder="请输入收货人" />
+					<u-input v-model="form.linkMan" clearable placeholder="请输入收货人" />
 				</u-form-item>
 				<u-form-item label="手机号码" prop="mobile" required>
-					<u--input v-model="form.mobile" type="number" clearable placeholder="请输入手机号码" />
+					<u-input v-model="form.mobile" type="number" clearable placeholder="请输入手机号码" />
 				</u-form-item>
 				<u-form-item label="所在地区" prop="areaDisplay" required>
 					<u-cell style="width: 100%;" :title="form.areaDisplay ? form.areaDisplay : '省市区县、乡镇信息'" required clickable isLink :border="false" @click="showRegion = true"></u-cell>
 					<city-select v-model="showRegion" :area-code="areaCode" :level="4" @city-change="cityChange"></city-select>
 				</u-form-item>
 				<u-form-item label="详细地址" label-position="top" prop="address" required>
-					<u--input v-model="form.address" type="textarea" :auto-height="true" clearable placeholder="请输入详细地址" />
+					<u-input v-model="form.address" type="textarea" :auto-height="true" clearable placeholder="请输入详细地址" />
 				</u-form-item>
 				<u-form-item label="默认地址">
 					<u-switch v-model="form.isDefault" active-color="#19be6b" slot="right"></u-switch>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">保存</u-button>
@@ -139,6 +142,46 @@ export default {
 				uni.navigateBack()
 			}
 		},
+		chooseAddress() {
+			uni.chooseAddress({
+			  success: res => {
+			    this._chooseAddress(res)
+			  }
+			})
+		},
+		async _chooseAddress(chooseAddressRes) {
+			this.form.address = chooseAddressRes.detailInfo
+			this.form.linkMan = chooseAddressRes.userName
+			this.form.mobile = chooseAddressRes.telNumber
+			this.form.areaDisplay = chooseAddressRes.provinceName + chooseAddressRes.cityName + chooseAddressRes.countyName
+			// 读取省份
+			let res = await this.$wxapi.province()
+			if(res.code != 0) {
+				return
+			}
+			let item = res.data.find(ele => { return ele.name == chooseAddressRes.provinceName })
+			if(item) {
+				this.form.provinceId = item.id
+			}
+			// 读取城市
+			res = await this.$wxapi.nextRegion(item.id)
+			if(res.code != 0) {
+				return
+			}
+			item = res.data.find(ele => { return ele.name == chooseAddressRes.cityName })
+			if(item) {
+				this.form.cityId = item.id
+			}
+			// 读取区县
+			res = await this.$wxapi.nextRegion(item.id)
+			if(res.code != 0) {
+				return
+			}
+			item = res.data.find(ele => { return ele.name == chooseAddressRes.countyName })
+			if(item) {
+				this.form.districtId = item.id
+			}
+		}
 	}
 };
 </script>

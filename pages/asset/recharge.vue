@@ -7,7 +7,7 @@
 			</u-grid-item>
 		</u-grid>
 		<view class="submit-btn">
-			<u--input placeholder="请输入充值金额" v-model="amount" type="digit" fontSize="38rpx" clearable></u--input>
+			<u-input placeholder="请输入充值金额" v-model="amount" type="digit" fontSize="38rpx" clearable></u-input>
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">立即充值</u-button>

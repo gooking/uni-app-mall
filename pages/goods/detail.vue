@@ -5,13 +5,18 @@
 			<scroll-view class="main" scroll-y :scroll-into-view="curViewId" enable-back-to-top scroll-with-animation
 				@scrolltolower="scrolltolower">
 				<view id="basic">
-					<u-swiper :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx"></u-swiper>
+					<video v-if="videoMp4Src" src="{{ videoMp4Src }}" autoplay="true" loop="true" object-fit="cover" style='width:750rpx;height:750rpx;'></video>
+					<u-swiper v-else :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx"></u-swiper>
 					<view class="price-share">
 						<view class="price-score">
 							<view v-if="goodsDetail.basicInfo.minPrice" class="item">
-								<text>¥</text>{{goodsDetail.basicInfo.minPrice}}</view>
+								<text>¥</text>{{goodsDetail.basicInfo.minPrice}}
+							</view>
 							<view v-if="goodsDetail.basicInfo.minScore" class="item">
-								<text><image class="score-icon" src="/static/images/score.png"></image></text>{{goodsDetail.basicInfo.minScore}}</view>
+								<text>
+									<image class="score-icon" src="/static/images/score.png"></image>
+								</text>{{goodsDetail.basicInfo.minScore}}
+							</view>
 						</view>
 						<!-- #ifdef MP -->
 						<view class="btns">
@@ -27,7 +32,10 @@
 						<!-- #endif -->
 					</view>
 					<view class="goods-title u-line-3 pt16">
-						<u-tag v-if="goodsDetail.basicInfo.supplyType == 'vop_jd' || goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
+						<u-tag
+							v-if="goodsDetail.basicInfo.supplyType == 'vop_jd' || goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'"
+							text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag">
+						</u-tag>
 						<text class="goods-title">{{ goodsDetail.basicInfo.name }}</text>
 					</view>
 					<view v-if="goodsDetail.basicInfo.characteristic" class="title-sub">
@@ -44,8 +52,8 @@
 					<u-divider text="详细介绍"></u-divider>
 					<view class="content">
 						<view v-if="wxintroduction">
-							<u--image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"
-								height="auto"></u--image>
+							<u-image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"
+								height="auto"></u-image>
 						</view>
 						<u-parse v-else :content="goodsDetail.content"></u-parse>
 					</view>
@@ -55,16 +63,16 @@
 					<view v-if="reputationList" class="reputation-box">
 						<view v-for="(item,index) in reputationList" :key="index" class="album">
 							<view class="album__avatar">
-								<u--image class="image" :src="item.user.avatarUrl" shape="circle" width="120rpx"
-									height="120rpx"></u--image>
+								<u-image class="image" :src="item.user.avatarUrl" shape="circle" width="120rpx"
+									height="120rpx"></u-image>
 							</view>
 							<view class="album__content">
-								<u--text :text="item.user.nick" type="primary" bold size="17"></u--text>
+								<u-text :text="item.user.nick" type="primary" bold size="17"></u-text>
 								<u-rate v-model="item.goods.goodReputation"></u-rate>
-								<u--text margin="8rpx 0 8rpx 0" size="26rpx" color="#666666"
-									:text="item.goods.goodReputationRemark"></u--text>
-								<u--text margin="0 0 8rpx 0" size="24rpx" color="#666666"
-									:text="item.goods.dateReputation"></u--text>
+								<u-text margin="8rpx 0 8rpx 0" size="26rpx" color="#666666"
+									:text="item.goods.goodReputationRemark"></u-text>
+								<u-text margin="0 0 8rpx 0" size="24rpx" color="#666666"
+									:text="item.goods.dateReputation"></u-text>
 								<!-- <u-album v-if="item.reputationPics" :urls="urls2"></u-album> -->
 								<view style="height: 32rpx;"></view>
 							</view>
@@ -127,8 +135,7 @@
 	export default {
 		data() {
 			return {
-				tabs: [
-					{
+				tabs: [{
 						viewId: 'basic',
 						name: '商品信息',
 					},
@@ -148,7 +155,8 @@
 				faved: false,
 				showGoodsPop: false,
 				page: 1,
-				reputationList: null
+				reputationList: null,
+				videoMp4Src: undefined,
 			}
 		},
 		onLoad(e) {
@@ -179,7 +187,7 @@
 		},
 		methods: {
 			async _goodsDetail(goodsId, supplyType, yyId) {
-				if(goodsId) {
+				if (goodsId) {
 					// https://www.yuque.com/apifm/nu0f75/vuml8a
 					const res = await this.$wxapi.goodsDetail(goodsId, this.token)
 					if (res.code != 0) {
@@ -193,6 +201,9 @@
 						return
 					}
 					this.goodsDetail = res.data
+					if (res.data.basicInfo.videoId) {
+						this.getVideoSrc(res.data.basicInfo.videoId)
+					}
 				} else {
 					// 不是api工厂商品
 					this.goodsDetail = {
@@ -278,7 +289,7 @@
 				this.wxintroduction = res.data.pics
 			},
 			goCart() {
-				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+				if (this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
 					uni.setStorageSync('cart_tabIndex', 1)
 				}
 				uni.switchTab({
@@ -291,7 +302,7 @@
 					type: 0,
 					goodsId: this.goodsDetail.basicInfo.id
 				}
-				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+				if (this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
 					data.type = 1
 					data.goodsId = this.goodsDetail.basicInfo.yyId
 				}
@@ -304,7 +315,7 @@
 				}
 			},
 			async addFav() {
-				if(!await getApp().checkHasLoginedH5()) {
+				if (!await getApp().checkHasLoginedH5()) {
 					uni.navigateTo({
 						url: "/pages/login/login"
 					})
@@ -315,7 +326,7 @@
 					type: 0,
 					goodsId: this.goodsDetail.basicInfo.id
 				}
-				if(this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
+				if (this.goodsDetail.basicInfo.supplyType == 'vop_jd') {
 					data.type = 1
 					data.goodsId = this.goodsDetail.basicInfo.yyId
 				}
@@ -388,6 +399,12 @@
 					} else {
 						this.reputationList = this.reputationList.concat(res.data.result)
 					}
+				}
+			},
+			async getVideoSrc(videoId) {
+				const res = await this.$wxapi.videoDetail(videoId)
+				if (res.code == 0) {
+					this.videoMp4Src = res.data.fdMp4
 				}
 			},
 		}
@@ -482,9 +499,11 @@
 
 	.content {
 		margin-top: 32rpx;
+
 		image {
 			height: auto;
 		}
+
 		div {
 			height: auto;
 		}

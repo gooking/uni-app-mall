@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="提现方式" prop="withdrawType" required>
 					<u-radio-group v-model="form.withdrawType" @change="radioChange">
 						<u-radio label="提现到微信" :name="0"></u-radio>
@@ -10,28 +10,28 @@
 				</u-form-item>
 				<template v-if="userBankInfo">
 					<u-form-item label="所在地">
-						<u--text mode="text" :text="userBankInfo.info.provinceStr + userBankInfo.info.cityStr + userBankInfo.info.areaStr + userBankInfo.info.streetStr" align="right"></u--text>
+						<u-text mode="text" :text="userBankInfo.info.provinceStr + userBankInfo.info.cityStr + userBankInfo.info.areaStr + userBankInfo.info.streetStr" align="right"></u-text>
 					</u-form-item>
 					<u-form-item label="开户银行">
-						<u--text mode="text" :text="userBankInfo.info.bankName" align="right"></u--text>
+						<u-text mode="text" :text="userBankInfo.info.bankName" align="right"></u-text>
 					</u-form-item>
 					<u-form-item label="支行">
-						<u--text mode="text" :text="userBankInfo.info.bankBranch" align="right"></u--text>
+						<u-text mode="text" :text="userBankInfo.info.bankBranch" align="right"></u-text>
 					</u-form-item>
 					<u-form-item label="姓名">
-						<u--text mode="name" :text="userBankInfo.info.name" format="encrypt" align="right"></u--text>
+						<u-text mode="name" :text="userBankInfo.info.name" format="encrypt" align="right"></u-text>
 					</u-form-item>
 					<u-form-item label="账号">
-						<u--text mode="name" :text="userBankInfo.info.bankCardNumber" format="encrypt" align="right"></u--text>
+						<u-text mode="name" :text="userBankInfo.info.bankCardNumber" format="encrypt" align="right"></u-text>
 					</u-form-item>
 				</template>
 				<u-form-item label="可提金额">
-					<u--text mode="price" :text="balance" align="right"></u--text>
+					<u-text mode="price" :text="balance" align="right"></u-text>
 				</u-form-item>
 				<u-form-item label="提现金额" prop="amount" required>
-					<u--input v-model="form.amount" type="digit" clearable placeholder="请输入提现金额"></u--input>
+					<u-input v-model="form.amount" type="digit" clearable placeholder="请输入提现金额"></u-input>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">申请提现</u-button>

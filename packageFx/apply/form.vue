@@ -3,18 +3,18 @@
 		<image v-if="adPositionFxTopPic" class="logo" :src="adPositionFxTopPic.val" mode="widthFix" />
 		
 		<u-divider text="申请成为分销商"></u-divider>
-		<u--form ref="uForm" label-width="130rpx">
+		<u-formref="uForm" label-width="130rpx">
 			<u-form-item v-if="userDetail && userDetail.referrer" label="邀请人">
-				<u--input v-model="userDetail.referrer.nick" />
+				<u-input v-model="userDetail.referrer.nick" />
 			</u-form-item>
 			<u-form-item label="姓名">
-				<u--input v-model="name" clearable required placeholder="请输入真实姓名"/>
+				<u-input v-model="name" clearable required placeholder="请输入真实姓名"/>
 			</u-form-item>
 			<u-form-item label="手机">
-				<u--input v-model="mobile" type="number" clearable required placeholder="请输入手机号码"/>
+				<u-input v-model="mobile" type="number" clearable required placeholder="请输入手机号码"/>
 			</u-form-item>
 		
-		</u--form>
+		</u-form
 		
 		
 		<view class="tips">成为分销商后卖出商品，您可以获得佣金</view>

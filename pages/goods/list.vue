@@ -21,8 +21,8 @@
 						<u-tag v-if="item.supplyType == 'vop_jd' || item.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
 						<text class="goods-title">{{ item.name }}</text>
 					</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
@@ -41,8 +41,8 @@
 						<u-tag v-if="item.supplyType == 'vop_jd' || item.supplyType == 'jdJoycityPoints'" text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
 						<text class="goods-title">{{ item.name }}</text>
 					</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>

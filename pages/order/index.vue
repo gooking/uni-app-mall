@@ -48,7 +48,7 @@
 						<view class="evaluate btn ml24" @click="pay(index)">立即支付</view>
 					</view>
 					<view v-if="item.status > 0 && !item.isEnd" class="bottom">
-						<view v-if="item.refundStatus == 1" class="btn-box">
+						<view v-if="item.refundStatus == 1 || refundApplyedOrderIds.includes(item.id + '')" class="btn-box">
 							<u-button type="error" plain size="small" shape="circle" text="撤销售后"
 								@click="refundCancel(item)"></u-button>
 						</view>
@@ -68,6 +68,7 @@
 	export default {
 		data() {
 			return {
+				refundApplyedOrderIds: undefined,
 				orderList: undefined,
 				dataList: undefined,
 				list: [{
@@ -110,6 +111,9 @@
 			this.change({
 				index: this.current
 			})
+		},
+		onShow() {
+			this.refundApplyedOrderIds = uni.getStorageSync('refundApplyedOrderIds')
 		},
 		methods: {
 			async _orderStatistics() {

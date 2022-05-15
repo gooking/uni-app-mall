@@ -36,9 +36,9 @@
 		</view>
 		<u-notice-bar v-if="notice" class="notice" icon="volume" :text="notice.title" mode="link"
 			url="/pages/notice/list"></u-notice-bar>
-		<u--image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true"
+		<u-image v-if="adPosition['index-live-pic']" class="live-pic" :showLoading="true"
 			:src="adPosition['index-live-pic'].val" width="100vw" height="auto" radius="32rpx" mode="widthFix"
-			@click="goUrl(adPosition['index-live-pic'].url)"></u--image>
+			@click="goUrl(adPosition['index-live-pic'].url)"></u-image>
 		<view v-if="miaoshaGoods" class="miaoshaGoods">
 			<view class="ttt">
 				<view class="l"><u-line></u-line></view>
@@ -92,8 +92,8 @@
 							bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
 						<text class="goods-title">{{ item.name }}</text>
 					</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text>
@@ -116,8 +116,8 @@
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
 					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<u-line-progress :percentage="item.process" activeColor="#ff0000"></u-line-progress>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
@@ -139,8 +139,8 @@
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
 					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<view class="miaosha-price-btn">
 						<view class="price">￥{{item.kanjiaPrice}} <text>￥{{item.minPrice}}</text></view>
 						<u-button type="success" size="mini" text="我要拼团" @click="goDetail(item)"></u-button>
@@ -168,8 +168,8 @@
 							bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag"></u-tag>
 						<text class="goods-title">{{ item.name }}</text>
 					</view>
-					<u--text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
-						color="#c95060"></u--text>
+					<u-text v-if="item.characteristic" class="goods-title" :text="item.characteristic" size="28rpx"
+						color="#c95060"></u-text>
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text>

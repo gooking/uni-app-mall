@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u--form ref="uForm" label-width="130rpx" :model="form">
+			<u-formref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="消耗积分" prop="deductionScore" required>
-					<u--input v-model="form.deductionScore" type="number" clearable focus placeholder="请输入积分数量"></u--input>
+					<u-input v-model="form.deductionScore" type="number" clearable focus placeholder="请输入积分数量"></u-input>
 				</u-form-item>
-			</u--form>
+			</u-form
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">立即兑换</u-button>

@@ -21,7 +21,7 @@
 					</view>
 				</u-form-item>
 				<u-form-item label="设置密码" prop="pwd" required>
-					<u--input v-model="form.pwd" type="password" clearable placeholder="请输入登陆密码"></u--input>
+					<u-input v-model="form.pwd" type="password" clearable placeholder="请输入登陆密码"></u-input>
 				</u-form-item>
 			</u-form>
 		</view>

@@ -41,7 +41,21 @@
     "pages/login/reg",
     "pages/login/resetpwd"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "packageFx",
+      "pages": [
+        "index/index",
+        "apply/index",
+        "apply/form",
+        "myusers/index",
+        "commisionLog/index",
+        "report/team",
+        "report/city",
+        "myusers/myusers-detail"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",
@@ -86,11 +100,18 @@
       }
     ]
   },
+  "preloadRule": {
+    "PackageFx/index/index": {
+      "network": "all",
+      "packages": [
+        "__APP__"
+      ]
+    }
+  },
   "permission": {
     "scope.userLocation": {
       "desc": "为你推荐附近的门店"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

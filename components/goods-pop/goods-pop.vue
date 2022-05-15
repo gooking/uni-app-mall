@@ -2,9 +2,9 @@
 	<u-popup v-if="show" :show="show" mode="bottom" round="32rpx" :customStyle="{maxHeight: '80vh', overflow: 'scroll'}"
 		@close="close">
 		<view class="goodsList-pop">
-			<u--image showLoading lazyLoad :src="pic" radius="16rpx" width="240rpx" height="240rpx"></u--image>
+			<u-image showLoading lazyLoad :src="pic" radius="16rpx" width="240rpx" height="240rpx"></u-image>
 			<view class="goods-info">
-				<u--text class="t" :lines="3" :text="goodsDetail.basicInfo.name"></u--text>
+				<u-text class="t" :lines="3" :text="goodsDetail.basicInfo.name"></u-text>
 				<view v-if="goodsDetail.basicInfo.numberSells" class="t2">已售:{{ goodsDetail.basicInfo.numberSells }}
 				</view>
 				<view class="price">
