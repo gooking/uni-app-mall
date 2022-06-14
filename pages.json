@@ -160,6 +160,19 @@
 		    }
 		},
 		{
+		    "path" : "pages/asset/deposit",
+		    "style": {
+				"navigationBarTitleText": "支付押金"
+		    }
+		},
+		{
+		    "path" : "pages/asset/depositlog",
+		    "style": {
+				"navigationBarTitleText": "押金记录",
+				"enablePullDownRefresh": true
+		    }
+		},
+		{
 		    "path" : "pages/score/index",
 		    "style": {
 				"navigationBarTitleText": "我的积分"

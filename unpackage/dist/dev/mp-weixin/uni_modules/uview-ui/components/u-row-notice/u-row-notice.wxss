@@ -43,6 +43,8 @@ view.data-v-9adf94ee, scroll-view.data-v-9adf94ee, swiper-item.data-v-9adf94ee {
   white-space: nowrap;
   -webkit-animation: u-loop-animation-data-v-9adf94ee 10s linear infinite both;
           animation: u-loop-animation-data-v-9adf94ee 10s linear infinite both;
+  display: flex;
+  flex-direction: row;
 }
 @-webkit-keyframes u-loop-animation-data-v-9adf94ee {
 0% {

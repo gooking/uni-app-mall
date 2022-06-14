@@ -19,7 +19,6 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": true,
     "lazyloadPlaceholderEnable": false,
-    "useMultiFrameRuntime": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -36,7 +35,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.21.2",
-  "appid": "wxb24cb93a3a5c1336",
+  "appid": "wxa46b09d413fbcaff",
   "projectname": "天使童装",
   "condition": {
     "search": {

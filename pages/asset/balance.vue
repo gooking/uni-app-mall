@@ -19,6 +19,8 @@
 		<u-cell title="资金明细" isLink url="/pages/asset/cashlog"></u-cell>
 		<u-cell title="我要提现" isLink url="/pages/asset/widthdraw"></u-cell>
 		<u-cell title="提现记录" isLink url="/pages/asset/withdrawlog"></u-cell>
+		<u-cell title="支付押金" isLink url="/pages/asset/deposit"></u-cell>
+		<u-cell title="押金记录" isLink url="/pages/asset/depositlog"></u-cell>
 	</view>
 </template>
 
@@ -28,6 +30,7 @@
 			return {
 				balance: 0.00,
 				freeze: 0.00,
+				totleConsumed: 0.00,
 				score: 0,
 				score_sign_continuous: 0.00,
 				tabs: [{

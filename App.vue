@@ -6,12 +6,13 @@
 		globalData: {
 			h5Domain: 'https://flpt.jxsupplier.com',
 			goLogin: false,
-			subDomain: 'cysx', // jdjf0115
-			merchantId: 10, // 42151
+			subDomain: 'tz', // jdjf0115
+			merchantId: 951, // 42151
 			version: '1.2.0',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open',
 			wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID
 			openAlipayProvider: false, // 是否开通支付宝支付
+			addressLevel: 3, // 省市区到3级还是4级，可选 3 或者 4
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n

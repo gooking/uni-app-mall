@@ -26,6 +26,8 @@
     "pages/asset/bindCard",
     "pages/asset/widthdraw",
     "pages/asset/withdrawlog",
+    "pages/asset/deposit",
+    "pages/asset/depositlog",
     "pages/score/index",
     "pages/score/logs",
     "pages/score/excharge",
@@ -115,6 +117,5 @@
       "desc": "为你推荐附近的门店"
     }
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }
