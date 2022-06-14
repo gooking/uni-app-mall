@@ -1,7 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
-    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
-  }
-}
