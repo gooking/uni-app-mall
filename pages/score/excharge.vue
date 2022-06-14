@@ -1,11 +1,11 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="券号" prop="number" required>
 					<u-input v-model="form.number" clearable focus placeholder="请输入积分券号码"></u-input>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">立即兑换</u-button>

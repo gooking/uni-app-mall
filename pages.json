@@ -245,6 +245,18 @@
 		    "style": {
 				"navigationBarTitleText": "忘记密码找回"
 		    }
+		},
+		{
+		    "path" : "pages/agreement",
+		    "style": {
+				"navigationBarTitleText": ""
+		    }
+		},
+		{
+		    "path" : "pages/notagree",
+		    "style": {
+				"navigationBarTitleText": ""
+		    }
 		}
     ],
 	"subPackages": [
@@ -306,7 +318,7 @@
 		}
 	],
 	"preloadRule": {
-		"PackageFx/index/index": {
+		"packageFx/index/index": {
 			"network": "all",
 			"packages": ["__APP__"]
 		}

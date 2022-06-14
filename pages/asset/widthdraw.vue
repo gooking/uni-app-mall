@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="提现方式" prop="withdrawType" required>
 					<u-radio-group v-model="form.withdrawType" @change="radioChange">
 						<u-radio label="提现到微信" :name="0"></u-radio>
@@ -31,7 +31,7 @@
 				<u-form-item label="提现金额" prop="amount" required>
 					<u-input v-model="form.amount" type="digit" clearable placeholder="请输入提现金额"></u-input>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">申请提现</u-button>

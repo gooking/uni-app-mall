@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item v-if="orderType == 3" label="售后商品" prop="skuId" required @click="goodsPickerShow = true">
 					<u-input
 						v-model="form.skuName"
@@ -84,7 +84,7 @@
 						multiple
 					></u-upload>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">保存</u-button>

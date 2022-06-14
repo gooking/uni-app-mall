@@ -39,7 +39,9 @@
     "pages/refund/apply",
     "pages/login/login",
     "pages/login/reg",
-    "pages/login/resetpwd"
+    "pages/login/resetpwd",
+    "pages/agreement",
+    "pages/notagree"
   ],
   "subPackages": [
     {
@@ -101,7 +103,7 @@
     ]
   },
   "preloadRule": {
-    "PackageFx/index/index": {
+    "packageFx/index/index": {
       "network": "all",
       "packages": [
         "__APP__"
@@ -113,5 +115,6 @@
       "desc": "为你推荐附近的门店"
     }
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

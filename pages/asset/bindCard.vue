@@ -1,7 +1,7 @@
 <template>
 	<view v-if="!userBankInfo && userBankInfoOk">
 		<view class="form-box">
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="银行名称" prop="bankName" required>
 					<picker class="input-select" mode="selector" v-model="userBankSelectBanksIndex" :range="userBankSelectBanks" range-key="bankName" @change="userBankSelectBanksChange">
 						<view @click="userBankSelectBanksShow = true">
@@ -24,7 +24,7 @@
 				<u-form-item label="银行账号" prop="bankCardNumber" required>
 					<u-input v-model="form.bankCardNumber" type="number" clearable placeholder="请输入银行账号"></u-input>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<view class="submit-btn">
 			<u-button type="success" @click="submit">立即绑定</u-button>

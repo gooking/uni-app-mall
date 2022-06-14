@@ -4,7 +4,7 @@
 			<!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
 			<u-cell title="一键读取小程序收获地址" :isLink="true" @click="chooseAddress"></u-cell>
 			<!-- #endif -->
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="收货人" prop="linkMan" required>
 					<u-input v-model="form.linkMan" clearable placeholder="请输入收货人" />
 				</u-form-item>
@@ -21,7 +21,7 @@
 				<u-form-item label="默认地址">
 					<u-switch v-model="form.isDefault" active-color="#19be6b" slot="right"></u-switch>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<view class="submit">
 			<u-button type="success" @click="submit">保存</u-button>

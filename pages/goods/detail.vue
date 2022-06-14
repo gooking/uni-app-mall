@@ -5,7 +5,7 @@
 			<scroll-view class="main" scroll-y :scroll-into-view="curViewId" enable-back-to-top scroll-with-animation
 				@scrolltolower="scrolltolower">
 				<view id="basic">
-					<video v-if="videoMp4Src" src="{{ videoMp4Src }}" autoplay="true" loop="true" object-fit="cover" style='width:750rpx;height:750rpx;'></video>
+					<video v-if="videoMp4Src" :src="videoMp4Src" autoplay="true" loop="true" object-fit="cover" style='width:750rpx;height:750rpx;'></video>
 					<u-swiper v-else :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx"></u-swiper>
 					<view class="price-share">
 						<view class="price-score">
@@ -285,8 +285,11 @@
 				this.goodsDetail.basicInfo.minPrice = 0
 				this.goodsDetail.basicInfo.minScore = res.data.goodsPrice
 				this.goodsDetail.basicInfo.originalPrice = res.data.suggestedPrice
-				// this.goodsDetail.content = res.data.usageGuide
-				this.wxintroduction = res.data.pics
+				if (res.data.pics && res.data.pics.length > 0) {
+					this.wxintroduction = res.data.pics
+				} else {
+					this.goodsDetail.content = res.data.usageGuide
+				}
 			},
 			goCart() {
 				if (this.goodsDetail.basicInfo.supplyType == 'vop_jd') {

@@ -47,6 +47,9 @@
 		<view v-if="orderDetail.orderInfo.remark" class="remark">
 			{{ orderDetail.orderInfo.remark }}
 		</view>
+		<view v-if="orderDetail.orderInfo.remark2" class="remark">
+			{{ orderDetail.orderInfo.remark2 }}
+		</view>
 		<u-divider text="合计"></u-divider>
 		<u-cell :border="false" title="商品金额" :value="'¥' + orderDetail.orderInfo.amount" :arrow="false"></u-cell>
 		<u-cell :border="false" title="快递费" :value="'¥' + orderDetail.orderInfo.amountLogistics" :arrow="false"></u-cell>

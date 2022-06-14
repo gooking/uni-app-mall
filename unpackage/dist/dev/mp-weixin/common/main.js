@@ -182,8 +182,8 @@ var QQAUTH = __webpack_require__(/*! @/common/qqauth.js */ 17);var _default =
   globalData: {
     h5Domain: 'https://flpt.jxsupplier.com',
     goLogin: false,
-    subDomain: 'bnhj', // jdjf0115
-    merchantId: '88', // 42151
+    subDomain: 'cysx', // jdjf0115
+    merchantId: 10, // 42151
     version: '1.2.0',
     sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open',
     wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID

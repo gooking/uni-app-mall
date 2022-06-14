@@ -165,6 +165,10 @@ async function authorize() {
 								name: 'uid',
 								value: res.data.uid
 							})
+							store.commit('$uStore', {
+								name: 'mobile',
+								value: res.data.mobile
+							})
 							resolve(res)
 						} else {
 							wx.showToast({
@@ -187,6 +191,10 @@ async function authorize() {
 							store.commit('$uStore', {
 								name: 'uid',
 								value: res.data.uid
+							})
+							store.commit('$uStore', {
+								name: 'mobile',
+								value: res.data.mobile
 							})
 							resolve(res)
 						} else {

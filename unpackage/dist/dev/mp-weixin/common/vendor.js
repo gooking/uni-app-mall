@@ -2184,6 +2184,49 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ 1008:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-toolbar/props.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否展示工具条
+    show: {
+      type: Boolean,
+      default: uni.$u.props.toolbar.show },
+
+    // 取消按钮的文字
+    cancelText: {
+      type: String,
+      default: uni.$u.props.toolbar.cancelText },
+
+    // 确认按钮的文字
+    confirmText: {
+      type: String,
+      default: uni.$u.props.toolbar.confirmText },
+
+    // 取消按钮的颜色
+    cancelColor: {
+      type: String,
+      default: uni.$u.props.toolbar.cancelColor },
+
+    // 确认按钮的颜色
+    confirmColor: {
+      type: String,
+      default: uni.$u.props.toolbar.confirmColor },
+
+    // 标题文字
+    title: {
+      type: String,
+      default: uni.$u.props.toolbar.title } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 101:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/notify.js ***!
@@ -2212,6 +2255,23 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     duration: 3000,
     fontSize: 15,
     safeAreaInsetTop: false } };exports.default = _default;
+
+/***/ }),
+
+/***/ 1016:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-status-bar/props.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    bgColor: {
+      type: String,
+      default: uni.$u.props.statusBar.bgColor } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
@@ -2256,6 +2316,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     disableMinus: false,
     disablePlus: false,
     iconStyle: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 1024:
+/*!*********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-safe-bottom/props.js ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {} };exports.default = _default;
 
 /***/ }),
 
@@ -4161,7 +4234,7 @@ try {
 }
 
 // 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-var saveStateKeys = ['sysconfigMap', 'app_show_pic_version', 'referrer', 'token', 'uid', 'cartNumber'];
+var saveStateKeys = ['sysconfigMap', 'app_show_pic_version', 'referrer', 'token', 'uid', 'cartNumber', 'agreeYxtk'];
 
 // 保存变量到本地存储中
 var saveLifeData = function saveLifeData(key, value) {
@@ -4188,6 +4261,7 @@ var store = new _vuex.default.Store({
     referrer: lifeData.referrer ? lifeData.referrer : '',
     token: lifeData.token ? lifeData.token : '92e4cc2d-3cb8-4c2d-b2cd-a9b8d395b641',
     uid: lifeData.uid ? lifeData.uid : '2587651',
+    agreeYxtk: lifeData.agreeYxtk ? true : false,
     cartNumber: 0 },
 
   mutations: {
@@ -6187,7 +6261,9 @@ module.exports = (_module$exports = {
   },
   request: request,
   queryMobileLocation: function queryMobileLocation() {var mobile = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/common/mobile-segment/location', false, 'get', { mobile: mobile });
+    return request('/common/mobile-segment/location', false, 'get', {
+      mobile: mobile });
+
   },
   nextMobileSegment: function nextMobileSegment(data) {
     return request('/common/mobile-segment/next', false, 'post', data);
@@ -6196,13 +6272,20 @@ module.exports = (_module$exports = {
     return request('/common/map/qq/distance', false, 'post', data);
   },
   forexRate: function forexRate(fromCode, toCode) {
-    return request('/forex/rate', true, 'get', { fromCode: fromCode, toCode: toCode });
+    return request('/forex/rate', true, 'get', {
+      fromCode: fromCode,
+      toCode: toCode });
+
   },
   queryConfigValue: function queryConfigValue(key) {
-    return request('/config/value', true, 'get', { key: key });
+    return request('/config/value', true, 'get', {
+      key: key });
+
   },
   queryConfigBatch: function queryConfigBatch(keys) {
-    return request('/config/values', true, 'get', { keys: keys });
+    return request('/config/values', true, 'get', {
+      keys: keys });
+
   },
   scoreRules: function scoreRules(data) {
     return request('/score/send/rule', true, 'post', data);
@@ -6247,7 +6330,9 @@ module.exports = (_module$exports = {
 
   },
   kanjiaSet: function kanjiaSet(goodsId) {
-    return request('/shop/goods/kanjia/set/v2', true, 'get', { goodsId: goodsId });
+    return request('/shop/goods/kanjia/set/v2', true, 'get', {
+      goodsId: goodsId });
+
   },
   kanjiaJoin: function kanjiaJoin(token, kjid) {
     return request('/shop/goods/kanjia/join', true, 'post', {
@@ -6300,7 +6385,9 @@ module.exports = (_module$exports = {
   },
   addTempleMsgFormid: function addTempleMsgFormid(token, type, formId) {
     return request('/template-msg/wxa/formId', true, 'post', {
-      token: token, type: type, formId: formId });
+      token: token,
+      type: type,
+      formId: formId });
 
   },
   sendTempleMsg: function sendTempleMsg(data) {
@@ -6321,6 +6408,12 @@ module.exports = (_module$exports = {
   wxpayJsapi: function wxpayJsapi(data) {
     return request('/pay/wx/jsapi', true, 'post', data);
   },
+  wxpayQrcode: function wxpayQrcode(data) {
+    return request('/pay/wx/qrcode', true, 'post', data);
+  },
+  wxpayApp: function wxpayApp(data) {
+    return request('/pay/wx/app', true, 'post', data);
+  },
   wxpayFOMO: function wxpayFOMO(data) {
     return request('/pay/fomo/wxapp', true, 'post', data);
   },
@@ -6340,7 +6433,10 @@ module.exports = (_module$exports = {
     return request('/pay/tt/ecpay', true, 'post', data);
   },
   payQuery: function payQuery(token, outTradeId) {
-    return request('/pay/query', true, 'get', { token: token, outTradeId: outTradeId });
+    return request('/pay/query', true, 'get', {
+      token: token,
+      outTradeId: outTradeId });
+
   },
   wxpaySaobei: function wxpaySaobei(data) {
     return request('/pay/lcsw/wxapp', true, 'post', data);
@@ -6398,12 +6494,17 @@ module.exports = (_module$exports = {
   },
   bindUsername: function bindUsername(token, username) {var pwd = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     return request('/user/username/bindUsername', true, 'post', {
-      token: token, username: username, pwd: pwd });
+      token: token,
+      username: username,
+      pwd: pwd });
 
   },
   login_mobile: function login_mobile(mobile, pwd) {var deviceId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';var deviceName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/m/login', true, 'post', {
-      mobile: mobile, pwd: pwd, deviceId: deviceId, deviceName: deviceName });
+      mobile: mobile,
+      pwd: pwd,
+      deviceId: deviceId,
+      deviceName: deviceName });
 
   },
   loginMobileSmsCode: function loginMobileSmsCode(data) {
@@ -6411,12 +6512,16 @@ module.exports = (_module$exports = {
   },
   resetPwdUseMobileCode: function resetPwdUseMobileCode(mobile, pwd, code) {
     return request('/user/m/reset-pwd', true, 'post', {
-      mobile: mobile, pwd: pwd, code: code });
+      mobile: mobile,
+      pwd: pwd,
+      code: code });
 
   },
   resetPwdUseEmailCode: function resetPwdUseEmailCode(email, pwd, code) {
     return request('/user/email/reset-pwd', true, 'post', {
-      email: email, pwd: pwd, code: code });
+      email: email,
+      pwd: pwd,
+      code: code });
 
   },
   wxmpAuth: function wxmpAuth(data) {
@@ -6456,10 +6561,14 @@ module.exports = (_module$exports = {
     return request('/shop/goods/category/all', true, 'get');
   },
   goodsCategoryV2: function goodsCategoryV2() {var shopId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/shop/goods/category/all', true, 'get', { shopId: shopId });
+    return request('/shop/goods/category/all', true, 'get', {
+      shopId: shopId });
+
   },
   goodsCategoryDetail: function goodsCategoryDetail(id) {
-    return request('/shop/goods/category/info', true, 'get', { id: id });
+    return request('/shop/goods/category/info', true, 'get', {
+      id: id });
+
   },
   goodsv2: function goodsv2(data) {
     if (!data) {
@@ -6473,17 +6582,20 @@ module.exports = (_module$exports = {
   },
   goodsDetail: function goodsDetail(id) {var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shop/goods/detail', true, 'get', {
-      id: id, token: token });
+      id: id,
+      token: token });
 
   },
   goodsLimitations: function goodsLimitations(goodsId) {var priceId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shop/goods/limitation', true, 'get', {
-      goodsId: goodsId, priceId: priceId });
+      goodsId: goodsId,
+      priceId: priceId });
 
   },
   goodsLimitationsV2: function goodsLimitationsV2(goodsId) {var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shop/goods/limitation', true, 'get', {
-      goodsId: goodsId, propertyChildIds: propertyChildIds });
+      goodsId: goodsId,
+      propertyChildIds: propertyChildIds });
 
   },
   goodsAddition: function goodsAddition(goodsId) {
@@ -6501,11 +6613,15 @@ module.exports = (_module$exports = {
     return request('/shop/goods/putOrUpdate', true, 'post', data);
   },
   deleteMyGoods: function deleteMyGoods(token, id) {
-    return request('/shop/goods/del', true, 'post', { token: token, id: id });
+    return request('/shop/goods/del', true, 'post', {
+      token: token,
+      id: id });
+
   },
   goodsPrice: function goodsPrice(goodsId, propertyChildIds) {
     return request('/shop/goods/price', true, 'post', {
-      goodsId: goodsId, propertyChildIds: propertyChildIds });
+      goodsId: goodsId,
+      propertyChildIds: propertyChildIds });
 
   },
   goodsPriceV2: function goodsPriceV2(data) {
@@ -6513,7 +6629,8 @@ module.exports = (_module$exports = {
   },
   goodsPriceDaily: function goodsPriceDaily(goodsId) {var priceId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shop/goods/price/day', true, 'get', {
-      goodsId: goodsId, priceId: priceId });
+      goodsId: goodsId,
+      priceId: priceId });
 
   },
   goodsPriceFreight: function goodsPriceFreight(data) {
@@ -6521,7 +6638,8 @@ module.exports = (_module$exports = {
   },
   goodsRebate: function goodsRebate(token, goodsId) {
     return request('/shop/goods/rebate/v2', true, 'get', {
-      token: token, goodsId: goodsId });
+      token: token,
+      goodsId: goodsId });
 
   },
   goodsReputation: function goodsReputation(data) {
@@ -6535,7 +6653,9 @@ module.exports = (_module$exports = {
   },
   myBuyGoodsHisDelete: function myBuyGoodsHisDelete(token) {var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     return request('/shop/goods/his/delete', true, 'post', {
-      token: token, id: id, goodsId: goodsId });
+      token: token,
+      id: id,
+      goodsId: goodsId });
 
   },
   goodsFavList: function goodsFavList(data) {
@@ -6543,7 +6663,8 @@ module.exports = (_module$exports = {
   },
   goodsFavPut: function goodsFavPut(token, goodsId) {
     return request('/shop/goods/fav/add', true, 'post', {
-      token: token, goodsId: goodsId });
+      token: token,
+      goodsId: goodsId });
 
   },
   goodsFavAdd: function goodsFavAdd(data) {
@@ -6551,7 +6672,8 @@ module.exports = (_module$exports = {
   },
   goodsFavCheck: function goodsFavCheck(token, goodsId) {
     return request('/shop/goods/fav/check', true, 'get', {
-      token: token, goodsId: goodsId });
+      token: token,
+      goodsId: goodsId });
 
   },
   goodsFavCheckV2: function goodsFavCheckV2(data) {
@@ -6559,14 +6681,19 @@ module.exports = (_module$exports = {
   },
   goodsFavDelete: function goodsFavDelete(token) {var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     return request('/shop/goods/fav/delete', true, 'post', {
-      token: token, id: id, goodsId: goodsId });
+      token: token,
+      id: id,
+      goodsId: goodsId });
 
   },
   goodsFavDeleteV2: function goodsFavDeleteV2(data) {
     return request('/shop/goods/fav/delete', true, 'post', data);
   },
   goodsSeckillGrab: function goodsSeckillGrab(goodsId, seconds) {
-    return request('/goods/seckill/grab', false, 'post', { goodsId: goodsId, seconds: seconds });
+    return request('/goods/seckill/grab', false, 'post', {
+      goodsId: goodsId,
+      seconds: seconds });
+
   },
   coupons: function coupons(data) {
     return request('/discounts/coupons', true, 'get', data);
@@ -6577,7 +6704,9 @@ module.exports = (_module$exports = {
 
   },
   couponStatistics: function couponStatistics(token) {
-    return request('/discounts/statistics', true, 'get', { token: token });
+    return request('/discounts/statistics', true, 'get', {
+      token: token });
+
   },
   myCoupons: function myCoupons(data) {
     return request('/discounts/my', true, 'get', data);
@@ -6596,17 +6725,30 @@ module.exports = (_module$exports = {
   },
   exchangeCoupons: function exchangeCoupons(token, number, pwd) {var extJsonStr = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/discounts/exchange', true, 'post', {
-      token: token, number: number, pwd: pwd, extJsonStr: extJsonStr });
+      token: token,
+      number: number,
+      pwd: pwd,
+      extJsonStr: extJsonStr });
 
   },
   couponsShareOpen: function couponsShareOpen(token, id) {
-    return request('/discounts/share/open', true, 'post', { token: token, id: id });
+    return request('/discounts/share/open', true, 'post', {
+      token: token,
+      id: id });
+
   },
   couponsShareClose: function couponsShareClose(token, id) {
-    return request('/discounts/share/close', true, 'post', { token: token, id: id });
+    return request('/discounts/share/close', true, 'post', {
+      token: token,
+      id: id });
+
   },
   couponsShareFetch: function couponsShareFetch(token, id, shareToken) {
-    return request('/discounts/share/fetch', true, 'post', { token: token, id: id, shareToken: shareToken });
+    return request('/discounts/share/fetch', true, 'post', {
+      token: token,
+      id: id,
+      shareToken: shareToken });
+
   },
   noticeList: function noticeList(data) {
     return request('/notice/list', true, 'post', data);
@@ -6682,7 +6824,9 @@ module.exports = (_module$exports = {
     return request('/shop/goods/pingtuan/list/v2', true, 'post', data);
   },
   pingtuanJoinUsers: function pingtuanJoinUsers(tuanId) {
-    return request('/shop/goods/pingtuan/joiner', true, 'get', { tuanId: tuanId });
+    return request('/shop/goods/pingtuan/joiner', true, 'get', {
+      tuanId: tuanId });
+
   },
   pingtuanMyJoined: function pingtuanMyJoined(data) {
     return request('/shop/goods/pingtuan/my-join-list', true, 'post', data);
@@ -6696,22 +6840,38 @@ module.exports = (_module$exports = {
     return request('/user/friend/list', true, 'post', data);
   },
   addFriend: function addFriend(token, uid) {
-    return request('/user/friend/add', true, 'post', { token: token, uid: uid });
+    return request('/user/friend/add', true, 'post', {
+      token: token,
+      uid: uid });
+
   },
   deleteFriend: function deleteFriend(token, uid) {
-    return request('/user/friend/delete', true, 'post', { token: token, uid: uid });
+    return request('/user/friend/delete', true, 'post', {
+      token: token,
+      uid: uid });
+
   },
   friendUserDetail: function friendUserDetail(token, uid) {
-    return request('/user/friend/detail', true, 'get', { token: token, uid: uid });
+    return request('/user/friend/detail', true, 'get', {
+      token: token,
+      uid: uid });
+
   },
   userImList: function userImList(data) {
     return request('/userIm/list', true, 'post', data);
   },
   userImSendmessage: function userImSendmessage(token, uid, content) {
-    return request('/userIm/sendmessage', true, 'post', { token: token, uid: uid, content: content });
+    return request('/userIm/sendmessage', true, 'post', {
+      token: token,
+      uid: uid,
+      content: content });
+
   },
   userImEmpty: function userImEmpty(token, uid) {
-    return request('/userIm/empty', true, 'post', { token: token, uid: uid });
+    return request('/userIm/empty', true, 'post', {
+      token: token,
+      uid: uid });
+
   },
   videoDetail: function videoDetail(videoId) {
     return request('/media/video/detail', true, 'get', {
@@ -6720,22 +6880,35 @@ module.exports = (_module$exports = {
   },
   bindMobileWxa: function bindMobileWxa(token, encryptedData, iv) {var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/wxapp/bindMobile', true, 'post', {
-      token: token, encryptedData: encryptedData, iv: iv, pwd: pwd });
+      token: token,
+      encryptedData: encryptedData,
+      iv: iv,
+      pwd: pwd });
 
   },
   bindMobileWxapp: function bindMobileWxapp(token, code, encryptedData, iv) {var pwd = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
     return request('/user/wxapp/bindMobile', true, 'post', {
-      token: token, code: code, encryptedData: encryptedData, iv: iv, pwd: pwd });
+      token: token,
+      code: code,
+      encryptedData: encryptedData,
+      iv: iv,
+      pwd: pwd });
 
   },
   bindMobileTta: function bindMobileTta(token, encryptedData, iv) {var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/tt/microapp/bindMobile', true, 'post', {
-      token: token, encryptedData: encryptedData, iv: iv, pwd: pwd });
+      token: token,
+      encryptedData: encryptedData,
+      iv: iv,
+      pwd: pwd });
 
   },
   bindMobileSms: function bindMobileSms(token, mobile, code) {var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/m/bind-mobile', true, 'post', {
-      token: token, mobile: mobile, code: code, pwd: pwd });
+      token: token,
+      mobile: mobile,
+      code: code,
+      pwd: pwd });
 
   },
   userDetail: function userDetail(token) {
@@ -6745,7 +6918,8 @@ module.exports = (_module$exports = {
   },
   userDetailSpreadUser: function userDetailSpreadUser(token, uid) {
     return request('/user/detail/spreadUser', true, 'get', {
-      token: token, uid: uid });
+      token: token,
+      uid: uid });
 
   },
   userWxinfo: function userWxinfo(token) {
@@ -6882,7 +7056,11 @@ module.exports = (_module$exports = {
     return request('/payBill/discounts', true, 'get');
   },
   payBill: function payBill(token, money) {var pwd = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/payBill/pay', true, 'post', { token: token, money: money, pwd: pwd });
+    return request('/payBill/pay', true, 'post', {
+      token: token,
+      money: money,
+      pwd: pwd });
+
   },
   payBillV2: function payBillV2(data) {
     return request('/payBill/pay', true, 'post', data);
@@ -6891,7 +7069,11 @@ module.exports = (_module$exports = {
     return request('/config/vipLevel', true, 'get');
   },
   fxApply: function fxApply(token, name, mobile) {
-    return request('/saleDistribution/apply', true, 'post', { token: token, name: name, mobile: mobile });
+    return request('/saleDistribution/apply', true, 'post', {
+      token: token,
+      name: name,
+      mobile: mobile });
+
   },
   fxApplyV2: function fxApplyV2(data) {
     return request('/saleDistribution/apply/v2', true, 'post', data);
@@ -6900,13 +7082,19 @@ module.exports = (_module$exports = {
     return request('/saleDistribution/setting', true, 'get');
   },
   fxBuy: function fxBuy(token) {
-    return request('/saleDistribution/buy', true, 'post', { token: token });
+    return request('/saleDistribution/buy', true, 'post', {
+      token: token });
+
   },
   fxApplyProgress: function fxApplyProgress(token) {
-    return request('/saleDistribution/apply/progress', true, 'get', { token: token });
+    return request('/saleDistribution/apply/progress', true, 'get', {
+      token: token });
+
   },
   fxApplyProgressV2: function fxApplyProgressV2(token) {
-    return request('/saleDistribution/apply/progress/v2', true, 'get', { token: token });
+    return request('/saleDistribution/apply/progress/v2', true, 'get', {
+      token: token });
+
   },
   fxMembers: function fxMembers(data) {
     return request('/saleDistribution/members', true, 'post', data);
@@ -6915,28 +7103,39 @@ module.exports = (_module$exports = {
     return request('/saleDistribution/commision/log', true, 'post', data);
   },
   fxCommisionFreezeAmount: function fxCommisionFreezeAmount(token) {
-    return request('/saleDistribution/commission/freeze', true, 'get', { token: token });
+    return request('/saleDistribution/commission/freeze', true, 'get', {
+      token: token });
+
   },
   fxSaleroomRankTotal: function fxSaleroomRankTotal(page, pageSize) {
     return request('/saleDistribution/sale-room-rank/total', true, 'get', {
-      page: page, pageSize: pageSize });
+      page: page,
+      pageSize: pageSize });
 
   },
   fxSaleroomRankTotalTeam: function fxSaleroomRankTotalTeam(page, pageSize) {
     return request('/saleDistribution/sale-room-rank/team/total', true, 'get', {
-      page: page, pageSize: pageSize });
+      page: page,
+      pageSize: pageSize });
 
   },
   fxSaleroomRankDaily: function fxSaleroomRankDaily(page, pageSize, day) {
     return request('/saleDistribution/sale-room-rank/daily', true, 'get', {
-      page: page, pageSize: pageSize, day: day });
+      page: page,
+      pageSize: pageSize,
+      day: day });
 
   },
   fxMembersStatistics: function fxMembersStatistics(token) {
-    return request('/saleDistribution/members/statistics', true, 'get', { token: token });
+    return request('/saleDistribution/members/statistics', true, 'get', {
+      token: token });
+
   },
   fxMyCommisionStatistics: function fxMyCommisionStatistics(token, days) {
-    return request('/saleDistribution/my/commision', true, 'get', { token: token, days: days });
+    return request('/saleDistribution/my/commision', true, 'get', {
+      token: token,
+      days: days });
+
   },
   fxGoods: function fxGoods(data) {
     return request('/saleDistribution/goods', true, 'post', data);
@@ -6945,14 +7144,18 @@ module.exports = (_module$exports = {
     return request('/saleDistribution/team/report', true, 'post', data);
   },
   fxCities: function fxCities(token) {
-    return request('/saleDistribution/city/list', true, 'get', { token: token });
+    return request('/saleDistribution/city/list', true, 'get', {
+      token: token });
+
   },
   fxCityReport: function fxCityReport(data) {
     return request('/saleDistribution/city/report', true, 'post', data);
   },
   goodsSellNumberStatistics: function goodsSellNumberStatistics(page, pageSize) {var goodsId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     return request('/site/goods/statistics', true, 'get', {
-      page: page, pageSize: pageSize, goodsId: goodsId });
+      page: page,
+      pageSize: pageSize,
+      goodsId: goodsId });
 
   },
   wxaQrcode: function wxaQrcode(data) {
@@ -6991,10 +7194,15 @@ module.exports = (_module$exports = {
     });
   },
   uploadFileFromUrl: function uploadFileFromUrl() {var remoteFileUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';var ext = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    return request('/dfs/upload/url', true, 'post', { remoteFileUrl: remoteFileUrl, ext: ext });
+    return request('/dfs/upload/url', true, 'post', {
+      remoteFileUrl: remoteFileUrl,
+      ext: ext });
+
   },
   uploadFileList: function uploadFileList() {var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/dfs/upload/list', true, 'post', { path: path });
+    return request('/dfs/upload/list', true, 'post', {
+      path: path });
+
   },
   refundApply: function refundApply(data) {
     return request('/order/refundApply/apply', true, 'post', data);
@@ -7017,7 +7225,9 @@ module.exports = (_module$exports = {
     return request('/cms/category/list', true, 'get', {});
   },
   cmsCategoryDetail: function cmsCategoryDetail(id) {
-    return request('/cms/category/info', true, 'get', { id: id });
+    return request('/cms/category/info', true, 'get', {
+      id: id });
+
   },
   cmsArticles: function cmsArticles(data) {
     return request('/cms/news/list', true, 'post', data);
@@ -7029,25 +7239,36 @@ module.exports = (_module$exports = {
     return request('/cms/news/useful/logs', true, 'post', data);
   },
   cmsArticleDetail: function cmsArticleDetail(id) {
-    return request('/cms/news/detail', true, 'get', { id: id });
+    return request('/cms/news/detail', true, 'get', {
+      id: id });
+
   },
   cmsArticleDetailV2: function cmsArticleDetailV2(id) {
-    return request('/cms/news/detail/v2', true, 'get', { id: id });
+    return request('/cms/news/detail/v2', true, 'get', {
+      id: id });
+
   },
   cmsArticlePreNext: function cmsArticlePreNext(id) {
-    return request('/cms/news/preNext', true, 'get', { id: id });
+    return request('/cms/news/preNext', true, 'get', {
+      id: id });
+
   },
   cmsArticleCreate: function cmsArticleCreate(data) {
     return request('/cms/news/put', true, 'post', data);
   },
   cmsArticleDelete: function cmsArticleDelete(token, id) {
-    return request('/cms/news/del', true, 'post', { token: token, id: id });
+    return request('/cms/news/del', true, 'post', {
+      token: token,
+      id: id });
+
   },
   cmsArticleUseless: function cmsArticleUseless(data) {
     return request('/cms/news/useful', true, 'post', data);
   },
   cmsPage: function cmsPage(key) {
-    return request('/cms/page/info/v2', true, 'get', { key: key });
+    return request('/cms/page/info/v2', true, 'get', {
+      key: key });
+
   },
   cmsTags: function cmsTags() {
     return request('/cms/tags/list', true, 'get', {});
@@ -7059,7 +7280,10 @@ module.exports = (_module$exports = {
     return request('/invoice/apply', true, 'post', data);
   },
   invoiceDetail: function invoiceDetail(token, id) {
-    return request('/invoice/info', true, 'get', { token: token, id: id });
+    return request('/invoice/info', true, 'get', {
+      token: token,
+      id: id });
+
   },
   depositList: function depositList(data) {
     return request('/deposit/list', true, 'post', data);
@@ -7068,10 +7292,16 @@ module.exports = (_module$exports = {
     return request('/deposit/pay', true, 'post', data);
   },
   depositInfo: function depositInfo(token, id) {
-    return request('/deposit/info', true, 'get', { token: token, id: id });
+    return request('/deposit/info', true, 'get', {
+      token: token,
+      id: id });
+
   },
   depositBackApply: function depositBackApply(token, id) {
-    return request('/deposit/back/apply', true, 'post', { token: token, id: id });
+    return request('/deposit/back/apply', true, 'post', {
+      token: token,
+      id: id });
+
   },
   shopAreaCities: function shopAreaCities() {
     return request('/shopArea/cities', true, 'get');
@@ -7080,7 +7310,9 @@ module.exports = (_module$exports = {
     return request('/shopArea/list', true, 'post', data);
   },
   shopAreaDetail: function shopAreaDetail(id) {
-    return request('/shopArea/detail', true, 'get', { id: id });
+    return request('/shopArea/detail', true, 'get', {
+      id: id });
+
   },
   fetchShopsCities: function fetchShopsCities() {
     return request('/shop/subshop/cities', true, 'get');
@@ -7089,10 +7321,14 @@ module.exports = (_module$exports = {
     return request('/shop/subshop/list', true, 'post', data);
   },
   fetchMyShops: function fetchMyShops(token) {
-    return request('/shop/subshop/my', true, 'get', { token: token });
+    return request('/shop/subshop/my', true, 'get', {
+      token: token });
+
   },
   shopSubdetail: function shopSubdetail(id) {
-    return request('/shop/subshop/detail/v2', true, 'get', { id: id });
+    return request('/shop/subshop/detail/v2', true, 'get', {
+      id: id });
+
   },
   shopSubApply: function shopSubApply(data) {
     return request('/shop/subshop/apply', true, 'post', data);
@@ -7113,22 +7349,38 @@ module.exports = (_module$exports = {
     return request('/user/bindSaleman', true, 'post', data);
   },
   modifyUserPassword: function modifyUserPassword(token, pwdOld, pwdNew) {
-    return request('/user/modify/password', true, 'post', { token: token, pwdOld: pwdOld, pwdNew: pwdNew });
+    return request('/user/modify/password', true, 'post', {
+      token: token,
+      pwdOld: pwdOld,
+      pwdNew: pwdNew });
+
   },
   uniqueId: function uniqueId() {var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/uniqueId/get', true, 'get', { type: type });
+    return request('/uniqueId/get', true, 'get', {
+      type: type });
+
   },
   queryBarcode: function queryBarcode() {var barcode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/barcode/info', true, 'get', { barcode: barcode });
+    return request('/barcode/info', true, 'get', {
+      barcode: barcode });
+
   },
   luckyInfo: function luckyInfo(id) {
-    return request('/luckyInfo/info/v2', true, 'get', { id: id });
+    return request('/luckyInfo/info/v2', true, 'get', {
+      id: id });
+
   },
   luckyInfoJoin: function luckyInfoJoin(id, token) {
-    return request('/luckyInfo/join', true, 'post', { id: id, token: token });
+    return request('/luckyInfo/join', true, 'post', {
+      id: id,
+      token: token });
+
   },
   luckyInfoJoinMy: function luckyInfoJoinMy(id, token) {
-    return request('/luckyInfo/join/my', true, 'get', { id: id, token: token });
+    return request('/luckyInfo/join/my', true, 'get', {
+      id: id,
+      token: token });
+
   },
   luckyInfoJoinLogs: function luckyInfoJoinLogs(data) {
     return request('/luckyInfo/join/logs', true, 'post', data);
@@ -7143,47 +7395,90 @@ module.exports = (_module$exports = {
     return request('/json/set', true, 'post', data);
   },
   jsonDelete: function jsonDelete(token, id) {
-    return request('/json/delete', true, 'post', { token: token, id: id });
+    return request('/json/delete', true, 'post', {
+      token: token,
+      id: id });
+
   },
   jsonTop: function jsonTop(token, id, isTop) {
-    return request('/json/top', true, 'post', { token: token, id: id, isTop: isTop });
+    return request('/json/top', true, 'post', {
+      token: token,
+      id: id,
+      isTop: isTop });
+
   },
   jsonHighlight: function jsonHighlight(token, id, isHighlight) {
-    return request('/json/highlight', true, 'post', { token: token, id: id, isHighlight: isHighlight });
+    return request('/json/highlight', true, 'post', {
+      token: token,
+      id: id,
+      isHighlight: isHighlight });
+
   },
   graphValidateCodeUrl: function graphValidateCodeUrl() {var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Math.random();
     var _url = API_BASE_URL + '/' + subDomain + '/verification/pic/get?key=' + key;
     return _url;
   },
   graphValidateCodeCheck: function graphValidateCodeCheck() {var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Math.random();var code = arguments.length > 1 ? arguments[1] : undefined;
-    return request('/verification/pic/check', true, 'post', { key: key, code: code });
+    return request('/verification/pic/check', true, 'post', {
+      key: key,
+      code: code });
+
   },
   shortUrl: function shortUrl() {var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/common/short-url/shorten', false, 'post', { url: url });
+    return request('/common/short-url/shorten', false, 'post', {
+      url: url });
+
   },
   smsValidateCode: function smsValidateCode(mobile) {var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var picCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/verification/sms/get', true, 'get', { mobile: mobile, key: key, picCode: picCode });
+    return request('/verification/sms/get', true, 'get', {
+      mobile: mobile,
+      key: key,
+      picCode: picCode });
+
   },
   smsValidateCodeByToken: function smsValidateCodeByToken(token) {
-    return request('/verification/sms/get-by-token', true, 'get', { token: token });
+    return request('/verification/sms/get-by-token', true, 'get', {
+      token: token });
+
   },
   smsValidateCodeCheck: function smsValidateCodeCheck(mobile, code) {
-    return request('/verification/sms/check', true, 'post', { mobile: mobile, code: code });
+    return request('/verification/sms/check', true, 'post', {
+      mobile: mobile,
+      code: code });
+
   },
   mailValidateCode: function mailValidateCode(mail) {
-    return request('/verification/mail/get', true, 'get', { mail: mail });
+    return request('/verification/mail/get', true, 'get', {
+      mail: mail });
+
   },
   mailValidateCodeCheck: function mailValidateCodeCheck(mail, code) {
-    return request('/verification/mail/check', true, 'post', { mail: mail, code: code });
+    return request('/verification/mail/check', true, 'post', {
+      mail: mail,
+      code: code });
+
   },
   mapDistance: function mapDistance(lat1, lng1, lat2, lng2) {
-    return request('/common/map/distance', false, 'get', { lat1: lat1, lng1: lng1, lat2: lat2, lng2: lng2 });
+    return request('/common/map/distance', false, 'get', {
+      lat1: lat1,
+      lng1: lng1,
+      lat2: lat2,
+      lng2: lng2 });
+
   },
   mapDistanceNavigation: function mapDistanceNavigation(key, mode, from, to) {
-    return request('/common/map/qq/distance', false, 'post', { key: key, mode: mode, from: from, to: to });
+    return request('/common/map/qq/distance', false, 'post', {
+      key: key,
+      mode: mode,
+      from: from,
+      to: to });
+
   },
   mapQQAddress: function mapQQAddress() {var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';var coord_type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '5';
-    return request('/common/map/qq/address', false, 'get', { location: location, coord_type: coord_type });
+    return request('/common/map/qq/address', false, 'get', {
+      location: location,
+      coord_type: coord_type });
+
   },
   mapQQSearch: function mapQQSearch(data) {
     return request('/common/map/qq/search', false, 'post', data);
@@ -7192,40 +7487,66 @@ module.exports = (_module$exports = {
     return request('/virtualTrader/list', true, 'post', data);
   },
   virtualTraderDetail: function virtualTraderDetail(token, id) {
-    return request('/virtualTrader/info', true, 'get', { token: token, id: id });
+    return request('/virtualTrader/info', true, 'get', {
+      token: token,
+      id: id });
+
   },
   virtualTraderBuy: function virtualTraderBuy(token, id) {
-    return request('/virtualTrader/buy', true, 'post', { token: token, id: id });
+    return request('/virtualTrader/buy', true, 'post', {
+      token: token,
+      id: id });
+
   },
   virtualTraderMyBuyLogs: function virtualTraderMyBuyLogs(data) {
     return request('/virtualTrader/buy/logs', true, 'post', data);
   },
   queuingTypes: function queuingTypes() {var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/queuing/types', true, 'get', { status: status });
+    return request('/queuing/types', true, 'get', {
+      status: status });
+
   },
   queuingGet: function queuingGet(token, typeId) {var mobile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/queuing/get', true, 'post', { token: token, typeId: typeId, mobile: mobile });
+    return request('/queuing/get', true, 'post', {
+      token: token,
+      typeId: typeId,
+      mobile: mobile });
+
   },
   queuingMy: function queuingMy(token) {var typeId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var status = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/queuing/my', true, 'get', { token: token, typeId: typeId, status: status });
+    return request('/queuing/my', true, 'get', {
+      token: token,
+      typeId: typeId,
+      status: status });
+
   },
   idcardCheck: function idcardCheck(token, name, idCardNo) {
-    return request('/user/idcard', true, 'post', { token: token, name: name, idCardNo: idCardNo });
+    return request('/user/idcard', true, 'post', {
+      token: token,
+      name: name,
+      idCardNo: idCardNo });
+
   },
   bindSeller: function bindSeller(data) {
     return request('/user/bindSeller', true, 'post', data);
   },
   loginout: function loginout(token) {
-    return request('/user/loginout', true, 'get', { token: token });
+    return request('/user/loginout', true, 'get', {
+      token: token });
+
   },
   userLevelList: function userLevelList(data) {
     return request('/user/level/list', true, 'post', data);
   },
   userLevelDetail: function userLevelDetail(levelId) {
-    return request('/user/level/info', true, 'get', { id: levelId });
+    return request('/user/level/info', true, 'get', {
+      id: levelId });
+
   },
   userLevelPrices: function userLevelPrices(levelId) {
-    return request('/user/level/prices', true, 'get', { levelId: levelId });
+    return request('/user/level/prices', true, 'get', {
+      levelId: levelId });
+
   },
   userLevelBuy: function userLevelBuy(token, priceId) {var isAutoRenew = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;var remark = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/level/buy', true, 'post', {
@@ -7242,46 +7563,62 @@ module.exports = (_module$exports = {
     return request('/user/message/list', true, 'post', data);
   },
   messageRead: function messageRead(token, id) {
-    return request('/user/message/read', true, 'post', { token: token, id: id });
+    return request('/user/message/read', true, 'post', {
+      token: token,
+      id: id });
+
   },
   messageDelete: function messageDelete(token, id) {
-    return request('/user/message/del', true, 'post', { token: token, id: id });
+    return request('/user/message/del', true, 'post', {
+      token: token,
+      id: id });
+
   },
   bindOpenid: function bindOpenid(token, code) {
     return request('/user/wxapp/bindOpenid', true, 'post', {
-      token: token, code: code,
+      token: token,
+      code: code,
       type: 2 });
 
   },
   encryptedData: function encryptedData(code, _encryptedData, iv) {
     return request('/user/wxapp/decode/encryptedData', true, 'post', {
-      code: code, encryptedData: _encryptedData, iv: iv });
+      code: code,
+      encryptedData: _encryptedData,
+      iv: iv });
 
   },
   scoreDeductionRules: function scoreDeductionRules() {var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/score/deduction/rules', true, 'get', { type: type });
+    return request('/score/deduction/rules', true, 'get', {
+      type: type });
+
   },
   voteItems: function voteItems(data) {
     return request('/vote/items', true, 'post', data);
   },
   voteItemDetail: function voteItemDetail(id) {
-    return request('/vote/info', true, 'get', { id: id });
+    return request('/vote/info', true, 'get', {
+      id: id });
+
   },
   vote: function vote(token, voteId, items, remark) {
     return request('/vote/vote', true, 'post', {
-      token: token, voteId: voteId,
+      token: token,
+      voteId: voteId,
       items: items.join(),
       remark: remark });
 
   },
   myVote: function myVote(token, voteId) {
     return request('/vote/vote/info', true, 'get', {
-      token: token, voteId: voteId });
+      token: token,
+      voteId: voteId });
 
   },
   myVoteV2: function myVoteV2(token, voteId) {
     return request('/vote/vote/info/v2', true, 'get', {
-      token: token, voteId: voteId });
+      token: token,
+      voteId: voteId });
 
   },
   voteLogs: function voteLogs(data) {
@@ -7294,27 +7631,37 @@ module.exports = (_module$exports = {
     return request('/yuyue/items', true, 'post', data);
   },
   yuyueItemDetail: function yuyueItemDetail(id) {var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    return request('/yuyue/info', true, 'get', { id: id, token: token });
+    return request('/yuyue/info', true, 'get', {
+      id: id,
+      token: token });
+
   },
   yuyueItemDelete: function yuyueItemDelete(token, id) {
-    return request('/yuyue/del', true, 'post', { token: token, id: id });
+    return request('/yuyue/del', true, 'post', {
+      token: token,
+      id: id });
+
   },
   yuyueJoin: function yuyueJoin(data) {
     return request('/yuyue/join', true, 'post', data);
   },
   yuyueJoinPay: function yuyueJoinPay(token, joinId) {
     return request('/yuyue/pay', true, 'post', {
-      token: token, joinId: joinId });
+      token: token,
+      joinId: joinId });
 
   },
   yuyueJoinUpdate: function yuyueJoinUpdate(token, joinId, extJsonStr) {
     return request('/yuyue/join/update', true, 'post', {
-      token: token, joinId: joinId, extJsonStr: extJsonStr });
+      token: token,
+      joinId: joinId,
+      extJsonStr: extJsonStr });
 
   },
   yuyueMyJoinInfo: function yuyueMyJoinInfo(token, joinId) {
     return request('/yuyue/join/info', true, 'post', {
-      token: token, joinId: joinId });
+      token: token,
+      joinId: joinId });
 
   },
   yuyueMyJoinLogs: function yuyueMyJoinLogs(data) {
@@ -7324,7 +7671,9 @@ module.exports = (_module$exports = {
     return request('/yuyue/info/teams', true, 'post', data);
   },
   yuyueTeamDetail: function yuyueTeamDetail(teamId) {
-    return request('/yuyue/info/team', true, 'get', { teamId: teamId });
+    return request('/yuyue/info/team', true, 'get', {
+      teamId: teamId });
+
   },
   yuyueTeamMembers: function yuyueTeamMembers(data) {
     return request('/yuyue/info/team/members', true, 'post', data);
@@ -7340,39 +7689,61 @@ module.exports = (_module$exports = {
   },
   bindEmail: function bindEmail(token, email, code) {var pwd = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/user/email/bindUsername', true, 'post', {
-      token: token, email: email, code: code, pwd: pwd });
+      token: token,
+      email: email,
+      code: code,
+      pwd: pwd });
 
   },
   goodsDynamic: function goodsDynamic(type) {
-    return request('/site/goods/dynamic', true, 'get', { type: type });
+    return request('/site/goods/dynamic', true, 'get', {
+      type: type });
+
   },
   goodsDynamicV2: function goodsDynamicV2(data) {
     return request('/site/goods/dynamic', true, 'get', data);
   },
   usersDynamic: function usersDynamic(type) {
-    return request('/site/user/dynamic', true, 'get', { type: type });
+    return request('/site/user/dynamic', true, 'get', {
+      type: type });
+
   },
   fetchSubDomainByWxappAppid: function fetchSubDomainByWxappAppid(appid) {
-    return request('/subdomain/appid/wxapp', false, 'get', { appid: appid });
+    return request('/subdomain/appid/wxapp', false, 'get', {
+      appid: appid });
+
   },
   cmsArticleFavPut: function cmsArticleFavPut(token, newsId) {
-    return request('/cms/news/fav/add', true, 'post', { token: token, newsId: newsId });
+    return request('/cms/news/fav/add', true, 'post', {
+      token: token,
+      newsId: newsId });
+
   },
   cmsArticleFavCheck: function cmsArticleFavCheck(token, newsId) {
-    return request('/cms/news/fav/check', true, 'get', { token: token, newsId: newsId });
+    return request('/cms/news/fav/check', true, 'get', {
+      token: token,
+      newsId: newsId });
+
   },
   cmsArticleFavList: function cmsArticleFavList(data) {
     return request('/cms/news/fav/list', true, 'post', data);
   },
   cmsArticleFavDeleteById: function cmsArticleFavDeleteById(token, id) {
-    return request('/cms/news/fav/delete', true, 'post', { token: token, id: id });
+    return request('/cms/news/fav/delete', true, 'post', {
+      token: token,
+      id: id });
+
   },
   cmsArticleFavDeleteByNewsId: function cmsArticleFavDeleteByNewsId(token, newsId) {
-    return request('/cms/news/fav/delete', true, 'post', { token: token, newsId: newsId });
+    return request('/cms/news/fav/delete', true, 'post', {
+      token: token,
+      newsId: newsId });
+
   },
   shippingCarInfo: function shippingCarInfo(token) {var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shopping-cart/info', true, 'get', {
-      token: token, type: type });
+      token: token,
+      type: type });
 
   },
   shippingCarInfoAddItem: function shippingCarInfoAddItem(token, goodsId, number, sku, addition) {var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '';
@@ -7387,22 +7758,31 @@ module.exports = (_module$exports = {
   },
   shippingCarInfoModifyNumber: function shippingCarInfoModifyNumber(token, key, number) {var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/shopping-cart/modifyNumber', true, 'post', {
-      token: token, key: key, number: number, type: type });
+      token: token,
+      key: key,
+      number: number,
+      type: type });
 
   },
   shippingCarInfoRemoveItem: function shippingCarInfoRemoveItem(token, key) {var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
     return request('/shopping-cart/remove', true, 'post', {
-      token: token, key: key, type: type });
+      token: token,
+      key: key,
+      type: type });
 
   },
   shippingCartSelected: function shippingCartSelected(token, key, selected) {var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
     return request('/shopping-cart/select', true, 'post', {
-      token: token, key: key, selected: selected, type: type });
+      token: token,
+      key: key,
+      selected: selected,
+      type: type });
 
   },
   shippingCarInfoRemoveAll: function shippingCarInfoRemoveAll(token) {var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
     return request('/shopping-cart/empty', true, 'post', {
-      token: token, type: type });
+      token: token,
+      type: type });
 
   },
   growthLogs: function growthLogs(data) {
@@ -7410,7 +7790,8 @@ module.exports = (_module$exports = {
   },
   exchangeScoreToGrowth: function exchangeScoreToGrowth(token, deductionScore) {
     return request('/growth/exchange', true, 'post', {
-      token: token, deductionScore: deductionScore });
+      token: token,
+      deductionScore: deductionScore });
 
   },
   wxaMpLiveRooms: function wxaMpLiveRooms() {
@@ -7441,7 +7822,9 @@ module.exports = (_module$exports = {
     return request('/peisong/member/statistics', true, 'post', data);
   },
   peisongOrdersGrabbing: function peisongOrdersGrabbing(token) {
-    return request('/peisong/order/grabbing', true, 'get', { token: token });
+    return request('/peisong/order/grabbing', true, 'get', {
+      token: token });
+
   },
   peisongOrders: function peisongOrders(data) {
     return request('/peisong/order/list', true, 'post', data);
@@ -7450,7 +7833,10 @@ module.exports = (_module$exports = {
     return request('/peisong/order/grab', true, 'post', data);
   },
   peisongOrderDetail: function peisongOrderDetail(token, id) {
-    return request('/peisong/order/detail', true, 'get', { token: token, id: id });
+    return request('/peisong/order/detail', true, 'get', {
+      token: token,
+      id: id });
+
   },
   peisongOrderEstimatedCompletionTime: function peisongOrderEstimatedCompletionTime(data) {
     return request('/peisong/order/estimatedCompletionTime', true, 'post', data);
@@ -7463,7 +7849,9 @@ module.exports = (_module$exports = {
   },
   peisongOrderAllocation: function peisongOrderAllocation(token, id, uid) {
     return request('/peisong/order/allocation', true, 'post', {
-      token: token, id: id, uid: uid });
+      token: token,
+      id: id,
+      uid: uid });
 
   },
   siteStatistics: function siteStatistics() {
@@ -7473,7 +7861,9 @@ module.exports = (_module$exports = {
     return request('/user/wxmp/auth', true, 'post', data);
   },
   jssdkSign: function jssdkSign(url) {
-    return request('/wx/jssdk/sign', true, 'post', { url: url });
+    return request('/wx/jssdk/sign', true, 'post', {
+      url: url });
+
   },
   orderStatistics: function orderStatistics(token) {
     return request('/order/statistics', true, 'get', {
@@ -7487,13 +7877,17 @@ module.exports = (_module$exports = {
     return request('/site/statistics/saleroom', true, 'get', data);
   },
   siteStatisticsSaleroomYear: function siteStatisticsSaleroomYear() {var year = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return request('/site/statistics/saleroom/year', true, 'get', { year: year });
+    return request('/site/statistics/saleroom/year', true, 'get', {
+      year: year });
+
   },
   bonusLog: function bonusLog(data) {
     return request('/bonusLog/list', true, 'post', data);
   },
   mtjAsset: function mtjAsset(token) {
-    return request('/mtj/asset', true, 'get', { token: token });
+    return request('/mtj/asset', true, 'get', {
+      token: token });
+
   },
   mtjSetting: function mtjSetting() {
     return request('/mtj/setting', true, 'get');
@@ -7515,17 +7909,20 @@ module.exports = (_module$exports = {
   },
   userAttentioncheck: function userAttentioncheck(token, uid) {
     return request('/user/attention/check', true, 'get', {
-      token: token, uid: uid });
+      token: token,
+      uid: uid });
 
   },
   userAttentionAdd: function userAttentionAdd(token, uid) {
     return request('/user/attention/add', true, 'post', {
-      token: token, uid: uid });
+      token: token,
+      uid: uid });
 
   },
   userAttentionRemove: function userAttentionRemove(token, uid) {
     return request('/user/attention/remove', true, 'post', {
-      token: token, uid: uid });
+      token: token,
+      uid: uid });
 
   },
   userAttentionMeList: function userAttentionMeList(data) {
@@ -7536,7 +7933,8 @@ module.exports = (_module$exports = {
   },
   userAttentionDetail: function userAttentionDetail(token, uid) {
     return request('/user/attention/detail', true, 'get', {
-      token: token, uid: uid });
+      token: token,
+      uid: uid });
 
   },
   userAttentionStatistics: function userAttentionStatistics(token) {
@@ -7557,19 +7955,33 @@ module.exports = (_module$exports = {
     return request('/cyTable/pay-order', true, 'post', data);
   },
   goodsTimesSchedule: function goodsTimesSchedule() {var goodsId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var brandId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';var categoryId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-    return request('/shop/goods/times/schedule', true, 'post', { goodsId: goodsId, propertyChildIds: propertyChildIds, brandId: brandId, categoryId: categoryId });
+    return request('/shop/goods/times/schedule', true, 'post', {
+      goodsId: goodsId,
+      propertyChildIds: propertyChildIds,
+      brandId: brandId,
+      categoryId: categoryId });
+
   },
   goodsTimesDays: function goodsTimesDays(goodsId) {var propertyChildIds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    return request('/shop/goods/times/days', true, 'post', { goodsId: goodsId, propertyChildIds: propertyChildIds });
+    return request('/shop/goods/times/days', true, 'post', {
+      goodsId: goodsId,
+      propertyChildIds: propertyChildIds });
+
   },
   goodsTimesDayItems: function goodsTimesDayItems(day, goodsId) {var propertyChildIds = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/shop/goods/times/items', true, 'post', { day: day, goodsId: goodsId, propertyChildIds: propertyChildIds });
+    return request('/shop/goods/times/items', true, 'post', {
+      day: day,
+      goodsId: goodsId,
+      propertyChildIds: propertyChildIds });
+
   },
   goodsBrandList: function goodsBrandList(data) {
     return request('/shop/goods/brand/list', true, 'post', data);
   },
   goodsBrandDetail: function goodsBrandDetail(id) {
-    return request('/shop/goods/brand/detail', true, 'get', { id: id });
+    return request('/shop/goods/brand/detail', true, 'get', {
+      id: id });
+
   },
   wxappServiceLogin: function wxappServiceLogin(data) {
     return request('/user/wxappService/login', true, 'post', data);
@@ -7596,22 +8008,39 @@ module.exports = (_module$exports = {
     return request('/user/wxappService/decode/encryptedData', true, 'post', data);
   },
   trtcUserSig: function trtcUserSig(token) {
-    return request('/trtc/userSig', true, 'get', { token: token });
+    return request('/trtc/userSig', true, 'get', {
+      token: token });
+
   },
   setPayPassword: function setPayPassword(token, pwd) {
-    return request('/user/paypwd/set', true, 'post', { token: token, pwd: pwd });
+    return request('/user/paypwd/set', true, 'post', {
+      token: token,
+      pwd: pwd });
+
   },
   modifyPayPassword: function modifyPayPassword(token, pwdOld, pwdNew) {
-    return request('/user/paypwd/modify', true, 'post', { token: token, pwdOld: pwdOld, pwdNew: pwdNew });
+    return request('/user/paypwd/modify', true, 'post', {
+      token: token,
+      pwdOld: pwdOld,
+      pwdNew: pwdNew });
+
   },
   resetPayPassword: function resetPayPassword(mobile, code, pwd) {
-    return request('/user/paypwd/reset', true, 'post', { mobile: mobile, code: code, pwd: pwd });
+    return request('/user/paypwd/reset', true, 'post', {
+      mobile: mobile,
+      code: code,
+      pwd: pwd });
+
   },
   adPosition: function adPosition(key) {
-    return request('/site/adPosition/info', true, 'get', { key: key });
+    return request('/site/adPosition/info', true, 'get', {
+      key: key });
+
   },
   adPositionBatch: function adPositionBatch(keys) {
-    return request('/site/adPosition/batch', true, 'get', { keys: keys });
+    return request('/site/adPosition/batch', true, 'get', {
+      keys: keys });
+
   },
   momentsCategory: function momentsCategory() {
     return request('/momentsCategory/list', true, 'get');
@@ -7620,7 +8049,9 @@ module.exports = (_module$exports = {
     return request('/moments/list', true, 'post', data);
   },
   momentsdetail: function momentsdetail(id) {
-    return request('/moments/detail', true, 'get', { id: id });
+    return request('/moments/detail', true, 'get', {
+      id: id });
+
   },
   goodsVisitLog: function goodsVisitLog(data) {
     return request('/goods/visitLog', true, 'post', data);
@@ -7632,25 +8063,40 @@ module.exports = (_module$exports = {
     return request('/goods/visitLog/delete', true, 'post', data);
   },
   channelDataPush: function channelDataPush(key, content) {
-    return request('/channelData/push', true, 'post', { key: key, content: content });
+    return request('/channelData/push', true, 'post', {
+      key: key,
+      content: content });
+
   },
   channelDataPull: function channelDataPull(key) {
-    return request('/channelData/pull', true, 'get', { key: key });
+    return request('/channelData/pull', true, 'get', {
+      key: key });
+
   },
   bindPartner: function bindPartner(token, partnerId) {
-    return request('/user/bindPartner', true, 'post', { token: token, uid: partnerId });
+    return request('/user/bindPartner', true, 'post', {
+      token: token,
+      uid: partnerId });
+
   },
   partnerSetting: function partnerSetting() {
     return request('/partner/setting', true, 'get');
   },
   partnerBindTeamLeader: function partnerBindTeamLeader(token, uid) {
-    return request('/partner/bindTeamLeader', true, 'post', { token: token, uid: uid });
+    return request('/partner/bindTeamLeader', true, 'post', {
+      token: token,
+      uid: uid });
+
   },
   partnerBuyTeamLeader: function partnerBuyTeamLeader(token) {
-    return request('/partner/buy', true, 'post', { token: token });
+    return request('/partner/buy', true, 'post', {
+      token: token });
+
   },
   partnerMembersStatistics: function partnerMembersStatistics(token) {
-    return request('/partner/members/statistics', true, 'get', { token: token });
+    return request('/partner/members/statistics', true, 'get', {
+      token: token });
+
   },
   partnerMembers: function partnerMembers(data) {
     return request('/partner/members', true, 'post', data);
@@ -7662,43 +8108,69 @@ module.exports = (_module$exports = {
     return request('/liveRooms/list', true, 'post', data);
   },
   myLiveRoomsInfo: function myLiveRoomsInfo(token, id) {
-    return request('/liveRooms/my/info', true, 'get', { token: token, id: id });
+    return request('/liveRooms/my/info', true, 'get', {
+      token: token,
+      id: id });
+
   },
   liveRoomsInfo: function liveRoomsInfo(token, id) {
-    return request('/liveRooms/info', true, 'get', { token: token, id: id });
+    return request('/liveRooms/info', true, 'get', {
+      token: token,
+      id: id });
+
   },
   liveRoomGoodsMainly: function liveRoomGoodsMainly(data) {
     return request('/liveRooms/goods/mainly', true, 'post', data);
   },
   stopLiveRoom: function stopLiveRoom(token, id) {
-    return request('/liveRooms/my/stop', true, 'post', { token: token, id: id });
+    return request('/liveRooms/my/stop', true, 'post', {
+      token: token,
+      id: id });
+
   },
   likeLiveRoom: function likeLiveRoom(token, id) {
-    return request('/liveRooms/like', true, 'post', { token: token, id: id });
+    return request('/liveRooms/like', true, 'post', {
+      token: token,
+      id: id });
+
   },
   liveRoomOnlineUsers: function liveRoomOnlineUsers(token, roomId) {
-    return request('/websocket/rest/liveRoom/onlines', false, 'get', { token: token, roomId: roomId });
+    return request('/websocket/rest/liveRoom/onlines', false, 'get', {
+      token: token,
+      roomId: roomId });
+
   },
   liveRoomKickOutUser: function liveRoomKickOutUser(token, roomId, uid) {
-    return request('/websocket/rest/liveRoom/kickOut', false, 'post', { token: token, roomId: roomId, uid: uid });
+    return request('/websocket/rest/liveRoom/kickOut', false, 'post', {
+      token: token,
+      roomId: roomId,
+      uid: uid });
+
   },
   mockApi: function mockApi(groupName, apiName, method) {
     return request("/mock/".concat(groupName, "/").concat(apiName), true, method);
   },
   tourJourneyList: function tourJourneyList(type, refId) {
-    return request('/tourJourney/list', true, 'get', { type: type, refId: refId });
+    return request('/tourJourney/list', true, 'get', {
+      type: type,
+      refId: refId });
+
   },
   userBankSelectBanks: function userBankSelectBanks() {
     return request('/userBank/banks', true, 'get');
   },
   userBankInfo: function userBankInfo(token) {
-    return request('/userBank/info', true, 'get', { token: token });
+    return request('/userBank/info', true, 'get', {
+      token: token });
+
   },
   userBankBind: function userBankBind(data) {
     return request('/userBank/bind', true, 'post', data);
   },
   userBankUnBind: function userBankUnBind(token) {
-    return request('/userBank/unbind', true, 'post', { token: token });
+    return request('/userBank/unbind', true, 'post', {
+      token: token });
+
   },
   // 京东VOP相关接口
   jdvopGoodsList: function jdvopGoodsList(data) {
@@ -7728,17 +8200,22 @@ module.exports = (_module$exports = {
   },
   jdvopCartModifyNumber: function jdvopCartModifyNumber(token, key, number) {
     return request("/jdvop/".concat(merchantId, "/shopping-cart/modifyNumber"), false, 'post', {
-      token: token, key: key, number: number });
+      token: token,
+      key: key,
+      number: number });
 
   },
   jdvopCartSelect: function jdvopCartSelect(token, key, selected) {
     return request("/jdvop/".concat(merchantId, "/shopping-cart/select"), false, 'post', {
-      token: token, key: key, selected: selected });
+      token: token,
+      key: key,
+      selected: selected });
 
   },
   jdvopCartRemove: function jdvopCartRemove(token, key) {
     return request("/jdvop/".concat(merchantId, "/shopping-cart/remove"), false, 'post', {
-      token: token, key: key });
+      token: token,
+      key: key });
 
   },
   jdvopCartEmpty: function jdvopCartEmpty(token) {
@@ -7750,44 +8227,67 @@ module.exports = (_module$exports = {
     return request('/vop/goods/list', true, 'post', data);
   },
   jdvopJinhuoGoodsDetail: function jdvopJinhuoGoodsDetail(token, skuId) {
-    return request('/vop/goods/detail', true, 'get', { token: token, skuId: skuId });
+    return request('/vop/goods/detail', true, 'get', {
+      token: token,
+      skuId: skuId });
+
   },
   // cps
   cpsJdGoodsDetail: function cpsJdGoodsDetail(data) {
     return request('/cpsJdGoods/detail', true, 'get', data);
   },
   cpsJdGoodsShotUrl: function cpsJdGoodsShotUrl(token, skuId) {
-    return request('/cpsJdGoods/shotUrl', true, 'get', { token: token, skuId: skuId });
+    return request('/cpsJdGoods/shotUrl', true, 'get', {
+      token: token,
+      skuId: skuId });
+
   },
   cpsJdOrders: function cpsJdOrders(data) {
     return request('/cpsJdOrder/list', true, 'post', data);
   },
   cpsJdOrderDetail: function cpsJdOrderDetail(token, id) {
-    return request('/cpsJdOrder/detail', true, 'get', { token: token, id: id });
+    return request('/cpsJdOrder/detail', true, 'get', {
+      token: token,
+      id: id });
+
   },
   cpsPddBeian: function cpsPddBeian(token) {
-    return request('/cpsPddGoods/beian', true, 'get', { token: token });
+    return request('/cpsPddGoods/beian', true, 'get', {
+      token: token });
+
   },
   cpsPddGoodsDetail: function cpsPddGoodsDetail(data) {
     return request('/cpsPddGoods/detail', true, 'get', data);
   },
   cpsPddGoodsShotUrl: function cpsPddGoodsShotUrl(token, goodsSign) {
-    return request('/cpsPddGoods/shotUrl', true, 'get', { token: token, goodsSign: goodsSign });
+    return request('/cpsPddGoods/shotUrl', true, 'get', {
+      token: token,
+      goodsSign: goodsSign });
+
   },
   cpsPddOrders: function cpsPddOrders(data) {
     return request('/cpsPddOrder/list', true, 'post', data);
   },
   cpsPddOrderDetail: function cpsPddOrderDetail(token, id) {
-    return request('/cpsPddOrder/detail', true, 'get', { token: token, id: id });
+    return request('/cpsPddOrder/detail', true, 'get', {
+      token: token,
+      id: id });
+
   },
   cpsTaobaoGoodsDetail: function cpsTaobaoGoodsDetail(data) {
     return request('/cpsTaobaoGoods/detail', true, 'get', data);
   },
   cpsTaobaoGoodsShotUrl: function cpsTaobaoGoodsShotUrl(token, content) {
-    return request('/cpsTaobaoGoods/shotUrl', true, 'post', { token: token, content: content });
+    return request('/cpsTaobaoGoods/shotUrl', true, 'post', {
+      token: token,
+      content: content });
+
   },
   cpsTaobaoGoodsKouling: function cpsTaobaoGoodsKouling(token, content) {
-    return request('/cpsTaobaoGoods/kouling', true, 'post', { token: token, content: content });
+    return request('/cpsTaobaoGoods/kouling', true, 'post', {
+      token: token,
+      content: content });
+
   },
   // 回收
   recycleOrders: function recycleOrders(data) {
@@ -7797,29 +8297,45 @@ module.exports = (_module$exports = {
     return request('/recycleOrder/apply', true, 'post', data);
   },
   recycleOrderDetail: function recycleOrderDetail(token, id) {
-    return request('/recycleOrder/detail', true, 'get', { token: token, id: id });
+    return request('/recycleOrder/detail', true, 'get', {
+      token: token,
+      id: id });
+
   },
   recycleOrderFahuo: function recycleOrderFahuo(data) {
     return request('/recycleOrder/fahuo', true, 'post', data);
   },
   recycleOrderClose: function recycleOrderClose(token, id) {
-    return request('/recycleOrder/close', true, 'post', { token: token, id: id });
+    return request('/recycleOrder/close', true, 'post', {
+      token: token,
+      id: id });
+
   },
   recycleOrderDelete: function recycleOrderDelete(token, id) {
-    return request('/recycleOrder/del', true, 'post', { token: token, id: id });
+    return request('/recycleOrder/del', true, 'post', {
+      token: token,
+      id: id });
+
   },
   // 会员卡
   cardList: function cardList(data) {
     return request('/card/list', true, 'post', data);
   },
   cardInfo: function cardInfo(id) {
-    return request('/card/info', true, 'get', { id: id });
+    return request('/card/info', true, 'get', {
+      id: id });
+
   },
   cardBuy: function cardBuy(token, id) {
-    return request('/card/buy', true, 'post', { token: token, id: id });
+    return request('/card/buy', true, 'post', {
+      token: token,
+      id: id });
+
   },
   cardMyList: function cardMyList(token) {
-    return request('/card/my', true, 'get', { token: token });
+    return request('/card/my', true, 'get', {
+      token: token });
+
   },
   cardMyLogs: function cardMyLogs(data) {
     return request('/card/logs', true, 'post', data);
@@ -7829,16 +8345,25 @@ module.exports = (_module$exports = {
     return request('/collectCard/del', true, 'post', data);
   },
   collectCardInfo: function collectCardInfo(number) {
-    return request('/collectCard/cardInfo', true, 'get', { number: number });
+    return request('/collectCard/cardInfo', true, 'get', {
+      number: number });
+
   },
   collectCardHisInfo: function collectCardHisInfo(token, id) {
-    return request('/collectCard/hisInfo', true, 'get', { token: token, id: id });
+    return request('/collectCard/hisInfo', true, 'get', {
+      token: token,
+      id: id });
+
   },
   collectCardBind: function collectCardBind(data) {
     return request('/collectCard/bind', true, 'post', data);
   },
   collectCardUnBind: function collectCardUnBind(token, id, smsCode) {
-    return request('/collectCard/bind', true, 'post', { token: token, id: id, smsCode: smsCode });
+    return request('/collectCard/bind', true, 'post', {
+      token: token,
+      id: id,
+      smsCode: smsCode });
+
   },
   // 其他
   bengenSaleTongjiList: function bengenSaleTongjiList(data) {
@@ -7852,7 +8377,9 @@ module.exports = (_module$exports = {
     return request('/courseInfo/list', true, 'post', data);
   },
   courseInfo: function courseInfo(id) {
-    return request('/courseInfo/info', true, 'get', { id: id });
+    return request('/courseInfo/info', true, 'get', {
+      id: id });
+
   },
   courseBuyLogPublic: function courseBuyLogPublic(data) {
     return request('/courseBuyLog/public', true, 'post', data);
@@ -7864,20 +8391,35 @@ module.exports = (_module$exports = {
     return request('/courseBuyLog/buy', true, 'post', data);
   },
   courseInfoBuyLogPay: function courseInfoBuyLogPay(token, orderId) {
-    return request('/courseBuyLog/pay', true, 'post', { token: token, orderId: orderId });
+    return request('/courseBuyLog/pay', true, 'post', {
+      token: token,
+      orderId: orderId });
+
   },
   courseInfoBuyLogDetail: function courseInfoBuyLogDetail(token, id) {var hxNumber = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    return request('/courseBuyLog/detail', true, 'get', { token: token, id: id, hxNumber: hxNumber });
+    return request('/courseBuyLog/detail', true, 'get', {
+      token: token,
+      id: id,
+      hxNumber: hxNumber });
+
   },
   courseInfoBuyLogClose: function courseInfoBuyLogClose(token, orderId) {
-    return request('/courseBuyLog/close', true, 'post', { token: token, orderId: orderId });
+    return request('/courseBuyLog/close', true, 'post', {
+      token: token,
+      orderId: orderId });
+
   },
   courseInfoBuyLogDelete: function courseInfoBuyLogDelete(token, orderId) {
-    return request('/courseBuyLog/del', true, 'post', { token: token, orderId: orderId });
+    return request('/courseBuyLog/del', true, 'post', {
+      token: token,
+      orderId: orderId });
+
   },
   // 橱窗
   chuchuanSettingInfo: function chuchuanSettingInfo(uid) {
-    return request('/chuchuan/info', true, 'get', { uid: uid });
+    return request('/chuchuan/info', true, 'get', {
+      uid: uid });
+
   },
   chuchuanSettingModify: function chuchuanSettingModify(data) {
     return request('/chuchuan/modify', true, 'post', data);
@@ -7889,10 +8431,16 @@ module.exports = (_module$exports = {
     return request('/chuchuanGoods/add', true, 'post', data);
   },
   chuchuanGoodsRemove: function chuchuanGoodsRemove(token, goodsId) {
-    return request('/chuchuanGoods/remove', true, 'post', { token: token, goodsId: goodsId });
+    return request('/chuchuanGoods/remove', true, 'post', {
+      token: token,
+      goodsId: goodsId });
+
   },
   chuchuanGoodsCheck: function chuchuanGoodsCheck(token, goodsId) {
-    return request('/chuchuanGoods/check', true, 'get', { token: token, goodsId: goodsId });
+    return request('/chuchuanGoods/check', true, 'get', {
+      token: token,
+      goodsId: goodsId });
+
   },
   // 寄存
   jicunGoodsList: function jicunGoodsList(data) {
@@ -7903,16 +8451,24 @@ module.exports = (_module$exports = {
   },
   // ocr
   ocrBusinessLicense: function ocrBusinessLicense(imageUrl) {
-    return request('/ocr/businessLicense', true, 'post', { imageUrl: imageUrl });
+    return request('/ocr/businessLicense', true, 'post', {
+      imageUrl: imageUrl });
+
   },
   ocrIdcard: function ocrIdcard(imageUrl) {
-    return request('/ocr/idcard', true, 'post', { imageUrl: imageUrl });
+    return request('/ocr/idcard', true, 'post', {
+      imageUrl: imageUrl });
+
   },
   ocrBankcard: function ocrBankcard(imageUrl) {
-    return request('/ocr/bankcard', true, 'post', { imageUrl: imageUrl });
+    return request('/ocr/bankcard', true, 'post', {
+      imageUrl: imageUrl });
+
   },
   ocrDriverLicense: function ocrDriverLicense(imageUrl) {
-    return request('/ocr/driverLicense', true, 'post', { imageUrl: imageUrl });
+    return request('/ocr/driverLicense', true, 'post', {
+      imageUrl: imageUrl });
+
   },
   // 朋友圈
   momentsPublish: function momentsPublish(data) {
@@ -7922,44 +8478,72 @@ function momentsList(data) {
   return request('/user/moments/list', true, 'get', data);
 }), _defineProperty(_module$exports, "momentsDetail",
 function momentsDetail(token, momentsId) {
-  return request('/user/moments/detail', true, 'get', { token: token, momentsId: momentsId });
+  return request('/user/moments/detail', true, 'get', {
+    token: token,
+    momentsId: momentsId });
+
 }), _defineProperty(_module$exports, "momentsDelete",
 function momentsDelete(token, momentsId) {
-  return request('/user/moments/del', true, 'post', { token: token, momentsId: momentsId });
+  return request('/user/moments/del', true, 'post', {
+    token: token,
+    momentsId: momentsId });
+
 }), _defineProperty(_module$exports, "momentsDeleteComment",
 function momentsDeleteComment(token, commentId) {
-  return request('/user/moments/delCommon', true, 'post', { token: token, commentId: commentId });
+  return request('/user/moments/delCommon', true, 'post', {
+    token: token,
+    commentId: commentId });
+
 }), _defineProperty(_module$exports, "momentsLike",
 function momentsLike(token, momentsId) {
-  return request('/user/moments/like', true, 'post', { token: token, momentsId: momentsId });
+  return request('/user/moments/like', true, 'post', {
+    token: token,
+    momentsId: momentsId });
+
 }), _defineProperty(_module$exports, "momentsComment",
 function momentsComment(token, momentsId) {var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';var content = arguments.length > 3 ? arguments[3] : undefined;
-  return request('/user/moments/comment', true, 'post', { token: token, momentsId: momentsId, uid: uid, content: content });
+  return request('/user/moments/comment', true, 'post', {
+    token: token,
+    momentsId: momentsId,
+    uid: uid,
+    content: content });
+
 }), _defineProperty(_module$exports, "momentsCommentLogs",
 function momentsCommentLogs(data) {
   return request('/user/moments/logs', true, 'get', data);
 }), _defineProperty(_module$exports, "momentsLogsRead",
 function momentsLogsRead(token, logsIds) {
-  return request('/user/moments/logRead', true, 'post', { token: token, logsIds: logsIds });
+  return request('/user/moments/logRead', true, 'post', {
+    token: token,
+    logsIds: logsIds });
+
 }), _defineProperty(_module$exports, "bottleMsgPublish",
 function bottleMsgPublish(data) {
   return request('/bottleMsg/publish', true, 'post', data);
 }), _defineProperty(_module$exports, "bottleMsgSalvage",
 function bottleMsgSalvage(token) {
-  return request('/bottleMsg/salvage', true, 'get', { token: token });
+  return request('/bottleMsg/salvage', true, 'get', {
+    token: token });
+
 }), _defineProperty(_module$exports, "userInvoiceInfo",
 function userInvoiceInfo(token) {
-  return request('/userInvoice/info', true, 'get', { token: token });
+  return request('/userInvoice/info', true, 'get', {
+    token: token });
+
 }), _defineProperty(_module$exports, "userInvoiceUnbind",
 function userInvoiceUnbind(token) {
-  return request('/userInvoice/unbind', true, 'post', { token: token });
+  return request('/userInvoice/unbind', true, 'post', {
+    token: token });
+
 }), _defineProperty(_module$exports, "userInvoiceBind",
 function userInvoiceBind(data) {
   return request('/userInvoice/bind', true, 'post', data);
 }), _defineProperty(_module$exports, "joycityPointsGoodsDetail",
 
 function joycityPointsGoodsDetail(goodsId) {
-  return request('/joycityPoints/goods/detail', true, 'get', { goodsId: goodsId });
+  return request('/joycityPoints/goods/detail', true, 'get', {
+    goodsId: goodsId });
+
 }), _defineProperty(_module$exports, "joycityPointsCanApplyAfterSale",
 function joycityPointsCanApplyAfterSale(data) {
   return request('/joycityPoints/orders/canApplyAfterSale', true, 'get', data);
@@ -7981,10 +8565,15 @@ function aliappUserAuthorize(data) {
   return request('/user/aliapp/authorize', true, 'post', data);
 }), _defineProperty(_module$exports, "tempDataSet",
 function tempDataSet(key, content) {
-  return request('/tempData/set', true, 'post', { key: key, content: content });
+  return request('/tempData/set', true, 'post', {
+    key: key,
+    content: content });
+
 }), _defineProperty(_module$exports, "tempDataGet",
 function tempDataGet(key) {
-  return request('/tempData/get', true, 'get', { key: key });
+  return request('/tempData/get', true, 'get', {
+    key: key });
+
 }), _module$exports);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -20825,7 +21414,75 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 529:
+/***/ 53:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/alert.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:48:53
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/alert.js
+                                                                                                      */var _default =
+{
+  // alert警告组件
+  alert: {
+    title: '',
+    type: 'warning',
+    description: '',
+    closable: false,
+    showIcon: false,
+    effect: 'light',
+    center: false,
+    fontSize: 14 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 54:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/avatar.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:49:22
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/avatar.js
+                                                                                                      */var _default =
+{
+  // avatar 组件
+  avatar: {
+    src: '',
+    shape: 'circle',
+    size: 40,
+    mode: 'scaleToFill',
+    text: '',
+    bgColor: '#c0c4cc',
+    color: '#ffffff',
+    fontSize: 18,
+    icon: '',
+    mpAvatar: false,
+    randomBgColor: false,
+    defaultUrl: '',
+    colorIndex: '',
+    name: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 545:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-swiper/props.js ***!
   \****************************************************************************************************/
@@ -20959,10 +21616,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 53:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/alert.js ***!
-  \**************************************************************************************************/
+/***/ 55:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/avatarGroup.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20973,24 +21630,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:48:53
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/alert.js
+                                                                                                      * @lastTime     : 2021-08-20 16:49:55
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/avatarGroup.js
                                                                                                       */var _default =
 {
-  // alert警告组件
-  alert: {
-    title: '',
-    type: 'warning',
-    description: '',
-    closable: false,
-    showIcon: false,
-    effect: 'light',
-    center: false,
-    fontSize: 14 } };exports.default = _default;
+  // avatarGroup 组件
+  avatarGroup: {
+    urls: function urls() {return [];},
+    maxCount: 5,
+    shape: 'circle',
+    mode: 'scaleToFill',
+    showMore: true,
+    size: 40,
+    keyName: '',
+    gap: 0.5,
+    extraValue: 0 } };exports.default = _default;
 
 /***/ }),
 
-/***/ 537:
+/***/ 553:
 /*!********************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/mixin/button.js ***!
   \********************************************************************************************/
@@ -21012,7 +21670,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 538:
+/***/ 554:
 /*!**********************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/mixin/openType.js ***!
   \**********************************************************************************************/
@@ -21046,7 +21704,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 539:
+/***/ 555:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-button/props.js ***!
   \****************************************************************************************************/
@@ -21216,10 +21874,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 54:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/avatar.js ***!
-  \***************************************************************************************************/
+/***/ 56:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/backtop.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21230,30 +21888,28 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:49:22
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/avatar.js
+                                                                                                      * @lastTime     : 2021-08-20 16:50:18
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/backtop.js
                                                                                                       */var _default =
 {
-  // avatar 组件
-  avatar: {
-    src: '',
-    shape: 'circle',
-    size: 40,
-    mode: 'scaleToFill',
+  // backtop组件
+  backtop: {
+    mode: 'circle',
+    icon: 'arrow-upward',
     text: '',
-    bgColor: '#c0c4cc',
-    color: '#ffffff',
-    fontSize: 18,
-    icon: '',
-    mpAvatar: false,
-    randomBgColor: false,
-    defaultUrl: '',
-    colorIndex: '',
-    name: '' } };exports.default = _default;
+    duration: 100,
+    scrollTop: 0,
+    top: 400,
+    bottom: 100,
+    right: 20,
+    zIndex: 9,
+    iconStyle: function iconStyle() {return {
+        color: '#909399',
+        fontSize: '19px' };} } };exports.default = _default;
 
 /***/ }),
 
-/***/ 547:
+/***/ 563:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-search/props.js ***!
   \****************************************************************************************************/
@@ -21380,10 +22036,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 55:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/avatarGroup.js ***!
-  \********************************************************************************************************/
+/***/ 57:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/badge.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21394,25 +22050,29 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:49:55
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/avatarGroup.js
+                                                                                                      * @lastTime     : 2021-08-23 19:51:50
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/badge.js
                                                                                                       */var _default =
 {
-  // avatarGroup 组件
-  avatarGroup: {
-    urls: function urls() {return [];},
-    maxCount: 5,
+  // 徽标数组件
+  badge: {
+    isDot: false,
+    value: '',
+    show: true,
+    max: 999,
+    type: 'error',
+    showZero: false,
+    bgColor: null,
+    color: null,
     shape: 'circle',
-    mode: 'scaleToFill',
-    showMore: true,
-    size: 40,
-    keyName: '',
-    gap: 0.5,
-    extraValue: 0 } };exports.default = _default;
+    numberType: 'overflow',
+    offset: function offset() {return [];},
+    inverted: false,
+    absolute: false } };exports.default = _default;
 
 /***/ }),
 
-/***/ 555:
+/***/ 571:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-cell-group/props.js ***!
   \********************************************************************************************************/
@@ -21435,42 +22095,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 56:
-/*!****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/backtop.js ***!
-  \****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:50:18
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/backtop.js
-                                                                                                      */var _default =
-{
-  // backtop组件
-  backtop: {
-    mode: 'circle',
-    icon: 'arrow-upward',
-    text: '',
-    duration: 100,
-    scrollTop: 0,
-    top: 400,
-    bottom: 100,
-    right: 20,
-    zIndex: 9,
-    iconStyle: function iconStyle() {return {
-        color: '#909399',
-        fontSize: '19px' };} } };exports.default = _default;
-
-/***/ }),
-
-/***/ 563:
+/***/ 579:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-cell/props.js ***!
   \**************************************************************************************************/
@@ -21589,10 +22214,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 57:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/badge.js ***!
-  \**************************************************************************************************/
+/***/ 58:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/button.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21603,29 +22228,44 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-23 19:51:50
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/badge.js
+                                                                                                      * @lastTime     : 2021-08-20 16:51:27
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/button.js
                                                                                                       */var _default =
 {
-  // 徽标数组件
-  badge: {
-    isDot: false,
-    value: '',
-    show: true,
-    max: 999,
-    type: 'error',
-    showZero: false,
-    bgColor: null,
-    color: null,
-    shape: 'circle',
-    numberType: 'overflow',
-    offset: function offset() {return [];},
-    inverted: false,
-    absolute: false } };exports.default = _default;
+  // button组件
+  button: {
+    hairline: false,
+    type: 'info',
+    size: 'normal',
+    shape: 'square',
+    plain: false,
+    disabled: false,
+    loading: false,
+    loadingText: '',
+    loadingMode: 'spinner',
+    loadingSize: 15,
+    openType: '',
+    formType: '',
+    appParameter: '',
+    hoverStopPropagation: true,
+    lang: 'en',
+    sessionFrom: '',
+    sendMessageTitle: '',
+    sendMessagePath: '',
+    sendMessageImg: '',
+    showMessageCard: false,
+    dataName: '',
+    throttleTime: 0,
+    hoverStartTime: 0,
+    hoverStayTime: 200,
+    text: '',
+    icon: '',
+    iconColor: '',
+    color: '' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 571:
+/***/ 587:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-sticky/props.js ***!
   \****************************************************************************************************/
@@ -21674,7 +22314,58 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 579:
+/***/ 59:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/calendar.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:52:43
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/calendar.js
+                                                                                                      */var _default =
+{
+  // calendar 组件
+  calendar: {
+    title: '日期选择',
+    showTitle: true,
+    showSubtitle: true,
+    mode: 'single',
+    startText: '开始',
+    endText: '结束',
+    customList: function customList() {return [];},
+    color: '#3c9cff',
+    minDate: 0,
+    maxDate: 0,
+    defaultDate: null,
+    maxCount: Number.MAX_SAFE_INTEGER, // Infinity
+    rowHeight: 56,
+    formatter: null,
+    showLunar: false,
+    showMark: true,
+    confirmText: '确定',
+    confirmDisabledText: '确定',
+    show: false,
+    closeOnClickOverlay: false,
+    readonly: false,
+    showConfirm: true,
+    maxRange: Number.MAX_SAFE_INTEGER, // Infinity
+    rangePrompt: '',
+    showRangePrompt: true,
+    allowSameDay: false,
+    round: 0,
+    monthNum: 3 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 595:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-notice-bar/props.js ***!
   \********************************************************************************************************/
@@ -21753,10 +22444,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 58:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/button.js ***!
-  \***************************************************************************************************/
+/***/ 60:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/carKeyboard.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21767,44 +22458,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:51:27
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/button.js
+                                                                                                      * @lastTime     : 2021-08-20 16:53:20
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/carKeyboard.js
                                                                                                       */var _default =
 {
-  // button组件
-  button: {
-    hairline: false,
-    type: 'info',
-    size: 'normal',
-    shape: 'square',
-    plain: false,
-    disabled: false,
-    loading: false,
-    loadingText: '',
-    loadingMode: 'spinner',
-    loadingSize: 15,
-    openType: '',
-    formType: '',
-    appParameter: '',
-    hoverStopPropagation: true,
-    lang: 'en',
-    sessionFrom: '',
-    sendMessageTitle: '',
-    sendMessagePath: '',
-    sendMessageImg: '',
-    showMessageCard: false,
-    dataName: '',
-    throttleTime: 0,
-    hoverStartTime: 0,
-    hoverStayTime: 200,
-    text: '',
-    icon: '',
-    iconColor: '',
-    color: '' } };exports.default = _default;
+  // 车牌号键盘
+  carKeyboard: {
+    random: false } };exports.default = _default;
 
 /***/ }),
 
-/***/ 587:
+/***/ 603:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-image/props.js ***!
   \***************************************************************************************************/
@@ -21897,10 +22561,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 59:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/calendar.js ***!
-  \*****************************************************************************************************/
+/***/ 61:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/cell.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21911,44 +22575,37 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:52:43
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/calendar.js
+                                                                                                      * @lastTime     : 2021-08-23 20:53:09
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/cell.js
                                                                                                       */var _default =
 {
-  // calendar 组件
-  calendar: {
-    title: '日期选择',
-    showTitle: true,
-    showSubtitle: true,
-    mode: 'single',
-    startText: '开始',
-    endText: '结束',
-    customList: function customList() {return [];},
-    color: '#3c9cff',
-    minDate: 0,
-    maxDate: 0,
-    defaultDate: null,
-    maxCount: Number.MAX_SAFE_INTEGER, // Infinity
-    rowHeight: 56,
-    formatter: null,
-    showLunar: false,
-    showMark: true,
-    confirmText: '确定',
-    confirmDisabledText: '确定',
-    show: false,
-    closeOnClickOverlay: false,
-    readonly: false,
-    showConfirm: true,
-    maxRange: Number.MAX_SAFE_INTEGER, // Infinity
-    rangePrompt: '',
-    showRangePrompt: true,
-    allowSameDay: false,
-    round: 0,
-    monthNum: 3 } };exports.default = _default;
+  // cell组件的props
+  cell: {
+    customClass: '',
+    title: '',
+    label: '',
+    value: '',
+    icon: '',
+    disabled: false,
+    border: true,
+    center: false,
+    url: '',
+    linkType: 'navigateTo',
+    clickable: false,
+    isLink: false,
+    required: false,
+    arrowDirection: '',
+    iconStyle: {},
+    rightIconStyle: {},
+    rightIcon: 'arrow-right',
+    titleStyle: {},
+    size: '',
+    stop: true,
+    name: '' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 595:
+/***/ 611:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-line/props.js ***!
   \**************************************************************************************************/
@@ -21990,31 +22647,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 60:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/carKeyboard.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:53:20
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/carKeyboard.js
-                                                                                                      */var _default =
-{
-  // 车牌号键盘
-  carKeyboard: {
-    random: false } };exports.default = _default;
-
-/***/ }),
-
-/***/ 603:
+/***/ 619:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-count-down/props.js ***!
   \********************************************************************************************************/
@@ -22047,7 +22680,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 604:
+/***/ 62:
+/*!******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/cellGroup.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:54:16
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/cellGroup.js
+                                                                                                      */var _default =
+{
+  // cell-group组件的props
+  cellGroup: {
+    title: '',
+    border: true,
+    customStyle: {} } };exports.default = _default;
+
+/***/ }),
+
+/***/ 620:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-count-down/utils.js ***!
   \********************************************************************************************************/
@@ -22120,51 +22779,7 @@ function isSameSecond(time1, time2) {
 
 /***/ }),
 
-/***/ 61:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/cell.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-23 20:53:09
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/cell.js
-                                                                                                      */var _default =
-{
-  // cell组件的props
-  cell: {
-    customClass: '',
-    title: '',
-    label: '',
-    value: '',
-    icon: '',
-    disabled: false,
-    border: true,
-    center: false,
-    url: '',
-    linkType: 'navigateTo',
-    clickable: false,
-    isLink: false,
-    required: false,
-    arrowDirection: '',
-    iconStyle: {},
-    rightIconStyle: {},
-    rightIcon: 'arrow-right',
-    titleStyle: {},
-    size: '',
-    stop: true,
-    name: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 612:
+/***/ 628:
 /*!*************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-tag/props.js ***!
   \*************************************************************************************************/
@@ -22257,10 +22872,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 62:
-/*!******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/cellGroup.js ***!
-  \******************************************************************************************************/
+/***/ 63:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/checkbox.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22271,19 +22886,29 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:54:16
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/cellGroup.js
+                                                                                                      * @lastTime     : 2021-08-23 21:06:59
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/checkbox.js
                                                                                                       */var _default =
 {
-  // cell-group组件的props
-  cellGroup: {
-    title: '',
-    border: true,
-    customStyle: {} } };exports.default = _default;
+  // checkbox组件
+  checkbox: {
+    name: '',
+    shape: '',
+    size: '',
+    checkbox: false,
+    disabled: '',
+    activeColor: '',
+    inactiveColor: '',
+    iconSize: '',
+    iconColor: '',
+    label: '',
+    labelSize: '',
+    labelColor: '',
+    labelDisabled: '' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 620:
+/***/ 636:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-text/value.js ***!
   \**************************************************************************************************/
@@ -22378,7 +23003,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 621:
+/***/ 637:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-text/props.js ***!
   \**************************************************************************************************/
@@ -22497,112 +23122,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 629:
-/*!***********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-line-progress/props.js ***!
-  \***********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 激活部分的颜色
-    activeColor: {
-      type: String,
-      default: uni.$u.props.lineProgress.activeColor },
-
-    inactiveColor: {
-      type: String,
-      default: uni.$u.props.lineProgress.color },
-
-    // 进度百分比，数值
-    percentage: {
-      type: [String, Number],
-      default: uni.$u.props.lineProgress.inactiveColor },
-
-    // 是否在进度条内部显示百分比的值
-    showText: {
-      type: Boolean,
-      default: uni.$u.props.lineProgress.showText },
-
-    // 进度条的高度，单位px
-    height: {
-      type: [String, Number],
-      default: uni.$u.props.lineProgress.height } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 63:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/checkbox.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-23 21:06:59
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/checkbox.js
-                                                                                                      */var _default =
-{
-  // checkbox组件
-  checkbox: {
-    name: '',
-    shape: '',
-    size: '',
-    checkbox: false,
-    disabled: '',
-    activeColor: '',
-    inactiveColor: '',
-    iconSize: '',
-    iconColor: '',
-    label: '',
-    labelSize: '',
-    labelColor: '',
-    labelDisabled: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 637:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-overlay/props.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 是否显示遮罩
-    show: {
-      type: Boolean,
-      default: uni.$u.props.overlay.show },
-
-    // 层级z-index
-    zIndex: {
-      type: [String, Number],
-      default: uni.$u.props.overlay.zIndex },
-
-    // 遮罩的过渡时间，单位为ms
-    duration: {
-      type: [String, Number],
-      default: uni.$u.props.overlay.duration },
-
-    // 不透明度值，当做rgba的第四个参数
-    opacity: {
-      type: [String, Number],
-      default: uni.$u.props.overlay.opacity } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
 /***/ 64:
 /*!**********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/checkboxGroup.js ***!
@@ -22642,6 +23161,130 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 645:
+/*!***********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-line-progress/props.js ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 激活部分的颜色
+    activeColor: {
+      type: String,
+      default: uni.$u.props.lineProgress.activeColor },
+
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.lineProgress.color },
+
+    // 进度百分比，数值
+    percentage: {
+      type: [String, Number],
+      default: uni.$u.props.lineProgress.inactiveColor },
+
+    // 是否在进度条内部显示百分比的值
+    showText: {
+      type: Boolean,
+      default: uni.$u.props.lineProgress.showText },
+
+    // 进度条的高度，单位px
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.lineProgress.height } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 65:
+/*!***********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/circleProgress.js ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:55:02
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/circleProgress.js
+                                                                                                      */var _default =
+{
+  // circleProgress 组件
+  circleProgress: {
+    percentage: 30 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 653:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-overlay/props.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否显示遮罩
+    show: {
+      type: Boolean,
+      default: uni.$u.props.overlay.show },
+
+    // 层级z-index
+    zIndex: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.zIndex },
+
+    // 遮罩的过渡时间，单位为ms
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.duration },
+
+    // 不透明度值，当做rgba的第四个参数
+    opacity: {
+      type: [String, Number],
+      default: uni.$u.props.overlay.opacity } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 66:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/code.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:55:27
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/code.js
+                                                                                                      */var _default =
+
+{
+  // code 组件
+  code: {
+    seconds: 60,
+    startText: '获取验证码',
+    changeText: 'X秒重新获取',
+    endText: '重新获取',
+    keepRunning: false,
+    uniqueKey: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 661:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-icon/icons.js ***!
   \**************************************************************************************************/
@@ -22865,7 +23508,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 646:
+/***/ 662:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-icon/props.js ***!
   \**************************************************************************************************/
@@ -22963,10 +23606,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 65:
-/*!***********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/circleProgress.js ***!
-  \***********************************************************************************************************/
+/***/ 67:
+/*!******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/codeInput.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22977,17 +23620,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:55:02
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/circleProgress.js
+                                                                                                      * @lastTime     : 2021-08-20 16:55:58
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/codeInput.js
                                                                                                       */var _default =
 {
-  // circleProgress 组件
-  circleProgress: {
-    percentage: 30 } };exports.default = _default;
+  // codeInput 组件
+  codeInput: {
+    adjustPosition: true,
+    maxlength: 6,
+    dot: false,
+    mode: 'box',
+    hairline: false,
+    space: 10,
+    value: '',
+    focus: false,
+    bold: false,
+    color: '#606266',
+    fontSize: 18,
+    size: 35,
+    disabledKeyboard: false,
+    borderColor: '#c9cacc',
+    disabledDot: true } };exports.default = _default;
 
 /***/ }),
 
-/***/ 654:
+/***/ 670:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-empty/props.js ***!
   \***************************************************************************************************/
@@ -23055,37 +23712,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 66:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/code.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:55:27
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/code.js
-                                                                                                      */var _default =
-
-{
-  // code 组件
-  code: {
-    seconds: 60,
-    startText: '获取验证码',
-    changeText: 'X秒重新获取',
-    endText: '重新获取',
-    keepRunning: false,
-    uniqueKey: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 662:
+/***/ 678:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-parse/props.js ***!
   \***************************************************************************************************/
@@ -23140,7 +23767,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 663:
+/***/ 679:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-parse/parser.js ***!
   \****************************************************************************************************/
@@ -24227,10 +24854,10 @@ module.exports = parser;
 
 /***/ }),
 
-/***/ 67:
-/*!******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/codeInput.js ***!
-  \******************************************************************************************************/
+/***/ 68:
+/*!************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/col.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24241,30 +24868,47 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:55:58
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/codeInput.js
+                                                                                                      * @lastTime     : 2021-08-20 16:56:12
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/col.js
                                                                                                       */var _default =
 {
-  // codeInput 组件
-  codeInput: {
-    maxlength: 6,
-    dot: false,
-    mode: 'box',
-    hairline: false,
-    space: 10,
-    value: '',
-    focus: false,
-    bold: false,
-    color: '#606266',
-    fontSize: 18,
-    size: 35,
-    disabledKeyboard: false,
-    borderColor: '#c9cacc',
-    disabledDot: true } };exports.default = _default;
+  // col 组件
+  col: {
+    span: 12,
+    offset: 0,
+    justify: 'start',
+    align: 'stretch',
+    textAlign: 'left' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 678:
+/***/ 69:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/collapse.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:56:30
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/collapse.js
+                                                                                                      */var _default =
+{
+  // collapse 组件
+  collapse: {
+    value: null,
+    accordion: false,
+    border: true } };exports.default = _default;
+
+/***/ }),
+
+/***/ 694:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-tabs/props.js ***!
   \**************************************************************************************************/
@@ -24337,10 +24981,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 68:
-/*!************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/col.js ***!
-  \************************************************************************************************/
+/***/ 70:
+/*!*********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/collapseItem.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24351,47 +24995,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:56:12
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/col.js
+                                                                                                      * @lastTime     : 2021-08-20 16:56:42
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/collapseItem.js
                                                                                                       */var _default =
 {
-  // col 组件
-  col: {
-    span: 12,
-    offset: 0,
-    justify: 'start',
-    align: 'stretch',
-    textAlign: 'left' } };exports.default = _default;
+  // collapseItem 组件
+  collapseItem: {
+    title: '',
+    value: '',
+    label: '',
+    disabled: false,
+    isLink: true,
+    clickable: true,
+    border: true,
+    align: 'left',
+    name: '',
+    icon: '',
+    duration: 300 } };exports.default = _default;
 
 /***/ }),
 
-/***/ 69:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/collapse.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:56:30
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/collapse.js
-                                                                                                      */var _default =
-{
-  // collapse 组件
-  collapse: {
-    value: null,
-    accordion: false,
-    border: true } };exports.default = _default;
-
-/***/ }),
-
-/***/ 693:
+/***/ 709:
 /*!**********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-swipe-action/props.js ***!
   \**********************************************************************************************************/
@@ -24409,7 +25033,40 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 699:
+/***/ 71:
+/*!*********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/columnNotice.js ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:57:16
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/columnNotice.js
+                                                                                                      */var _default =
+{
+  // columnNotice 组件
+  columnNotice: {
+    text: '',
+    icon: 'volume',
+    mode: '',
+    color: '#f9ae3d',
+    bgColor: '#fdf6ec',
+    fontSize: 14,
+    speed: 80,
+    step: false,
+    duration: 1500,
+    disableTouch: true } };exports.default = _default;
+
+/***/ }),
+
+/***/ 715:
 /*!*******************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/mixin/touch.js ***!
   \*******************************************************************************************/
@@ -24477,41 +25134,7 @@ function getDirection(x, y) {
 
 /***/ }),
 
-/***/ 70:
-/*!*********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/collapseItem.js ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:56:42
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/collapseItem.js
-                                                                                                      */var _default =
-{
-  // collapseItem 组件
-  collapseItem: {
-    title: '',
-    value: '',
-    label: '',
-    disabled: false,
-    isLink: true,
-    clickable: true,
-    border: true,
-    align: 'left',
-    name: '',
-    icon: '',
-    duration: 300 } };exports.default = _default;
-
-/***/ }),
-
-/***/ 700:
+/***/ 716:
 /*!***************************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-swipe-action-item/props.js ***!
   \***************************************************************************************************************/
@@ -24561,7 +25184,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 701:
+/***/ 717:
 /*!*************************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-swipe-action-item/wxs.js ***!
   \*************************************************************************************************************/
@@ -24585,10 +25208,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 71:
-/*!*********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/columnNotice.js ***!
-  \*********************************************************************************************************/
+/***/ 72:
+/*!******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/countDown.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24599,26 +25222,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:57:16
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/columnNotice.js
+                                                                                                      * @lastTime     : 2021-08-20 17:11:29
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/countDown.js
                                                                                                       */var _default =
 {
-  // columnNotice 组件
-  columnNotice: {
-    text: '',
-    icon: 'volume',
-    mode: '',
-    color: '#f9ae3d',
-    bgColor: '#fdf6ec',
-    fontSize: 14,
-    speed: 80,
-    step: false,
-    duration: 1500,
-    disableTouch: true } };exports.default = _default;
+  // u-count-down 计时器组件
+  countDown: {
+    time: 0,
+    format: 'HH:mm:ss',
+    autoStart: true,
+    millisecond: false } };exports.default = _default;
 
 /***/ }),
 
-/***/ 711:
+/***/ 727:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-number-box/props.js ***!
   \********************************************************************************************************/
@@ -24736,7 +25353,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 719:
+/***/ 73:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/countTo.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 16:57:32
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/countTo.js
+                                                                                                      */var _default =
+{
+  // countTo 组件
+  countTo: {
+    startVal: 0,
+    endVal: 0,
+    duration: 2000,
+    autoplay: true,
+    decimals: 0,
+    useEasing: true,
+    decimal: '.',
+    color: '#606266',
+    fontSize: 22,
+    bold: false,
+    separator: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 735:
 /*!*****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-divider/props.js ***!
   \*****************************************************************************************************/
@@ -24789,10 +25440,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 72:
-/*!******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/countDown.js ***!
-  \******************************************************************************************************/
+/***/ 74:
+/*!***********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/datetimePicker.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24803,20 +25454,38 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:11:29
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/countDown.js
+                                                                                                      * @lastTime     : 2021-08-20 16:57:48
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/datetimePicker.js
                                                                                                       */var _default =
 {
-  // u-count-down 计时器组件
-  countDown: {
-    time: 0,
-    format: 'HH:mm:ss',
-    autoStart: true,
-    millisecond: false } };exports.default = _default;
+  // datetimePicker 组件
+  datetimePicker: {
+    show: false,
+    showToolbar: true,
+    value: '',
+    title: '',
+    mode: 'datetime',
+    maxDate: new Date(new Date().getFullYear() + 10, 0, 1).getTime(),
+    minDate: new Date(new Date().getFullYear() - 10, 0, 1).getTime(),
+    minHour: 0,
+    maxHour: 23,
+    minMinute: 0,
+    maxMinute: 59,
+    filter: null,
+    formatter: null,
+    loading: false,
+    itemHeight: 44,
+    cancelText: '取消',
+    confirmText: '确认',
+    cancelColor: '#909193',
+    confirmColor: '#3c9cff',
+    visibleItemCount: 5,
+    closeOnClickOverlay: false,
+    defaultIndex: function defaultIndex() {return [];} } };exports.default = _default;
 
 /***/ }),
 
-/***/ 727:
+/***/ 743:
 /*!*********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-radio-group/props.js ***!
   \*********************************************************************************************************/
@@ -24910,9 +25579,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 73:
+/***/ 75:
 /*!****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/countTo.js ***!
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/divider.js ***!
   \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -24924,27 +25593,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:57:32
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/countTo.js
+                                                                                                      * @lastTime     : 2021-08-20 16:58:03
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/divider.js
                                                                                                       */var _default =
 {
-  // countTo 组件
-  countTo: {
-    startVal: 0,
-    endVal: 0,
-    duration: 2000,
-    autoplay: true,
-    decimals: 0,
-    useEasing: true,
-    decimal: '.',
-    color: '#606266',
-    fontSize: 22,
-    bold: false,
-    separator: '' } };exports.default = _default;
+  // divider组件
+  divider: {
+    dashed: false,
+    hairline: true,
+    dot: false,
+    textPosition: 'center',
+    text: '',
+    textSize: 14,
+    textColor: '#909399',
+    lineColor: '#dcdfe6' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 735:
+/***/ 751:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-radio/props.js ***!
   \***************************************************************************************************/
@@ -25017,52 +25683,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 74:
-/*!***********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/datetimePicker.js ***!
-  \***********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:57:48
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/datetimePicker.js
-                                                                                                      */var _default =
-{
-  // datetimePicker 组件
-  datetimePicker: {
-    show: false,
-    showToolbar: true,
-    value: '',
-    title: '',
-    mode: 'datetime',
-    maxDate: new Date(new Date().getFullYear() + 10, 0, 1).getTime(),
-    minDate: new Date(new Date().getFullYear() - 10, 0, 1).getTime(),
-    minHour: 0,
-    maxHour: 23,
-    minMinute: 0,
-    maxMinute: 59,
-    filter: null,
-    formatter: null,
-    loading: false,
-    itemHeight: 44,
-    cancelText: '取消',
-    confirmText: '确认',
-    cancelColor: '#909193',
-    confirmColor: '#3c9cff',
-    visibleItemCount: 5,
-    closeOnClickOverlay: false,
-    defaultIndex: function defaultIndex() {return [];} } };exports.default = _default;
-
-/***/ }),
-
-/***/ 743:
+/***/ 759:
 /*!******************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-textarea/props.js ***!
   \******************************************************************************************************/
@@ -25185,163 +25806,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 75:
-/*!****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/divider.js ***!
-  \****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 16:58:03
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/divider.js
-                                                                                                      */var _default =
-{
-  // divider组件
-  divider: {
-    dashed: false,
-    hairline: true,
-    dot: false,
-    textPosition: 'center',
-    text: '',
-    textSize: 14,
-    textColor: '#909399',
-    lineColor: '#dcdfe6' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 751:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-subsection/props.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // tab的数据
-    list: {
-      type: Array,
-      default: uni.$u.props.subsection.list },
-
-    // 当前活动的tab的index
-    current: {
-      type: [String, Number],
-      default: uni.$u.props.subsection.current },
-
-    // 激活的颜色
-    activeColor: {
-      type: String,
-      default: uni.$u.props.subsection.activeColor },
-
-    // 未激活的颜色
-    inactiveColor: {
-      type: String,
-      default: uni.$u.props.subsection.inactiveColor },
-
-    // 模式选择，mode=button为按钮形式，mode=subsection时为分段模式
-    mode: {
-      type: String,
-      default: uni.$u.props.subsection.mode },
-
-    // 字体大小
-    fontSize: {
-      type: [String, Number],
-      default: uni.$u.props.subsection.fontSize },
-
-    // 激活tab的字体是否加粗
-    bold: {
-      type: Boolean,
-      default: uni.$u.props.subsection.bold },
-
-    // mode = button时，组件背景颜色
-    bgColor: {
-      type: String,
-      default: uni.$u.props.subsection.bgColor },
-
-    // 从list元素对象中读取的键名
-    keyName: {
-      type: String,
-      default: uni.$u.props.subsection.keyName } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 759:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-album/props.js ***!
-  \***************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 图片地址，Array<String>|Array<Object>形式
-    urls: {
-      type: Array,
-      default: uni.$u.props.album.urls },
-
-    // 指定从数组的对象元素中读取哪个属性作为图片地址
-    keyName: {
-      type: String,
-      default: uni.$u.props.album.keyName },
-
-    // 单图时，图片长边的长度
-    singleSize: {
-      type: [String, Number],
-      default: uni.$u.props.album.singleSize },
-
-    // 多图时，图片边长
-    multipleSize: {
-      type: [String, Number],
-      default: uni.$u.props.album.multipleSize },
-
-    // 多图时，图片水平和垂直之间的间隔
-    space: {
-      type: [String, Number],
-      default: uni.$u.props.album.space },
-
-    // 单图时，图片缩放裁剪的模式
-    singleMode: {
-      type: String,
-      default: uni.$u.props.album.singleMode },
-
-    // 多图时，图片缩放裁剪的模式
-    multipleMode: {
-      type: String,
-      default: uni.$u.props.album.multipleMode },
-
-    // 最多展示的图片数量，超出时最后一个位置将会显示剩余图片数量
-    maxCount: {
-      type: [String, Number],
-      default: uni.$u.props.album.maxCount },
-
-    // 是否可以预览图片
-    previewFullImage: {
-      type: Boolean,
-      default: uni.$u.props.album.previewFullImage },
-
-    // 每行展示图片数量，如设置，singleSize和multipleSize将会无效
-    rowCount: {
-      type: [String, Number],
-      default: uni.$u.props.album.rowCount },
-
-    // 超出maxCount时是否显示查看更多的提示
-    showMore: {
-      type: Boolean,
-      default: uni.$u.props.album.showMore } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
 /***/ 76:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/empty.js ***!
@@ -25377,49 +25841,53 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 767:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-steps/props.js ***!
-  \***************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-form-item/props.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
   props: {
-    // 排列方向
-    direction: {
+    // input的label提示语
+    label: {
       type: String,
-      default: uni.$u.props.steps.direction },
+      default: uni.$u.props.formItem.label },
 
-    // 设置第几个步骤
-    current: {
+    // 绑定的值
+    prop: {
+      type: String,
+      default: uni.$u.props.formItem.prop },
+
+    // 是否显示表单域的下划线边框
+    borderBottom: {
+      type: [String, Boolean],
+      default: uni.$u.props.formItem.borderBottom },
+
+    // label的宽度，单位px
+    labelWidth: {
       type: [String, Number],
-      default: uni.$u.props.steps.current },
+      default: uni.$u.props.formItem.labelWidth },
 
-    // 激活状态颜色
-    activeColor: {
+    // 右侧图标
+    rightIcon: {
       type: String,
-      default: uni.$u.props.steps.activeColor },
+      default: uni.$u.props.formItem.rightIcon },
 
-    // 未激活状态颜色
-    inactiveColor: {
+    // 左侧图标
+    leftIcon: {
       type: String,
-      default: uni.$u.props.steps.inactiveColor },
+      default: uni.$u.props.formItem.leftIcon },
 
-    // 激活状态的图标
-    activeIcon: {
-      type: String,
-      default: uni.$u.props.steps.activeIcon },
-
-    // 未激活状态图标
-    inactiveIcon: {
-      type: String,
-      default: uni.$u.props.steps.inactiveIcon },
-
-    // 是否显示点类型
-    dot: {
+    // 是否显示左边的必填星号，只作显示用，具体校验必填的逻辑，请在rules中配置
+    required: {
       type: Boolean,
-      default: uni.$u.props.steps.dot } } };exports.default = _default;
+      default: uni.$u.props.formItem.required },
+
+    leftIconStyle: {
+      type: [String, Object],
+      default: uni.$u.props.formItem.leftIconStyle } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
@@ -25456,314 +25924,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 775:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-steps-item/props.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 标题
-    title: {
-      type: [String, Number],
-      default: uni.$u.props.stepsItem.title },
-
-    // 描述文本
-    desc: {
-      type: [String, Number],
-      default: uni.$u.props.stepsItem.desc },
-
-    // 图标大小
-    iconSize: {
-      type: [String, Number],
-      default: uni.$u.props.stepsItem.iconSize },
-
-    // 当前步骤是否处于失败状态
-    error: {
-      type: Boolean,
-      default: uni.$u.props.stepsItem.error } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 78:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/formItem.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:04:32
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/formItem.js
-                                                                                                      */var _default =
-{
-  // formItem 组件
-  formItem: {
-    label: '',
-    prop: '',
-    borderBottom: '',
-    labelWidth: '',
-    rightIcon: '',
-    leftIcon: '',
-    required: false,
-    leftIconStyle: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 783:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-grid/props.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 分成几列
-    col: {
-      type: [String, Number],
-      default: uni.$u.props.grid.col },
-
-    // 是否显示边框
-    border: {
-      type: Boolean,
-      default: uni.$u.props.grid.border },
-
-    // 宫格对齐方式，表现为数量少的时候，靠左，居中，还是靠右
-    align: {
-      type: String,
-      default: uni.$u.props.grid.align } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 79:
-/*!************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/gap.js ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:05:25
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/gap.js
-                                                                                                      */var _default =
-{
-  // gap组件
-  gap: {
-    bgColor: 'transparent',
-    height: 20,
-    marginTop: 0,
-    marginBottom: 0,
-    customStyle: {} } };exports.default = _default;
-
-/***/ }),
-
-/***/ 791:
-/*!*******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-grid-item/props.js ***!
-  \*******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 宫格的name
-    name: {
-      type: [String, Number, null],
-      default: uni.$u.props.gridItem.name },
-
-    // 背景颜色
-    bgColor: {
-      type: String,
-      default: uni.$u.props.gridItem.bgColor } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 799:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-gap/props.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 背景颜色（默认transparent）
-    bgColor: {
-      type: String,
-      default: uni.$u.props.gap.bgColor },
-
-    // 分割槽高度，单位px（默认30）
-    height: {
-      type: [String, Number],
-      default: uni.$u.props.gap.height },
-
-    // 与上一个组件的距离
-    marginTop: {
-      type: [String, Number],
-      default: uni.$u.props.gap.marginTop },
-
-    // 与下一个组件的距离
-    marginBottom: {
-      type: [String, Number],
-      default: uni.$u.props.gap.marginBottom } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 80:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/grid.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:05:57
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/grid.js
-                                                                                                      */var _default =
-{
-  // grid组件
-  grid: {
-    col: 3,
-    border: false,
-    align: 'left' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 807:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-badge/props.js ***!
-  \***************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 是否显示圆点
-    isDot: {
-      type: Boolean,
-      default: uni.$u.props.badge.isDot },
-
-    // 显示的内容
-    value: {
-      type: [Number, String],
-      default: uni.$u.props.badge.value },
-
-    // 是否显示
-    show: {
-      type: Boolean,
-      default: uni.$u.props.badge.show },
-
-    // 最大值，超过最大值会显示 '{max}+'
-    max: {
-      type: [Number, String],
-      default: uni.$u.props.badge.max },
-
-    // 主题类型，error|warning|success|primary
-    type: {
-      type: String,
-      default: uni.$u.props.badge.type },
-
-    // 当数值为 0 时，是否展示 Badge
-    showZero: {
-      type: Boolean,
-      default: uni.$u.props.badge.showZero },
-
-    // 背景颜色，优先级比type高，如设置，type参数会失效
-    bgColor: {
-      type: [String, null],
-      default: uni.$u.props.badge.bgColor },
-
-    // 字体颜色
-    color: {
-      type: [String, null],
-      default: uni.$u.props.badge.color },
-
-    // 徽标形状，circle-四角均为圆角，horn-左下角为直角
-    shape: {
-      type: String,
-      default: uni.$u.props.badge.shape },
-
-    // 设置数字的显示方式，overflow|ellipsis|limit
-    // overflow会根据max字段判断，超出显示`${max}+`
-    // ellipsis会根据max判断，超出显示`${max}...`
-    // limit会依据1000作为判断条件，超出1000，显示`${value/1000}K`，比如2.2k、3.34w，最多保留2位小数
-    numberType: {
-      type: String,
-      default: uni.$u.props.badge.numberType },
-
-    // 设置badge的位置偏移，格式为 [x, y]，也即设置的为top和right的值，absolute为true时有效
-    offset: {
-      type: Array,
-      default: uni.$u.props.badge.offset },
-
-    // 是否反转背景和字体颜色
-    inverted: {
-      type: Boolean,
-      default: uni.$u.props.badge.inverted },
-
-    // 是否绝对定位
-    absolute: {
-      type: Boolean,
-      default: uni.$u.props.badge.absolute } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 81:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/gridItem.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:06:13
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/gridItem.js
-                                                                                                      */var _default =
-{
-  // grid-item组件
-  gridItem: {
-    name: null,
-    bgColor: 'transparent' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 815:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-input/props.js ***!
   \***************************************************************************************************/
@@ -25954,6 +26114,396 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ 78:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/formItem.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:04:32
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/formItem.js
+                                                                                                      */var _default =
+{
+  // formItem 组件
+  formItem: {
+    label: '',
+    prop: '',
+    borderBottom: '',
+    labelWidth: '',
+    rightIcon: '',
+    leftIcon: '',
+    required: false,
+    leftIconStyle: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 783:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-subsection/props.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // tab的数据
+    list: {
+      type: Array,
+      default: uni.$u.props.subsection.list },
+
+    // 当前活动的tab的index
+    current: {
+      type: [String, Number],
+      default: uni.$u.props.subsection.current },
+
+    // 激活的颜色
+    activeColor: {
+      type: String,
+      default: uni.$u.props.subsection.activeColor },
+
+    // 未激活的颜色
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.subsection.inactiveColor },
+
+    // 模式选择，mode=button为按钮形式，mode=subsection时为分段模式
+    mode: {
+      type: String,
+      default: uni.$u.props.subsection.mode },
+
+    // 字体大小
+    fontSize: {
+      type: [String, Number],
+      default: uni.$u.props.subsection.fontSize },
+
+    // 激活tab的字体是否加粗
+    bold: {
+      type: Boolean,
+      default: uni.$u.props.subsection.bold },
+
+    // mode = button时，组件背景颜色
+    bgColor: {
+      type: String,
+      default: uni.$u.props.subsection.bgColor },
+
+    // 从list元素对象中读取的键名
+    keyName: {
+      type: String,
+      default: uni.$u.props.subsection.keyName } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 79:
+/*!************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/gap.js ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:05:25
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/gap.js
+                                                                                                      */var _default =
+{
+  // gap组件
+  gap: {
+    bgColor: 'transparent',
+    height: 20,
+    marginTop: 0,
+    marginBottom: 0,
+    customStyle: {} } };exports.default = _default;
+
+/***/ }),
+
+/***/ 791:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-rate/props.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 用于v-model双向绑定选中的星星数量
+    value: {
+      type: [String, Number],
+      default: uni.$u.props.rate.value },
+
+    // 要显示的星星数量
+    count: {
+      type: [String, Number],
+      default: uni.$u.props.rate.count },
+
+    // 是否不可选中
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.rate.disabled },
+
+    // 是否只读
+    readonly: {
+      type: Boolean,
+      default: uni.$u.props.rate.readonly },
+
+    // 星星的大小，单位px
+    size: {
+      type: [String, Number],
+      default: uni.$u.props.rate.size },
+
+    // 未选中时的颜色
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.rate.inactiveColor },
+
+    // 选中的颜色
+    activeColor: {
+      type: String,
+      default: uni.$u.props.rate.activeColor },
+
+    // 星星之间的间距，单位px
+    gutter: {
+      type: [String, Number],
+      default: uni.$u.props.rate.gutter },
+
+    // 最少能选择的星星个数
+    minCount: {
+      type: [String, Number],
+      default: uni.$u.props.rate.minCount },
+
+    // 是否允许半星
+    allowHalf: {
+      type: Boolean,
+      default: uni.$u.props.rate.allowHalf },
+
+    // 选中时的图标(星星)
+    activeIcon: {
+      type: String,
+      default: uni.$u.props.rate.activeIcon },
+
+    // 未选中时的图标(星星)
+    inactiveIcon: {
+      type: String,
+      default: uni.$u.props.rate.inactiveIcon },
+
+    // 是否可以通过滑动手势选择评分
+    touchable: {
+      type: Boolean,
+      default: uni.$u.props.rate.touchable } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 799:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-badge/props.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否显示圆点
+    isDot: {
+      type: Boolean,
+      default: uni.$u.props.badge.isDot },
+
+    // 显示的内容
+    value: {
+      type: [Number, String],
+      default: uni.$u.props.badge.value },
+
+    // 是否显示
+    show: {
+      type: Boolean,
+      default: uni.$u.props.badge.show },
+
+    // 最大值，超过最大值会显示 '{max}+'
+    max: {
+      type: [Number, String],
+      default: uni.$u.props.badge.max },
+
+    // 主题类型，error|warning|success|primary
+    type: {
+      type: String,
+      default: uni.$u.props.badge.type },
+
+    // 当数值为 0 时，是否展示 Badge
+    showZero: {
+      type: Boolean,
+      default: uni.$u.props.badge.showZero },
+
+    // 背景颜色，优先级比type高，如设置，type参数会失效
+    bgColor: {
+      type: [String, null],
+      default: uni.$u.props.badge.bgColor },
+
+    // 字体颜色
+    color: {
+      type: [String, null],
+      default: uni.$u.props.badge.color },
+
+    // 徽标形状，circle-四角均为圆角，horn-左下角为直角
+    shape: {
+      type: String,
+      default: uni.$u.props.badge.shape },
+
+    // 设置数字的显示方式，overflow|ellipsis|limit
+    // overflow会根据max字段判断，超出显示`${max}+`
+    // ellipsis会根据max判断，超出显示`${max}...`
+    // limit会依据1000作为判断条件，超出1000，显示`${value/1000}K`，比如2.2k、3.34w，最多保留2位小数
+    numberType: {
+      type: String,
+      default: uni.$u.props.badge.numberType },
+
+    // 设置badge的位置偏移，格式为 [x, y]，也即设置的为top和right的值，absolute为true时有效
+    offset: {
+      type: Array,
+      default: uni.$u.props.badge.offset },
+
+    // 是否反转背景和字体颜色
+    inverted: {
+      type: Boolean,
+      default: uni.$u.props.badge.inverted },
+
+    // 是否绝对定位
+    absolute: {
+      type: Boolean,
+      default: uni.$u.props.badge.absolute } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 80:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/grid.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:05:57
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/grid.js
+                                                                                                      */var _default =
+{
+  // grid组件
+  grid: {
+    col: 3,
+    border: false,
+    align: 'left' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 81:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/gridItem.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:06:13
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/gridItem.js
+                                                                                                      */var _default =
+{
+  // grid-item组件
+  gridItem: {
+    name: null,
+    bgColor: 'transparent' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 814:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-switch/props.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否为加载中状态
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.switch.loading },
+
+    // 是否为禁用装填
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.switch.disabled },
+
+    // 开关尺寸，单位px
+    size: {
+      type: [String, Number],
+      default: uni.$u.props.switch.size },
+
+    // 打开时的背景颜色
+    activeColor: {
+      type: String,
+      default: uni.$u.props.switch.activeColor },
+
+    // 关闭时的背景颜色
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.switch.inactiveColor },
+
+    // 通过v-model双向绑定的值
+    value: {
+      type: [Boolean, String, Number],
+      default: uni.$u.props.switch.value },
+
+    // switch打开时的值
+    activeValue: {
+      type: [String, Number, Boolean],
+      default: uni.$u.props.switch.activeValue },
+
+    // switch关闭时的值
+    inactiveValue: {
+      type: [String, Number, Boolean],
+      default: uni.$u.props.switch.inactiveValue },
+
+    // 是否开启异步变更，开启后需要手动控制输入值
+    asyncChange: {
+      type: Boolean,
+      default: uni.$u.props.switch.asyncChange },
+
+    // 圆点与外边框的距离
+    space: {
+      type: [String, Number],
+      default: uni.$u.props.switch.space } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 82:
 /*!*************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/icon.js ***!
@@ -25999,7 +26549,431 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));f
 
 /***/ }),
 
-/***/ 823:
+/***/ 822:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-album/props.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 图片地址，Array<String>|Array<Object>形式
+    urls: {
+      type: Array,
+      default: uni.$u.props.album.urls },
+
+    // 指定从数组的对象元素中读取哪个属性作为图片地址
+    keyName: {
+      type: String,
+      default: uni.$u.props.album.keyName },
+
+    // 单图时，图片长边的长度
+    singleSize: {
+      type: [String, Number],
+      default: uni.$u.props.album.singleSize },
+
+    // 多图时，图片边长
+    multipleSize: {
+      type: [String, Number],
+      default: uni.$u.props.album.multipleSize },
+
+    // 多图时，图片水平和垂直之间的间隔
+    space: {
+      type: [String, Number],
+      default: uni.$u.props.album.space },
+
+    // 单图时，图片缩放裁剪的模式
+    singleMode: {
+      type: String,
+      default: uni.$u.props.album.singleMode },
+
+    // 多图时，图片缩放裁剪的模式
+    multipleMode: {
+      type: String,
+      default: uni.$u.props.album.multipleMode },
+
+    // 最多展示的图片数量，超出时最后一个位置将会显示剩余图片数量
+    maxCount: {
+      type: [String, Number],
+      default: uni.$u.props.album.maxCount },
+
+    // 是否可以预览图片
+    previewFullImage: {
+      type: Boolean,
+      default: uni.$u.props.album.previewFullImage },
+
+    // 每行展示图片数量，如设置，singleSize和multipleSize将会无效
+    rowCount: {
+      type: [String, Number],
+      default: uni.$u.props.album.rowCount },
+
+    // 超出maxCount时是否显示查看更多的提示
+    showMore: {
+      type: Boolean,
+      default: uni.$u.props.album.showMore } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 83:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/image.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:01:51
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/image.js
+                                                                                                      */var _default =
+{
+  // image组件
+  image: {
+    src: '',
+    mode: 'aspectFill',
+    width: '300',
+    height: '225',
+    shape: 'square',
+    radius: 0,
+    lazyLoad: true,
+    showMenuByLongpress: true,
+    loadingIcon: 'photo',
+    errorIcon: 'error-circle',
+    showLoading: true,
+    showError: true,
+    fade: true,
+    webp: false,
+    duration: 500,
+    bgColor: '#f3f4f6' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 830:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-steps/props.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 排列方向
+    direction: {
+      type: String,
+      default: uni.$u.props.steps.direction },
+
+    // 设置第几个步骤
+    current: {
+      type: [String, Number],
+      default: uni.$u.props.steps.current },
+
+    // 激活状态颜色
+    activeColor: {
+      type: String,
+      default: uni.$u.props.steps.activeColor },
+
+    // 未激活状态颜色
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.steps.inactiveColor },
+
+    // 激活状态的图标
+    activeIcon: {
+      type: String,
+      default: uni.$u.props.steps.activeIcon },
+
+    // 未激活状态图标
+    inactiveIcon: {
+      type: String,
+      default: uni.$u.props.steps.inactiveIcon },
+
+    // 是否显示点类型
+    dot: {
+      type: Boolean,
+      default: uni.$u.props.steps.dot } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 838:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-steps-item/props.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 标题
+    title: {
+      type: [String, Number],
+      default: uni.$u.props.stepsItem.title },
+
+    // 描述文本
+    desc: {
+      type: [String, Number],
+      default: uni.$u.props.stepsItem.desc },
+
+    // 图标大小
+    iconSize: {
+      type: [String, Number],
+      default: uni.$u.props.stepsItem.iconSize },
+
+    // 当前步骤是否处于失败状态
+    error: {
+      type: Boolean,
+      default: uni.$u.props.stepsItem.error } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 84:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/indexAnchor.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:13:15
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/indexAnchor.js
+                                                                                                      */var _default =
+{
+  // indexAnchor 组件
+  indexAnchor: {
+    text: '',
+    color: '#606266',
+    size: 14,
+    bgColor: '#dedede',
+    height: 32 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 846:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-grid/props.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 分成几列
+    col: {
+      type: [String, Number],
+      default: uni.$u.props.grid.col },
+
+    // 是否显示边框
+    border: {
+      type: Boolean,
+      default: uni.$u.props.grid.border },
+
+    // 宫格对齐方式，表现为数量少的时候，靠左，居中，还是靠右
+    align: {
+      type: String,
+      default: uni.$u.props.grid.align } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 85:
+/*!******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/indexList.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:13:35
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/indexList.js
+                                                                                                      */var _default =
+{
+  // indexList 组件
+  indexList: {
+    inactiveColor: '#606266',
+    activeColor: '#5677fc',
+    indexList: function indexList() {return [];},
+    sticky: true,
+    customNavHeight: 0 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 854:
+/*!*******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-grid-item/props.js ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 宫格的name
+    name: {
+      type: [String, Number, null],
+      default: uni.$u.props.gridItem.name },
+
+    // 背景颜色
+    bgColor: {
+      type: String,
+      default: uni.$u.props.gridItem.bgColor } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 86:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/input.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:13:55
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/input.js
+                                                                                                      */var _default =
+{
+  // index 组件
+  input: {
+    value: '',
+    type: 'text',
+    fixed: false,
+    disabled: false,
+    disabledColor: '#f5f7fa',
+    clearable: false,
+    password: false,
+    maxlength: -1,
+    placeholder: null,
+    placeholderClass: 'input-placeholder',
+    placeholderStyle: 'color: #c0c4cc',
+    showWordLimit: false,
+    confirmType: 'done',
+    confirmHold: false,
+    holdKeyboard: false,
+    focus: false,
+    autoBlur: false,
+    disableDefaultPadding: false,
+    cursor: -1,
+    cursorSpacing: 30,
+    selectionStart: -1,
+    selectionEnd: -1,
+    adjustPosition: true,
+    inputAlign: 'left',
+    fontSize: '15px',
+    color: '#303133',
+    prefixIcon: '',
+    prefixIconStyle: '',
+    suffixIcon: '',
+    suffixIconStyle: '',
+    border: 'surround',
+    readonly: false,
+    shape: 'square',
+    formatter: null } };exports.default = _default;
+
+/***/ }),
+
+/***/ 862:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-gap/props.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 背景颜色（默认transparent）
+    bgColor: {
+      type: String,
+      default: uni.$u.props.gap.bgColor },
+
+    // 分割槽高度，单位px（默认30）
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.gap.height },
+
+    // 与上一个组件的距离
+    marginTop: {
+      type: [String, Number],
+      default: uni.$u.props.gap.marginTop },
+
+    // 与下一个组件的距离
+    marginBottom: {
+      type: [String, Number],
+      default: uni.$u.props.gap.marginBottom } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 87:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/keyboard.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:07:49
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/keyboard.js
+                                                                                                      */var _default =
+{
+  // 键盘组件
+  keyboard: {
+    mode: 'number',
+    dotDisabled: false,
+    tooltip: true,
+    showTips: true,
+    tips: '',
+    showCancel: true,
+    showConfirm: true,
+    random: false,
+    safeAreaInsetBottom: true,
+    closeOnClickOverlay: true,
+    show: false,
+    overlay: true,
+    zIndex: 10075,
+    cancelText: '取消',
+    confirmText: '确定',
+    autoChange: false } };exports.default = _default;
+
+/***/ }),
+
+/***/ 870:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-alert/props.js ***!
   \***************************************************************************************************/
@@ -26052,46 +27026,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));f
 
 /***/ }),
 
-/***/ 83:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/image.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:01:51
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/image.js
-                                                                                                      */var _default =
-{
-  // image组件
-  image: {
-    src: '',
-    mode: 'aspectFill',
-    width: '300',
-    height: '225',
-    shape: 'square',
-    radius: 0,
-    lazyLoad: true,
-    showMenuByLongpress: true,
-    loadingIcon: 'photo',
-    errorIcon: 'error-circle',
-    showLoading: true,
-    showError: true,
-    fade: true,
-    webp: false,
-    duration: 500,
-    bgColor: '#f3f4f6' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 831:
+/***/ 878:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-modal/props.js ***!
   \***************************************************************************************************/
@@ -26184,7 +27119,528 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 839:
+/***/ 88:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/line.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:04:49
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/line.js
+                                                                                                      */var _default =
+{
+  // line组件
+  line: {
+    color: '#d6d7d9',
+    length: '100%',
+    direction: 'row',
+    hairline: true,
+    margin: 0,
+    dashed: false } };exports.default = _default;
+
+/***/ }),
+
+/***/ 886:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-picker/props.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否展示picker弹窗
+    show: {
+      type: Boolean,
+      default: uni.$u.props.picker.show },
+
+    // 是否展示顶部的操作栏
+    showToolbar: {
+      type: Boolean,
+      default: uni.$u.props.picker.showToolbar },
+
+    // 顶部标题
+    title: {
+      type: String,
+      default: uni.$u.props.picker.title },
+
+    // 对象数组，设置每一列的数据
+    columns: {
+      type: Array,
+      default: uni.$u.props.picker.columns },
+
+    // 是否显示加载中状态
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.picker.loading },
+
+    // 各列中，单个选项的高度
+    itemHeight: {
+      type: [String, Number],
+      default: uni.$u.props.picker.itemHeight },
+
+    // 取消按钮的文字
+    cancelText: {
+      type: String,
+      default: uni.$u.props.picker.cancelText },
+
+    // 确认按钮的文字
+    confirmText: {
+      type: String,
+      default: uni.$u.props.picker.confirmText },
+
+    // 取消按钮的颜色
+    cancelColor: {
+      type: String,
+      default: uni.$u.props.picker.cancelColor },
+
+    // 确认按钮的颜色
+    confirmColor: {
+      type: String,
+      default: uni.$u.props.picker.confirmColor },
+
+    // 选择器只有一列时，默认选中项的索引，从0开始
+    singleIndex: {
+      type: [String, Number],
+      default: uni.$u.props.picker.singleIndex },
+
+    // 每列中可见选项的数量
+    visibleItemCount: {
+      type: [String, Number],
+      default: uni.$u.props.picker.visibleItemCount },
+
+    // 选项对象中，需要展示的属性键名
+    keyName: {
+      type: String,
+      default: uni.$u.props.picker.keyName },
+
+    // 是否允许点击遮罩关闭选择器
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: uni.$u.props.picker.closeOnClickOverlay },
+
+    // 各列的默认索引
+    defaultIndex: {
+      type: Array,
+      default: uni.$u.props.picker.defaultIndex },
+
+    // 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件，只在微信2.21.1及以上有效
+    immediateChange: {
+      type: Boolean,
+      default: uni.$u.props.picker.immediateChange } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 89:
+/*!*********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/lineProgress.js ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:14:11
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/lineProgress.js
+                                                                                                      */var _default =
+{
+  // lineProgress 组件
+  lineProgress: {
+    activeColor: '#19be6b',
+    inactiveColor: '#ececec',
+    percentage: 0,
+    showText: true,
+    height: 12 } };exports.default = _default;
+
+/***/ }),
+
+/***/ 894:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-upload/utils.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.chooseFile = chooseFile;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function pickExclude(obj, keys) {
+  // 某些情况下，type可能会为
+  if (!['[object Object]', '[object File]'].includes(Object.prototype.toString.call(obj))) {
+    return {};
+  }
+  return Object.keys(obj).reduce(function (prev, key) {
+    if (!keys.includes(key)) {
+      prev[key] = obj[key];
+    }
+    return prev;
+  }, {});
+}
+
+function formatImage(res) {
+  return res.tempFiles.map(function (item) {return _objectSpread(_objectSpread({},
+    pickExclude(item, ['path'])), {}, {
+      type: 'image',
+      url: item.path,
+      thumb: item.path,
+      size: item.size });});
+
+
+
+
+}
+
+function formatVideo(res) {
+  return [_objectSpread(_objectSpread({},
+
+  pickExclude(res, ['tempFilePath', 'thumbTempFilePath', 'errMsg'])), {}, {
+    type: 'video',
+    url: res.tempFilePath,
+    thumb: res.thumbTempFilePath,
+    size: res.size })];
+
+
+
+
+
+}
+
+function formatMedia(res) {
+  return res.tempFiles.map(function (item) {return _objectSpread(_objectSpread({},
+    pickExclude(item, ['fileType', 'thumbTempFilePath', 'tempFilePath'])), {}, {
+      type: res.type,
+      url: item.tempFilePath,
+      thumb: res.type === 'video' ? item.thumbTempFilePath : item.tempFilePath,
+      size: item.size });});
+
+}
+
+function formatFile(res) {
+  return res.tempFiles.map(function (item) {return _objectSpread(_objectSpread({},
+    pickExclude(item, ['path'])), {}, {
+      url: item.path,
+      size: item.size });});
+
+
+
+
+
+}
+function chooseFile(_ref)
+
+
+
+
+
+
+
+
+{var accept = _ref.accept,multiple = _ref.multiple,capture = _ref.capture,compressed = _ref.compressed,maxDuration = _ref.maxDuration,sizeType = _ref.sizeType,camera = _ref.camera,maxCount = _ref.maxCount;
+  return new Promise(function (resolve, reject) {
+    switch (accept) {
+      case 'image':
+        uni.chooseImage({
+          count: multiple ? Math.min(maxCount, 9) : 1,
+          sourceType: capture,
+          sizeType: sizeType,
+          success: function success(res) {return resolve(formatImage(res));},
+          fail: reject });
+
+        break;
+
+      // 只有微信小程序才支持chooseMedia接口
+      case 'media':
+        wx.chooseMedia({
+          count: multiple ? Math.min(maxCount, 9) : 1,
+          sourceType: capture,
+          maxDuration: maxDuration,
+          sizeType: sizeType,
+          camera: camera,
+          success: function success(res) {return resolve(formatMedia(res));},
+          fail: reject });
+
+        break;
+
+      case 'video':
+        uni.chooseVideo({
+          sourceType: capture,
+          compressed: compressed,
+          maxDuration: maxDuration,
+          camera: camera,
+          success: function success(res) {return resolve(formatVideo(res));},
+          fail: reject });
+
+        break;
+
+      // 只有微信小程序才支持chooseMessageFile接口
+      case 'file':
+
+        wx.chooseMessageFile({
+          count: multiple ? maxCount : 1,
+          type: accept,
+          success: function success(res) {return resolve(formatFile(res));},
+          fail: reject });
+
+
+
+
+
+
+
+
+
+
+
+        break;
+
+      default:
+        // 此为保底选项，在accept不为上面任意一项的时候选取全部文件
+
+        wx.chooseMessageFile({
+          count: multiple ? maxCount : 1,
+          type: 'all',
+          success: function success(res) {return resolve(formatFile(res));},
+          fail: reject });}
+
+
+
+
+
+
+
+
+
+
+
+
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 895:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-upload/mixin.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  watch: {
+    // 监听accept的变化，判断是否符合个平台要求
+    // 只有微信小程序才支持选择媒体，文件类型，所以这里做一个判断提示
+    accept: {
+      immediate: true,
+      handler: function handler(val) {
+
+
+
+
+
+
+
+
+
+
+      } } } };exports.default = _default;
+
+/***/ }),
+
+/***/ 896:
+/*!****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-upload/props.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 接受的文件类型, 可选值为all media image file video
+    accept: {
+      type: String,
+      default: uni.$u.props.upload.accept },
+
+    // 	图片或视频拾取模式，当accept为image类型时设置capture可选额外camera可以直接调起摄像头
+    capture: {
+      type: [String, Array],
+      default: uni.$u.props.upload.capture },
+
+    // 当accept为video时生效，是否压缩视频，默认为true
+    compressed: {
+      type: Boolean,
+      default: uni.$u.props.upload.compressed },
+
+    // 当accept为video时生效，可选值为back或front
+    camera: {
+      type: String,
+      default: uni.$u.props.upload.camera },
+
+    // 当accept为video时生效，拍摄视频最长拍摄时间，单位秒
+    maxDuration: {
+      type: Number,
+      default: uni.$u.props.upload.maxDuration },
+
+    // 上传区域的图标，只能内置图标
+    uploadIcon: {
+      type: String,
+      default: uni.$u.props.upload.uploadIcon },
+
+    // 上传区域的图标的颜色，默认
+    uploadIconColor: {
+      type: String,
+      default: uni.$u.props.upload.uploadIconColor },
+
+    // 是否开启文件读取前事件
+    useBeforeRead: {
+      type: Boolean,
+      default: uni.$u.props.upload.useBeforeRead },
+
+    // 读取后的处理函数
+    afterRead: {
+      type: Function,
+      default: null },
+
+    // 读取前的处理函数
+    beforeRead: {
+      type: Function,
+      default: null },
+
+    // 是否显示组件自带的图片预览功能
+    previewFullImage: {
+      type: Boolean,
+      default: uni.$u.props.upload.previewFullImage },
+
+    // 最大上传数量
+    maxCount: {
+      type: [String, Number],
+      default: uni.$u.props.upload.maxCount },
+
+    // 是否启用
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.upload.disabled },
+
+    // 预览上传的图片时的裁剪模式，和image组件mode属性一致
+    imageMode: {
+      type: String,
+      default: uni.$u.props.upload.imageMode },
+
+    // 标识符，可以在回调函数的第二项参数中获取
+    name: {
+      type: String,
+      default: uni.$u.props.upload.name },
+
+    // 所选的图片的尺寸, 可选值为original compressed
+    sizeType: {
+      type: Array,
+      default: uni.$u.props.upload.sizeType },
+
+    // 是否开启图片多选，部分安卓机型不支持
+    multiple: {
+      type: Boolean,
+      default: uni.$u.props.upload.multiple },
+
+    // 是否展示删除按钮
+    deletable: {
+      type: Boolean,
+      default: uni.$u.props.upload.deletable },
+
+    // 文件大小限制，单位为byte
+    maxSize: {
+      type: [String, Number],
+      default: uni.$u.props.upload.maxSize },
+
+    // 显示已上传的文件列表
+    fileList: {
+      type: Array,
+      default: uni.$u.props.upload.fileList },
+
+    // 上传区域的提示文字
+    uploadText: {
+      type: String,
+      default: uni.$u.props.upload.uploadText },
+
+    // 内部预览图片区域和选择图片按钮的区域宽度
+    width: {
+      type: [String, Number],
+      default: uni.$u.props.upload.width },
+
+    // 内部预览图片区域和选择图片按钮的区域高度
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.upload.height },
+
+    // 是否在上传完成后展示预览图
+    previewImage: {
+      type: Boolean,
+      default: uni.$u.props.upload.previewImage } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 9:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 10);
+
+/***/ }),
+
+/***/ 90:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/link.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
+                                                                                                                                                          * @Author       : LQ
+                                                                                                                                                          * @Description  :
+                                                                                                                                                          * @version      : 1.0
+                                                                                                                                                          * @Date         : 2021-08-20 16:44:21
+                                                                                                                                                          * @LastAuthor   : LQ
+                                                                                                                                                          * @lastTime     : 2021-08-20 17:45:36
+                                                                                                                                                          * @FilePath     : /u-view2.0/uview-ui/libs/config/props/link.js
+                                                                                                                                                          */var color = _config.default.color;var _default = { // link超链接组件props参数
+  link: { color: color['u-primary'], fontSize: 15,
+    underLine: false,
+    href: '',
+    mpTips: '链接已复制，请在浏览器打开',
+    lineColor: '',
+    text: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 904:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-form/props.js ***!
   \**************************************************************************************************/
@@ -26238,35 +27694,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 84:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/indexAnchor.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:13:15
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/indexAnchor.js
-                                                                                                      */var _default =
-{
-  // indexAnchor 组件
-  indexAnchor: {
-    text: '',
-    color: '#606266',
-    size: 14,
-    bgColor: '#dedede',
-    height: 32 } };exports.default = _default;
-
-/***/ }),
-
-/***/ 840:
+/***/ 905:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/util/async-validator.js ***!
   \****************************************************************************************************/
@@ -27618,11 +29046,11 @@ Schema.messages = messages;var _default =
 Schema;
 // # sourceMappingURL=index.js.map
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 841)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 906)))
 
 /***/ }),
 
-/***/ 841:
+/***/ 906:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -27653,7 +29081,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 842);
+        if (!path) path = __webpack_require__(/*! path */ 907);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -27667,7 +29095,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 842:
+/***/ 907:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -27977,66 +29405,14 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 841)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 906)))
 
 /***/ }),
 
-/***/ 848:
-/*!*******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-form-item/props.js ***!
-  \*******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // input的label提示语
-    label: {
-      type: String,
-      default: uni.$u.props.formItem.label },
-
-    // 绑定的值
-    prop: {
-      type: String,
-      default: uni.$u.props.formItem.prop },
-
-    // 是否显示表单域的下划线边框
-    borderBottom: {
-      type: [String, Boolean],
-      default: uni.$u.props.formItem.borderBottom },
-
-    // label的宽度，单位px
-    labelWidth: {
-      type: [String, Number],
-      default: uni.$u.props.formItem.labelWidth },
-
-    // 右侧图标
-    rightIcon: {
-      type: String,
-      default: uni.$u.props.formItem.rightIcon },
-
-    // 左侧图标
-    leftIcon: {
-      type: String,
-      default: uni.$u.props.formItem.leftIcon },
-
-    // 是否显示左边的必填星号，只作显示用，具体校验必填的逻辑，请在rules中配置
-    required: {
-      type: Boolean,
-      default: uni.$u.props.formItem.required },
-
-    leftIconStyle: {
-      type: [String, Object],
-      default: uni.$u.props.formItem.leftIconStyle } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 85:
-/*!******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/indexList.js ***!
-  \******************************************************************************************************/
+/***/ 91:
+/*!*************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/list.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28047,24 +29423,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:13:35
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/indexList.js
+                                                                                                      * @lastTime     : 2021-08-20 17:14:53
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/list.js
                                                                                                       */var _default =
 {
-  // indexList 组件
-  indexList: {
-    inactiveColor: '#606266',
-    activeColor: '#5677fc',
-    indexList: function indexList() {return [];},
-    sticky: true,
-    customNavHeight: 0 } };exports.default = _default;
+  // list 组件
+  list: {
+    showScrollbar: false,
+    lowerThreshold: 50,
+    upperThreshold: 0,
+    scrollTop: 0,
+    offsetAccuracy: 10,
+    enableFlex: false,
+    pagingEnabled: false,
+    scrollable: true,
+    scrollIntoView: '',
+    scrollWithAnimation: false,
+    enableBackToTop: false,
+    height: 0,
+    width: 0,
+    preLoadScreen: 1 } };exports.default = _default;
 
 /***/ }),
 
-/***/ 86:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/input.js ***!
-  \**************************************************************************************************/
+/***/ 92:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/listItem.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28075,50 +29460,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:13:55
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/input.js
+                                                                                                      * @lastTime     : 2021-08-20 17:15:40
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/listItem.js
                                                                                                       */var _default =
 {
-  // index 组件
-  input: {
-    value: '',
-    type: 'text',
-    fixed: false,
-    disabled: false,
-    disabledColor: '#f5f7fa',
-    clearable: false,
-    password: false,
-    maxlength: -1,
-    placeholder: null,
-    placeholderClass: 'input-placeholder',
-    placeholderStyle: 'color: #c0c4cc',
-    showWordLimit: false,
-    confirmType: 'done',
-    confirmHold: false,
-    holdKeyboard: false,
-    focus: false,
-    autoBlur: false,
-    disableDefaultPadding: false,
-    cursor: -1,
-    cursorSpacing: 30,
-    selectionStart: -1,
-    selectionEnd: -1,
-    adjustPosition: true,
-    inputAlign: 'left',
-    fontSize: '15px',
-    color: '#303133',
-    prefixIcon: '',
-    prefixIconStyle: '',
-    suffixIcon: '',
-    suffixIconStyle: '',
-    border: 'surround',
-    readonly: false,
-    shape: 'square',
-    formatter: null } };exports.default = _default;
+  // listItem 组件
+  listItem: {
+    anchor: '' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 863:
+/***/ 920:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-code/props.js ***!
   \**************************************************************************************************/
@@ -28161,46 +29513,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 87:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/keyboard.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:07:49
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/keyboard.js
-                                                                                                      */var _default =
-{
-  // 键盘组件
-  keyboard: {
-    mode: 'number',
-    dotDisabled: false,
-    tooltip: true,
-    showTips: true,
-    tips: '',
-    showCancel: true,
-    showConfirm: true,
-    random: false,
-    safeAreaInsetBottom: true,
-    closeOnClickOverlay: true,
-    show: false,
-    overlay: true,
-    zIndex: 10075,
-    cancelText: '取消',
-    confirmText: '确定',
-    autoChange: false } };exports.default = _default;
-
-/***/ }),
-
-/***/ 871:
+/***/ 928:
 /*!****************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-avatar/props.js ***!
   \****************************************************************************************************/
@@ -28287,7 +29600,46 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 879:
+/***/ 93:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadingIcon.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
+                                                                                                                                                          * @Author       : LQ
+                                                                                                                                                          * @Description  :
+                                                                                                                                                          * @version      : 1.0
+                                                                                                                                                          * @Date         : 2021-08-20 16:44:21
+                                                                                                                                                          * @LastAuthor   : LQ
+                                                                                                                                                          * @lastTime     : 2021-08-20 17:45:47
+                                                                                                                                                          * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingIcon.js
+                                                                                                                                                          */var color = _config.default.color;var _default = { // loading-icon加载中图标组件
+  loadingIcon: { show: true, color: color['u-tips-color'],
+    textColor: color['u-tips-color'],
+    vertical: false,
+    mode: 'spinner',
+    size: 24,
+    textSize: 15,
+    text: '',
+    timingFunction: 'ease-in-out',
+    duration: 1200,
+    inactiveColor: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 936:
 /*!**********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-loading-icon/props.js ***!
   \**********************************************************************************************************/
@@ -28355,10 +29707,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 88:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/line.js ***!
-  \*************************************************************************************************/
+/***/ 94:
+/*!********************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadingPage.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28369,22 +29721,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:04:49
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/line.js
+                                                                                                      * @lastTime     : 2021-08-20 17:00:23
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingPage.js
                                                                                                       */var _default =
 {
-  // line组件
-  line: {
-    color: '#d6d7d9',
-    length: '100%',
-    direction: 'row',
-    hairline: true,
-    margin: 0,
-    dashed: false } };exports.default = _default;
+  // loading-page组件
+  loadingPage: {
+    loadingText: '正在加载',
+    image: '',
+    loadingMode: 'circle',
+    loading: false,
+    bgColor: '#ffffff',
+    color: '#C8C8C8',
+    fontSize: 19,
+    loadingColor: '#C8C8C8' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 887:
+/***/ 944:
 /*!**************************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-swiper-indicator/props.js ***!
   \**************************************************************************************************************/
@@ -28422,10 +29776,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 89:
-/*!*********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/lineProgress.js ***!
-  \*********************************************************************************************************/
+/***/ 95:
+/*!*****************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadmore.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28436,21 +29790,32 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
                                                                                                       * @version      : 1.0
                                                                                                       * @Date         : 2021-08-20 16:44:21
                                                                                                       * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:14:11
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/lineProgress.js
+                                                                                                      * @lastTime     : 2021-08-20 17:15:26
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadmore.js
                                                                                                       */var _default =
 {
-  // lineProgress 组件
-  lineProgress: {
-    activeColor: '#19be6b',
-    inactiveColor: '#ececec',
-    percentage: 0,
-    showText: true,
-    height: 12 } };exports.default = _default;
+  // loadmore 组件
+  loadmore: {
+    status: 'loadmore',
+    bgColor: 'transparent',
+    icon: true,
+    fontSize: 14,
+    iconSize: 17,
+    color: '#606266',
+    loadingIcon: 'spinner',
+    loadmoreText: '加载更多',
+    loadingText: '正在加载...',
+    nomoreText: '没有更多了',
+    isDot: false,
+    iconColor: '#b7b7b7',
+    marginTop: 10,
+    marginBottom: 10,
+    height: 'auto',
+    line: false } };exports.default = _default;
 
 /***/ }),
 
-/***/ 895:
+/***/ 952:
 /*!***********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-column-notice/props.js ***!
   \***********************************************************************************************************/
@@ -28514,53 +29879,46 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 9:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 10);
-
-/***/ }),
-
-/***/ 90:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/link.js ***!
-  \*************************************************************************************************/
+/***/ 96:
+/*!**************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/modal.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
-                                                                                                                                                          * @Author       : LQ
-                                                                                                                                                          * @Description  :
-                                                                                                                                                          * @version      : 1.0
-                                                                                                                                                          * @Date         : 2021-08-20 16:44:21
-                                                                                                                                                          * @LastAuthor   : LQ
-                                                                                                                                                          * @lastTime     : 2021-08-20 17:45:36
-                                                                                                                                                          * @FilePath     : /u-view2.0/uview-ui/libs/config/props/link.js
-                                                                                                                                                          */var color = _config.default.color;var _default = { // link超链接组件props参数
-  link: { color: color['u-primary'], fontSize: 15,
-    underLine: false,
-    href: '',
-    mpTips: '链接已复制，请在浏览器打开',
-    lineColor: '',
-    text: '' } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:15:59
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/modal.js
+                                                                                                      */var _default =
+{
+  // modal 组件
+  modal: {
+    show: false,
+    title: '',
+    content: '',
+    confirmText: '确认',
+    cancelText: '取消',
+    showConfirmButton: true,
+    showCancelButton: false,
+    confirmColor: '#2979ff',
+    cancelColor: '#606266',
+    buttonReverse: false,
+    zoom: true,
+    asyncClose: false,
+    closeOnClickOverlay: false,
+    negativeTop: 0,
+    width: '650rpx',
+    confirmButtonShape: '' } };exports.default = _default;
 
 /***/ }),
 
-/***/ 903:
+/***/ 960:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-row-notice/props.js ***!
   \********************************************************************************************************/
@@ -28608,44 +29966,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));f
 
 /***/ }),
 
-/***/ 91:
-/*!*************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/list.js ***!
-  \*************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:14:53
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/list.js
-                                                                                                      */var _default =
-{
-  // list 组件
-  list: {
-    showScrollbar: false,
-    lowerThreshold: 50,
-    upperThreshold: 0,
-    scrollTop: 0,
-    offsetAccuracy: 10,
-    enableFlex: false,
-    pagingEnabled: false,
-    scrollable: true,
-    scrollIntoView: '',
-    scrollWithAnimation: false,
-    enableBackToTop: false,
-    height: 0,
-    width: 0,
-    preLoadScreen: 1 } };exports.default = _default;
-
-/***/ }),
-
-/***/ 911:
+/***/ 968:
 /*!********************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-transition/props.js ***!
   \********************************************************************************************************/
@@ -28678,7 +29999,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 912:
+/***/ 969:
 /*!*************************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-transition/transition.js ***!
   \*************************************************************************************************************/
@@ -28689,7 +30010,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 9));
 
 
-var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 913));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 970));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
 var nextTick = function nextTick() {return new Promise(function (resolve) {return setTimeout(resolve, 1000 / 50);});}; // nvue动画模块实现细节抽离在外部文件
 
 // 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
@@ -28844,7 +30165,47 @@ var getClassNames = function getClassNames(name) {return {
 
 /***/ }),
 
-/***/ 913:
+/***/ 97:
+/*!***************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/navbar.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+var _color = _interopRequireDefault(__webpack_require__(/*! ../color */ 98));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
+                                                                                                                                                        * @Author       : LQ
+                                                                                                                                                        * @Description  :
+                                                                                                                                                        * @version      : 1.0
+                                                                                                                                                        * @Date         : 2021-08-20 16:44:21
+                                                                                                                                                        * @LastAuthor   : LQ
+                                                                                                                                                        * @lastTime     : 2021-08-20 17:16:18
+                                                                                                                                                        * @FilePath     : /u-view2.0/uview-ui/libs/config/props/navbar.js
+                                                                                                                                                        */var _default = { // navbar 组件
+  navbar: { safeAreaInsetTop: true, placeholder: false, fixed: true, border: false, leftIcon: 'arrow-left', leftText: '',
+    rightText: '',
+    rightIcon: '',
+    title: '',
+    bgColor: '#ffffff',
+    titleWidth: '400rpx',
+    height: '44px',
+    leftIconSize: 20,
+    leftIconColor: _color.default.mainColor,
+    autoBack: false,
+    titleStyle: '' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 970:
 /*!***************************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
   \***************************************************************************************************************/
@@ -28921,31 +30282,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 92:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/listItem.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:15:40
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/listItem.js
-                                                                                                      */var _default =
-{
-  // listItem 组件
-  listItem: {
-    anchor: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 921:
+/***/ 978:
 /*!**************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-link/props.js ***!
   \**************************************************************************************************/
@@ -28993,46 +30330,61 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 93:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadingIcon.js ***!
-  \********************************************************************************************************/
+/***/ 98:
+/*!********************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/color.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 为了让用户能够自定义主题，会逐步弃用此文件，各颜色通过css提供
+// 为了给某些特殊场景使用和向后兼容，无需删除此文件(2020-06-20)
+var color = {
+  primary: '#3c9cff',
+  info: '#909399',
+  default: '#909399',
+  warning: '#f9ae3d',
+  error: '#f56c6c',
+  success: '#5ac725',
+  mainColor: '#303133',
+  contentColor: '#606266',
+  tipsColor: '#909399',
+  lightColor: '#c0c4cc',
+  borderColor: '#e4e7ed' };var _default =
 
 
-
-
-
-
-
-
-var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
-                                                                                                                                                          * @Author       : LQ
-                                                                                                                                                          * @Description  :
-                                                                                                                                                          * @version      : 1.0
-                                                                                                                                                          * @Date         : 2021-08-20 16:44:21
-                                                                                                                                                          * @LastAuthor   : LQ
-                                                                                                                                                          * @lastTime     : 2021-08-20 17:45:47
-                                                                                                                                                          * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingIcon.js
-                                                                                                                                                          */var color = _config.default.color;var _default = { // loading-icon加载中图标组件
-  loadingIcon: { show: true, color: color['u-tips-color'],
-    textColor: color['u-tips-color'],
-    vertical: false,
-    mode: 'spinner',
-    size: 24,
-    textSize: 15,
-    text: '',
-    timingFunction: 'ease-in-out',
-    duration: 1200,
-    inactiveColor: '' } };exports.default = _default;
+color;exports.default = _default;
 
 /***/ }),
 
-/***/ 938:
+/***/ 99:
+/*!******************************************************************************************************!*\
+  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/noNetwork.js ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * @Author       : LQ
+                                                                                                      * @Description  :
+                                                                                                      * @version      : 1.0
+                                                                                                      * @Date         : 2021-08-20 16:44:21
+                                                                                                      * @LastAuthor   : LQ
+                                                                                                      * @lastTime     : 2021-08-20 17:16:39
+                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/noNetwork.js
+                                                                                                      */var _default =
+{
+  // noNetwork
+  noNetwork: {
+    tips: '哎呀，网络信号丢失',
+    zIndex: '',
+    image: 'data:image/png;base64,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' } };exports.default = _default;
+
+/***/ }),
+
+/***/ 995:
 /*!***************************************************************************************************!*\
   !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-popup/props.js ***!
   \***************************************************************************************************/
@@ -29117,238 +30469,6 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../config */ 49));f
       type: [Number, String],
       default: uni.$u.props.popup.overlayOpacity } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 94:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadingPage.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:00:23
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingPage.js
-                                                                                                      */var _default =
-{
-  // loading-page组件
-  loadingPage: {
-    loadingText: '正在加载',
-    image: '',
-    loadingMode: 'circle',
-    loading: false,
-    bgColor: '#ffffff',
-    color: '#C8C8C8',
-    fontSize: 19,
-    loadingColor: '#C8C8C8' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 95:
-/*!*****************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/loadmore.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:15:26
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadmore.js
-                                                                                                      */var _default =
-{
-  // loadmore 组件
-  loadmore: {
-    status: 'loadmore',
-    bgColor: 'transparent',
-    icon: true,
-    fontSize: 14,
-    color: '#606266',
-    loadingIcon: 'spinner',
-    loadmoreText: '加载更多',
-    loadingText: '正在加载...',
-    nomoreText: '没有更多了',
-    isDot: false,
-    iconColor: '#b7b7b7',
-    marginTop: 10,
-    marginBottom: 10,
-    height: 'auto',
-    line: false } };exports.default = _default;
-
-/***/ }),
-
-/***/ 951:
-/*!********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-status-bar/props.js ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    bgColor: {
-      type: String,
-      default: uni.$u.props.statusBar.bgColor } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 959:
-/*!*********************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/components/u-safe-bottom/props.js ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {} };exports.default = _default;
-
-/***/ }),
-
-/***/ 96:
-/*!**************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/modal.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:15:59
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/modal.js
-                                                                                                      */var _default =
-{
-  // modal 组件
-  modal: {
-    show: false,
-    title: '',
-    content: '',
-    confirmText: '确认',
-    cancelText: '取消',
-    showConfirmButton: true,
-    showCancelButton: false,
-    confirmColor: '#2979ff',
-    cancelColor: '#606266',
-    buttonReverse: false,
-    zoom: true,
-    asyncClose: false,
-    closeOnClickOverlay: false,
-    negativeTop: 0,
-    width: '650rpx',
-    confirmButtonShape: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 97:
-/*!***************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/navbar.js ***!
-  \***************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-var _color = _interopRequireDefault(__webpack_require__(/*! ../color */ 98));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} /*
-                                                                                                                                                        * @Author       : LQ
-                                                                                                                                                        * @Description  :
-                                                                                                                                                        * @version      : 1.0
-                                                                                                                                                        * @Date         : 2021-08-20 16:44:21
-                                                                                                                                                        * @LastAuthor   : LQ
-                                                                                                                                                        * @lastTime     : 2021-08-20 17:16:18
-                                                                                                                                                        * @FilePath     : /u-view2.0/uview-ui/libs/config/props/navbar.js
-                                                                                                                                                        */var _default = { // navbar 组件
-  navbar: { safeAreaInsetTop: true, placeholder: false, fixed: true, border: false, leftIcon: 'arrow-left', leftText: '',
-    rightText: '',
-    rightIcon: '',
-    title: '',
-    bgColor: '#ffffff',
-    titleWidth: '400rpx',
-    height: '44px',
-    leftIconSize: 20,
-    leftIconColor: _color.default.mainColor,
-    autoBack: false,
-    titleStyle: '' } };exports.default = _default;
-
-/***/ }),
-
-/***/ 98:
-/*!********************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/color.js ***!
-  \********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 为了让用户能够自定义主题，会逐步弃用此文件，各颜色通过css提供
-// 为了给某些特殊场景使用和向后兼容，无需删除此文件(2020-06-20)
-var color = {
-  primary: '#3c9cff',
-  info: '#909399',
-  default: '#909399',
-  warning: '#f9ae3d',
-  error: '#f56c6c',
-  success: '#5ac725',
-  mainColor: '#303133',
-  contentColor: '#606266',
-  tipsColor: '#909399',
-  lightColor: '#c0c4cc',
-  borderColor: '#e4e7ed' };var _default =
-
-
-color;exports.default = _default;
-
-/***/ }),
-
-/***/ 99:
-/*!******************************************************************************************************!*\
-  !*** /Users/gongguojun/uniapp/tianshitongzhuang/uni_modules/uview-ui/libs/config/props/noNetwork.js ***!
-  \******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
-                                                                                                      * @Author       : LQ
-                                                                                                      * @Description  :
-                                                                                                      * @version      : 1.0
-                                                                                                      * @Date         : 2021-08-20 16:44:21
-                                                                                                      * @LastAuthor   : LQ
-                                                                                                      * @lastTime     : 2021-08-20 17:16:39
-                                                                                                      * @FilePath     : /u-view2.0/uview-ui/libs/config/props/noNetwork.js
-                                                                                                      */var _default =
-{
-  // noNetwork
-  noNetwork: {
-    tips: '哎呀，网络信号丢失',
-    zIndex: '',
-    image: 'data:image/png;base64,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' } };exports.default = _default;
 
 /***/ })
 

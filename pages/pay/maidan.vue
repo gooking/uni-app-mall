@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="form-box">
-			<u-formref="uForm" label-width="130rpx" :model="form">
+			<u-form ref="uForm" label-width="130rpx" :model="form">
 				<u-form-item label="消费金额" prop="amount" required>
 					<u-input v-model="form.amount" type="digit" clearable focus placeholder="请询问服务员本次消费金额"></u-input>
 				</u-form-item>
@@ -12,7 +12,7 @@
 						<u-radio v-if="openAlipayProvider" :customStyle="{marginLeft: '16rpx'}" label="支付宝" :name="2"></u-radio>
 					</u-radio-group>
 				</u-form-item>
-			</u-form
+			</u-form>
 		</view>
 		<u-cell-group v-if="payBillDiscounts" title="优惠规则">
 			<u-cell v-for="(item,index) in payBillDiscounts" :title="'累计消费满' + item.consume + '元'" :label="item.loop ? '可累计' : ''"
