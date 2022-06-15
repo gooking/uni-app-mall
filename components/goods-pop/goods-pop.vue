@@ -15,8 +15,8 @@
 				</view>
 			</view>
 		</view>
-		<u-line></u-line>
-		<view v-for="(item,index) in goodsDetail.properties" :key="item.id" v-if="!item.hidden" class="skuList">
+		<u-line dashed margin="32rpx"></u-line>
+		<view v-for="(item,index) in properties" :key="item.id" v-if="!item.hidden" class="skuList">
 			<view class="t">{{ item.name }}</view>
 			<view class="items">
 				<view v-for="(item2,index2) in item.childsCurGoods" :key="item2.id" class="item">
@@ -35,17 +35,19 @@
 				</view>
 			</view>
 		</view>
-		<u-line v-if="goodsAddition || goodsDetail.properties" class="sku-space"></u-line>
+		<u-line v-if="goodsAddition || properties" dashed margin="32rpx"></u-line>
 		<view class="buy-number">
 			<text>购买数量</text>
 			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
 		</view>
-		<u-line></u-line>
+		<u-line dashed margin="32rpx"></u-line>
 		<view class="btns">
 			<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 			<view class="icon-btn">
 				<u-icon name="chat" size="48rpx"></u-icon>
 				<text>客服</text>
+				<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name" :send-message-img="goodsDetail.basicInfo.pic"
+      :send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id" show-message-card></button>
 			</view>
 			<!--  #endif -->
 			<view class="icon-btn" @click="goCart">
@@ -105,7 +107,8 @@
 				propertyChildIds: undefined, // 用户已经选的sku信息数组
 				propertyChildNames: undefined,
 				goodsAddition: undefined,
-				faved: false
+				faved: false,
+				properties: undefined
 			}
 		},
 		watch: {
@@ -137,10 +140,11 @@
 					this.min = 1
 				}
 				this.max = this.goodsDetail.basicInfo.stores
+				this.goodsAddition = null
 				if (this.goodsDetail.basicInfo.hasAddition) {
 					this._goodsAddition()
 				}
-				this.goodsAddition = null
+				this.properties = this.goodsDetail.properties
 				TOOLS.showTabBarBadge()
 				this.goodsFavCheck()
 			},
@@ -150,26 +154,27 @@
 			// sku 选择事件
 			async skuSelect(index, index2) {
 				this.buyNumber = 1
-				const p = this.goodsDetail.properties[index]
+				const properties = this.goodsDetail.properties
+				const p = properties[index]
 				const c = p.childsCurGoods[index2]
 				// 当前sku往下的所有sku取消选中
-				for (let i = index; i < this.goodsDetail.properties.length; i++) {
-					const _p = this.goodsDetail.properties[i]
+				for (let i = index; i < properties.length; i++) {
+					const _p = properties[i]
 					_p.childsCurGoods.forEach(ele => {
 						ele.selected = false
 					})
 					_p.selectedChild = null
-					this.goodsDetail.properties.splice(i, 1, _p)
+					properties.splice(i, 1, _p)
 				}
 				// 当前选中
 				c.selected = true
 				p.selectedChild = c
 				p.childsCurGoods.splice(index2, 1, c)
-				this.goodsDetail.properties.splice(index, 1, p)
+				properties.splice(index, 1, p)
 				// 计算已经选中的sku信息
 				const propertyChildIds = []
 				const propertyChildNames = []
-				this.goodsDetail.properties.forEach(ele => {
+				properties.forEach(ele => {
 					if (ele.selectedChild) {
 						propertyChildIds.push(ele.id + ':' + ele.selectedChild.id)
 						propertyChildNames.push(ele.name + ':' + ele.selectedChild.name)
@@ -188,8 +193,8 @@
 					return ok
 				})
 				// 设置下面的可选性
-				for (let i = index + 1; i < this.goodsDetail.properties.length; i++) {
-					const _p = this.goodsDetail.properties[i]
+				for (let i = index + 1; i < properties.length; i++) {
+					const _p = properties[i]
 					let a = skuList.findIndex(ele => {
 						return ele.propertyChildIds.indexOf(_p.id + ':') != -1
 					})
@@ -208,7 +213,7 @@
 							c.hidden = false
 						}
 					})
-					this.goodsDetail.properties.splice(i, 1, _p)
+					properties.splice(i, 1, _p)
 				}
 				// 切换sku商品图片
 				if (this.goodsDetail.subPics && this.goodsDetail.subPics.length > 0) {
@@ -219,6 +224,7 @@
 						this.pic = _subPic.pic
 					}
 				}
+				this.properties = properties
 				this.calculateGoodsPrice()
 			},
 			// 可选配件选择事件
@@ -252,8 +258,8 @@
 			},
 			async calculateGoodsPrice() {
 				// 计算最终的商品价格
-				if (!this.propertyChildIds || !this.goodsDetail.properties || this.propertyChildIds.length != this
-					.goodsDetail.properties.length) {
+				if (!this.propertyChildIds || !this.properties || this.propertyChildIds.length != this
+					.properties.length) {
 					this.price = this.goodsDetail.basicInfo.minPrice
 					this.score = this.goodsDetail.basicInfo.minScore
 					if (!this.goodsDetail.basicInfo.stores) {
@@ -370,8 +376,8 @@
 				}
 			},
 			checkOk() {
-				if (this.goodsDetail.properties && (!this.propertyChildIds || this.propertyChildIds.length != this
-						.goodsDetail.properties.length)) {
+				if (this.properties && (!this.propertyChildIds || this.propertyChildIds.length != this
+						.properties.length)) {
 					uni.showToast({
 						title: '请选择规格',
 						icon: 'none'
@@ -418,8 +424,8 @@
 					return
 				}
 				const sku = []
-				if(this.goodsDetail.properties && this.goodsDetail.properties.length > 0) {
-					this.goodsDetail.properties.forEach(ele => {
+				if(this.properties && this.properties.length > 0) {
+					this.properties.forEach(ele => {
 						sku.push({
 							optionId: ele.id,
 							optionValueId: ele.selectedChild.id
@@ -482,8 +488,8 @@
 					return
 				}
 				const sku = []
-				if(this.goodsDetail.properties && this.goodsDetail.properties.length > 0) {
-					this.goodsDetail.properties.forEach(ele => {
+				if(this.properties && this.properties.length > 0) {
+					this.properties.forEach(ele => {
 						sku.push({
 							optionId: ele.id,
 							optionValueId: ele.selectedChild.id,
@@ -556,6 +562,7 @@
 			.t2 {
 				color: #666;
 				font-size: 26rpx;
+				padding: 8rpx 0;
 			}
 
 			.price {
@@ -564,8 +571,8 @@
 				display: flex;
 				align-items: center;
 
-				font {
-					font-size: 22rpx;
+				text {
+					font-size: 24rpx;
 				}
 			}
 
@@ -579,7 +586,7 @@
 
 	.skuList {
 		.t {
-			margin: 32rpx 0 0 32rpx;
+			margin-left: 32rpx;
 			color: #333;
 			font-size: 28rpx;
 			// font-weight: bold;
@@ -592,18 +599,15 @@
 			.item {
 				margin: 16rpx 0 0 32rpx;
 			}
+			padding-bottom: 32rpx;
 		}
-	}
-
-	.sku-space {
-		padding-top: 32rpx;
 	}
 
 	.buy-number {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 32rpx;
+		padding: 0 32rpx;
 		color: #333;
 		font-size: 30rpx;
 	}
@@ -620,6 +624,13 @@
 			font-size: 24rpx;
 			color: #333;
 			margin-right: 32rpx;
+			button {
+			  position: absolute;
+			  height: 100%;
+			  width: 100%;
+			  opacity: 0;
+			  z-index: 99;
+			}
 		}
 
 		.btn {

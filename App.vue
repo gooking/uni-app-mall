@@ -154,13 +154,14 @@
 				// #endif
 			},
 			async checkHasLoginedH5() {
-				if (!this.token) {
+				const _this = this.$vm ? this.$vm : this
+				if (!_this.token) {
 					return false
 				}
 				// https://www.yuque.com/apifm/nu0f75/mp9f59
-				const res = await this.$wxapi.checkToken(this.token)
+				const res = await _this.$wxapi.checkToken(_this.token)
 				if (res.code != 0) {
-					this.$u.vuex('token', '')
+					_this.$u.vuex('token', '')
 					return false
 				}
 				return true

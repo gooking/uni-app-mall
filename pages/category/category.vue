@@ -212,6 +212,7 @@
 				this.showGoodsPop = true
 			},
 			async addCart(item) {
+				console.log('token', this.token);
 				if(!await getApp().checkHasLoginedH5()) {
 					uni.navigateTo({
 						url: "/pages/login/login"
