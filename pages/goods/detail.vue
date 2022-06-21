@@ -5,8 +5,10 @@
 			<scroll-view class="main" scroll-y :scroll-into-view="curViewId" enable-back-to-top scroll-with-animation
 				@scrolltolower="scrolltolower">
 				<view id="basic">
-					<video v-if="videoMp4Src" :src="videoMp4Src" autoplay="true" loop="true" object-fit="cover" style='width:750rpx;height:750rpx;'></video>
-					<u-swiper v-else :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx"></u-swiper>
+					<video v-if="videoMp4Src" :src="videoMp4Src" autoplay="true" loop="true" object-fit="cover"
+						style='width:750rpx;height:750rpx;'></video>
+					<u-swiper v-else :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx">
+					</u-swiper>
 					<view class="price-share">
 						<view class="price-score">
 							<view v-if="goodsDetail.basicInfo.minPrice" class="item">
@@ -23,8 +25,9 @@
 							<view class="icon-btn">
 								<u-icon name="share-square" size="48rpx"></u-icon>
 								<text>分享</text>
+								<button open-type='share'></button>
 							</view>
-							<view class="icon-btn">
+							<view class="icon-btn" @click="drawSharePic">
 								<u-icon name="moments" size="48rpx"></u-icon>
 								<text>海报</text>
 							</view>
@@ -36,7 +39,7 @@
 							v-if="goodsDetail.basicInfo.supplyType == 'vop_jd' || goodsDetail.basicInfo.supplyType == 'jdJoycityPoints'"
 							text="京东自营" bgColor="#e64340" borderColor="#e64340" size="mini" class="goods-title-tag">
 						</u-tag>
-						<text class="goods-title">{{ goodsDetail.basicInfo.name }}</text>
+						<text>{{ goodsDetail.basicInfo.name }}</text>
 					</view>
 					<view v-if="goodsDetail.basicInfo.characteristic" class="title-sub">
 						{{ goodsDetail.basicInfo.characteristic }}
@@ -98,6 +101,8 @@
 				<view class="icon-btn">
 					<u-icon name="chat" size="48rpx"></u-icon>
 					<text>客服</text>
+					<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name" :send-message-img="goodsDetail.basicInfo.pic"
+					:send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id" show-message-card></button>
 				</view>
 				<!--  #endif -->
 				<view class="icon-btn" @click="goCart">
@@ -128,11 +133,25 @@
 			</view>
 		</view>
 		<goods-pop :show="showGoodsPop" :goodsDetail="goodsDetail" @close="showGoodsPop = false"></goods-pop>
+		<!-- <u-modal :show="showhaibao"  :title="title" >
+			<view class="slot-content">
+				<hch-poster v-if="showhaibao" ref="hchPoster" @cancel="handleCancel" :posterData.sync="posterData" @previewImage='previewImage' />
+			</view>
+		</u-modal> -->
+		<u-popup :show="showhaibao">
+			<view class="haibaopop">
+				<hch-poster v-if="showhaibao" ref="hchPoster" @cancel="haibaoCancel" :posterData.sync="posterData" @previewImage='haibaoPreview' />
+			</view>
+		</u-popup>
 	</view>
 </template>
 
 <script>
+	import HchPoster from "../../components/hch-poster/hch-poster.vue"
 	export default {
+		components: {
+			HchPoster
+		},
 		data() {
 			return {
 				tabs: [{
@@ -143,10 +162,10 @@
 						viewId: 'content',
 						name: '详细介绍',
 					},
-					// {
-					// 	viewId: 'reputation',
-					// 	name: '用户评价',
-					// },
+					{
+						viewId: 'reputation',
+						name: '用户评价',
+					},
 				],
 				curViewId: 'basic',
 				goodsDetail: undefined,
@@ -157,6 +176,9 @@
 				page: 1,
 				reputationList: null,
 				videoMp4Src: undefined,
+				showhaibao: false,
+				// 海报模板数据
+				posterData: {}
 			}
 		},
 		onLoad(e) {
@@ -410,6 +432,104 @@
 					this.videoMp4Src = res.data.fdMp4
 				}
 			},
+			async drawSharePic() {
+				uni.showLoading({
+					title: ''
+				})
+				const res = wx.getSystemInfoSync()
+				console.log(__wxConfig.envVersion); // develop trial release // 判断当前版本为什么版本
+				const qrcodeRes = await this.$wxapi.wxaQrcode({
+					scene: this.goodsDetail.basicInfo.id + ',' + uni.getStorageSync('uid'),
+					page: 'pages/goods/detail',
+					is_hyaline: true,
+					autoColor: true,
+					expireHours: 1,
+					check_path: __wxConfig.envVersion == 'release' ? true : false
+				})
+				if (qrcodeRes.code != 0) {
+					uni.hideLoading()
+					uni.showToast({
+						title: qrcodeRes.msg,
+						icon: 'none'
+					})
+					return
+				}
+				const qrcode = qrcodeRes.data
+				const pic = this.goodsDetail.basicInfo.pic
+				uni.getImageInfo({
+					src: pic,
+					success: res => {
+						const height = 490 * res.height / res.width
+						this.drawSharePicDone(height, qrcode)
+					},
+					fail: err => {
+						uni.hideLoading()
+						console.error(err)
+					}
+				})
+			},
+			async drawSharePicDone(height, qrcode) {
+				this.posterData = {
+					poster: {
+						//根据屏幕大小自动生成海报背景大小
+						url: 'https://dcdn.it120.cc/static/poster_bg.png', //背景图片地址
+						r: 10, //圆角半径
+						w: 300, //海报宽度
+						h: 610, //海报高度
+						p: 20 //海报内边距padding
+					},
+					mainImg: {
+						//海报主商品图
+						url: this.goodsDetail.basicInfo.pic, //图片地址
+						r: 10, //圆角半径
+						w: 250, //宽度
+						h: 250 //高度
+					},
+					title: {
+						//商品标题
+						text: this.goodsDetail.basicInfo.name, //文本
+						fontSize: 16, //字体大小
+						color: "#000", //颜色
+						lineHeight: 25, //行高
+						mt: 20 //margin-top
+					},
+					codeImg: {
+						//小程序码
+						url: qrcode, //图片地址
+						w: 180, //宽度
+						h: 180, //高度
+						mt: 20, //margin-top
+						r: 50 //圆角半径
+					},
+					tips: [
+						//提示信息
+						{
+							text: this.sysconfigMap.mallName, //文本
+							fontSize: 14, //字体大小
+							color: "#2f1709", //字体颜色
+							align: "center", //对齐方式
+							lineHeight: 25, //行高
+							mt: 20 //margin-top
+						},
+						{
+							text: "长按/扫描打开小程序", //文本
+							fontSize: 12, //字体大小
+							color: "#2f1709", //字体颜色
+							align: "center", //对齐方式
+							lineHeight: 25, //行高
+							mt: 20 //margin-top
+						}
+					]
+				}
+				this.showhaibao = true
+				setTimeout(() => {
+					uni.hideLoading()
+					this.$refs.hchPoster.posterShow()
+				}, 1000)
+			},
+			haibaoCancel() {
+				this.showhaibao = false
+			},
 		}
 	}
 </script>
@@ -524,6 +644,13 @@
 			font-size: 24rpx;
 			color: #333;
 			margin-right: 32rpx;
+			button {
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				opacity: 0;
+				z-index: 99;
+			}
 		}
 
 		.btn {
@@ -558,5 +685,12 @@
 			margin-left: 10px;
 			flex: 1;
 		}
+	}
+	.haibaopop {
+		width: 100vw;
+		height: 100vh;
+	}
+	.goods-title {
+		padding: 0 32rpx;
 	}
 </style>

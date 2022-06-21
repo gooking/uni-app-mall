@@ -6,7 +6,10 @@
 				<view class="img-box">
 					<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				</view>
-				<u-text class="goods-title" :text="item.goodsName" :lines="3" size="28rpx" color="#333" @click="goDetail(item)"></u-text>
+				<view class="name">
+					<u-text class="goods-title" :text="item.goodsName" :lines="3" size="28rpx" color="#333"
+						@click="goDetail(item)"></u-text>
+				</view>
 				<view class="delete">
 					<u-icon name="trash" color="#F20C32" size="48rpx" @click="deleteFav(index, item)"></u-icon>
 				</view>
@@ -24,13 +27,13 @@
 			}
 		},
 		created() {
-		
+
 		},
 		mounted() {
-			
+
 		},
 		onReady() {
-			
+
 		},
 		onLoad(e) {
 			this._favList()
@@ -51,15 +54,15 @@
 				})
 				if (res.code == 0) {
 					res.data.forEach(ele => {
-						if(ele.json) {
+						if (ele.json) {
 							const jsonStr = JSON.parse(ele.json)
-							if(jsonStr.pic) {
+							if (jsonStr.pic) {
 								ele.pic = jsonStr.pic
 							}
-							if(jsonStr.goodsName) {
+							if (jsonStr.goodsName) {
 								ele.goodsName = jsonStr.goodsName
 							}
-							if(jsonStr.supplyType) {
+							if (jsonStr.supplyType) {
 								ele.supplyType = jsonStr.supplyType
 							}
 						}
@@ -80,15 +83,15 @@
 			},
 			async deleteFav(index, item) {
 				uni.showModal({
-				    title: '提示',
-				    content: '确定要取消收藏吗？',
-				    success: res => {
-				        if (res.confirm) {
-				            this._deleteFav(index, item)
-				        } else if (res.cancel) {
-				            console.log('用户点击取消');
-				        }
-				    }
+					title: '提示',
+					content: '确定要取消收藏吗？',
+					success: res => {
+						if (res.confirm) {
+							this._deleteFav(index, item)
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
 				})
 			},
 			async _deleteFav(index, item) {
@@ -99,7 +102,7 @@
 				}
 				// https://www.yuque.com/apifm/nu0f75/zy4sil
 				const res = await this.$wxapi.goodsFavDeleteV2(data)
-				if(res.code == 0) {
+				if (res.code == 0) {
 					uni.showToast({
 						title: '取消收藏'
 					})
@@ -112,7 +115,7 @@
 				}
 			},
 			goDetail(item) {
-				if(item.supplyType == 'vop_jd') {
+				if (item.supplyType == 'vop_jd') {
 					uni.navigateTo({
 						url: '/pages/goods/detail?supplyType=vop_jd&yyId=' + item.goodsId
 					})
@@ -126,12 +129,13 @@
 	}
 </script>
 <style scoped lang="scss">
-.goods-container {
+	.goods-container {
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
 		box-sizing: content-box;
 		padding: 0 24rpx;
+
 		.goods-box {
 			width: 339rpx;
 			background-color: #fff;
@@ -140,28 +144,34 @@
 			border-radius: 5px;
 			border: 1px solid #D1D1D1;
 			padding-bottom: 10rpx;
+
 			.img-box {
 				width: 339rpx;
 				height: 339rpx;
 				overflow: hidden;
+
 				image {
 					width: 339rpx;
 					height: 339rpx;
 				}
 			}
+
 			.goods-title {
 				padding: 0 4rpx;
 			}
+
 			.goods-price-container {
 				display: flex;
 				align-items: baseline;
 			}
+
 			.goods-price {
 				overflow: hidden;
 				font-size: 34rpx;
 				color: #F20C32;
 				margin-left: 24rpx;
 			}
+
 			.goods-price2 {
 				overflow: hidden;
 				font-size: 26rpx;
@@ -170,11 +180,16 @@
 				margin-left: 20rpx;
 			}
 		}
-		
+
 	}
+
 	.delete {
 		padding: 16rpx;
 		display: flex;
 		justify-content: center;
+	}
+	.name {
+		height: 108rpx;
+		padding: 16rpx;
 	}
 </style>

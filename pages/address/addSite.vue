@@ -1,7 +1,7 @@
 <template>
 	<view class="wrap">
 		<!-- #ifdef MP-WEIXIN || MP-ALIPAY || MP-BAIDU || MP-TOUTIAO -->
-		<u-cell title="一键读取小程序收获地址" :isLink="true" @click="chooseAddress"></u-cell>
+		<u-cell title="一键读取小程序收货地址" :isLink="true" @click="chooseAddress"></u-cell>
 		<!-- #endif -->
 		<view class="top">
 			<u-form ref="uForm" label-width="130rpx" :model="form">

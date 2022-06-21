@@ -270,6 +270,24 @@
 		    "style": {
 				"navigationBarTitleText": ""
 		    }
+		},
+		{
+		    "path" : "pages/help/list",
+		    "style": {
+				"navigationBarTitleText": "帮助中心"
+		    }
+		},
+		{
+		    "path" : "pages/help/detail",
+		    "style": {
+				"navigationBarTitleText": ""
+		    }
+		},
+		{
+		    "path" : "pages/my/idcheck",
+		    "style": {
+				"navigationBarTitleText": "实名认证"
+		    }
 		}
     ],
 	"subPackages": [

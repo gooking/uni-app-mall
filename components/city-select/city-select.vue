@@ -10,7 +10,9 @@
 							<u-cell-group>
 								<u-cell v-for="(item,index) in provinces" :key="index" :title="item.label" :name="index"
 								 @click="provinceChange">
-									<u-icon v-if="isChooseP&&province===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
+									<view slot="right-icon">
+										<u-icon v-if="isChooseP && province == index" size="48rpx" name="checkbox-mark" color="green"></u-icon>
+									</view>
 								</u-cell>
 							</u-cell-group>
 						</scroll-view>
@@ -22,33 +24,39 @@
 							<u-cell-group>
 								<u-cell v-for="(item,index) in citys" :key="index" :title="item.label" :name="index"
 								 @click="cityChange">
-									<u-icon v-if="isChooseC&&city===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
+									<view slot="right-icon">
+										<u-icon v-if="isChooseC && city == index" size="48rpx" name="checkbox-mark" color="green"></u-icon>
+									</view>
 								</u-cell>
 							</u-cell-group>
 						</scroll-view>
 					</view>
 				</view>
 
-				<view v-if="isChooseC" class="area-item">
+				<view v-if="isChooseC && level >= 3" class="area-item">
 					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
 						<scroll-view :scroll-y="true" style="height: 100%">
 							<u-cell-group>
 								<u-cell v-for="(item,index) in areas" :key="index" :title="item.label" :name="index"
 								 @click="areaChange">
-									<u-icon v-if="isChooseA&&area===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
+									<view slot="right-icon">
+										<u-icon v-if="isChooseA&&area == index" size="48rpx" name="checkbox-mark" color="green"></u-icon>
+									</view>
 								</u-cell>
 							</u-cell-group>
 						</scroll-view>
 					</view>
 				</view>
 				
-				<view v-if="isChooseA && level == 4" class="area-item">
+				<view v-if="isChooseA && level >= 4" class="area-item">
 					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
 						<scroll-view :scroll-y="true" style="height: 100%">
 							<u-cell-group>
 								<u-cell v-for="(item,index) in streets" :key="index" :title="item.label" :name="index"
 								 @click="streetChange">
-									<u-icon v-if="isChooseS&&street===index" slot="right-icon" size="34" name="checkbox-mark"></u-icon>
+									<view slot="right-icon">
+										<u-icon v-if="isChooseS&&street == index" size="48rpx" name="checkbox-mark" color="green"></u-icon>
+									</view>
 								</u-cell>
 							</u-cell-group>
 						</scroll-view>
@@ -122,8 +130,17 @@
 				tabsIndex: 0,
 			}
 		},
+		watch: {
+			areaCode: {
+				deep: true,
+				immediate: true,
+				handler(newVal, oldName) {
+					this.init();
+				}
+			}
+		},
 		mounted() {
-			this.init();
+			// this.init();
 		},
 		computed: {
 			isChange() {
@@ -141,19 +158,21 @@
 				}
 				if (this.isChooseC) {
 					tabsList[1]['name'] = this.citys[this.city]['label'];
-					tabsList[2] = {
-						name: "请选择"
-					};
+					if(this.level >= 3) {
+						tabsList[2] = {
+							name: "请选择"
+						};
+					}
 				}
-				if (this.isChooseA) {
+				if (this.isChooseA && this.level >= 3) {
 					tabsList[2]['name'] = this.areas[this.area]['label'];
-					if(this.level == 4) {
+					if(this.level >= 4) {
 						tabsList[3] = {
 							name: "请选择"
 						};
 					}
 				}
-				if (this.isChooseS && this.level == 4) {
+				if (this.isChooseS && this.level >= 4) {
 					tabsList[3]['name'] = this.streets[this.street]['label'];
 				}
 				return tabsList;
@@ -177,24 +196,33 @@
 						})
 					})
 				}
+				if(this.level == 2) {
+					if (this.areaCode.length >= 2) {
+						await this.setProvince("", this.areaCode[0]);
+						await this.setCity("", this.areaCode[1]);
+					} else if (this.defaultRegion.length >= 2) {
+						await this.setProvince(this.defaultRegion[0], "");
+						await this.setCity(this.defaultRegion[1], "");
+					}
+				}
 				if(this.level == 3) {
-					if (this.areaCode.length == 3) {
+					if (this.areaCode.length >= 3) {
 						await this.setProvince("", this.areaCode[0]);
 						await this.setCity("", this.areaCode[1]);
 						await this.setArea("", this.areaCode[2]);
-					} else if (this.defaultRegion.length == 3) {
+					} else if (this.defaultRegion.length >= 3) {
 						await this.setProvince(this.defaultRegion[0], "");
 						await this.setCity(this.defaultRegion[1], "");
 						await this.setArea(this.defaultRegion[2], "");
 					}
 				}
 				if(this.level == 4) {
-					if (this.areaCode.length == 4) {
+					if (this.areaCode.length >= 4) {
 						await this.setProvince("", this.areaCode[0]);
 						await this.setCity("", this.areaCode[1]);
 						await this.setArea("", this.areaCode[2]);
 						await this.setStreet("", this.areaCode[3]);
-					} else if (this.defaultRegion.length == 4) {
+					} else if (this.defaultRegion.length >= 4) {
 						await this.setProvince(this.defaultRegion[0], "");
 						await this.setCity(this.defaultRegion[1], "");
 						await this.setArea(this.defaultRegion[2], "");
@@ -218,7 +246,7 @@
 				})
 				if(k != -1) {
 					const v = this.citys[k]
-					await this.cityChange({ name: k })
+					await this.cityChange({ name: k }, true)
 				}
 			},
 			async setArea(label = "", value = "") {
@@ -255,7 +283,7 @@
 					this.provinceChange({ name: this.province })
 				}
 				if(e.index == 1) {
-					this.cityChange({ name: this.city })
+					this.cityChange({ name: this.city }, true)
 				}
 				if(e.index == 2) {
 					this.areaChange({ name: this.area })
@@ -265,6 +293,7 @@
 				}
 			},
 			async provinceChange(e) {
+				console.log(e);
 				const index = e.name
 				this.isChooseP = true;
 				this.isChooseC = false;
@@ -285,12 +314,22 @@
 				// 接口读取结束
 				this.tabsIndex = 1;
 			},
-			async cityChange(e) {
+			async cityChange(e, initAction) {
 				const index = e.name
 				this.isChooseC = true;
 				this.isChooseA = false;
 				this.isChooseS = false;
 				this.city = index;
+				if(this.level == 2) {
+					if (!initAction) {
+						let result = {};
+						result.province = this.provinces[this.province];
+						result.city = this.citys[this.city];
+						this.$emit('city-change', result);
+						this.close();
+					}
+					return
+				}
 				// https://www.yuque.com/apifm/nu0f75/kfukig
 				const res = await this.$wxapi.nextRegion(this.citys[index].value)
 				this.areas = []

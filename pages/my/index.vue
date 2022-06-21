@@ -98,13 +98,14 @@
 		<u-gap height="5" bgColor="#EAEBEC"></u-gap>
   
 		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
+		<u-cell title="帮助中心" isLink clickable url="/pages/help/list"></u-cell>
 		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
 		<u-cell title="当前版本" :value="version"></u-cell>
 		<view class="btn-block">
 			<u-button type="error" text="退出" @click="loginout"></u-button>
 		</view>
 	</view>
-	<view v-else>
+	<view v-else-if="needLogin">
 		<u-empty mode="permission" text="请先登陆" marginTop="88rpx"></u-empty>
 		<view class="submit">
 			<u-button type="success" @click="goLogin">立即登陆</u-button>
@@ -116,6 +117,7 @@
 	export default {
 		data() {
 			return {
+				needLogin: false,
 				apiUserInfoMap: undefined,
 				balance: 0,
 				freeze: 0,
@@ -138,6 +140,9 @@
 			async _userDetail() {
 				// https://www.yuque.com/apifm/nu0f75/zgf8pu
 				const res = await this.$wxapi.userDetail(this.token)
+				if (res.code == 2000) {
+					this.needLogin = true
+				}
 				if (res.code == 0) {
 					if (!res.data.base.avatarUrl) {
 						res.data.base.avatarUrl = '/static/images/empty.jpg'
@@ -148,6 +153,9 @@
 			async _getUserAmount() {
 				// https://www.yuque.com/apifm/nu0f75/wrqkcb
 				const res = await this.$wxapi.userAmount(this.token)
+				if (res.code == 2000) {
+					this.needLogin = true
+				}
 				if (res.code == 0) {
 					this.balance = res.data.balance.toFixed(2),
 						this.freeze = res.data.freeze.toFixed(2),

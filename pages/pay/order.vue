@@ -18,7 +18,9 @@
 				<view class="right">
 					<view class="price-score">
 						<view v-if="item.price" class="item"><text>¥</text>{{item.price}}</view>
-						<view v-if="item.score" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.score}}</view>
+						<view v-if="item.score" class="item"><text>
+								<image class="score-icon" src="/static/images/score.png"></image>
+							</text>{{item.score}}</view>
 					</view>
 					<view class="number">x{{ item.number }}</view>
 				</view>
@@ -27,7 +29,9 @@
 				<text>共 {{ goodsNumber }} 件商品 合计:</text>
 				<view class="price-score" style="display: inline-flex;">
 					<view v-if="goodsPrice" class="item"><text>¥</text>{{ goodsPrice }}</view>
-					<view v-if="goodsScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{ goodsScore }}</view>
+					<view v-if="goodsScore" class="item"><text>
+							<image class="score-icon" src="/static/images/score.png"></image>
+						</text>{{ goodsScore }}</view>
 				</view>
 			</view>
 		</view>
@@ -43,18 +47,20 @@
 		<u-cell v-if="!defaultAddress" icon="map" title="新增收货地址" isLink url="/pages/address/addSite"></u-cell>
 		<u-cell v-else icon="map" :title="defaultAddress.info.linkMan + ' ' + defaultAddress.info.mobile"
 			:label="defaultAddress.info.provinceStr + defaultAddress.info.cityStr + defaultAddress.info.areaStr + defaultAddress.info.address"
-			isLink
-			url="/pages/address/index"></u-cell>
+			isLink url="/pages/address/index"></u-cell>
 		<view class="remark">
-			<u-textarea v-model="remark" placeholder="订单备注(选填)" ></u-textarea>
+			<u-textarea v-model="remark" placeholder="订单备注(选填)"></u-textarea>
 		</view>
 		<view v-if="orderInfo">
 			<u-divider text="合计"></u-divider>
-			<u-cell v-if="orderInfo.amountTotle" title="商品金额" :value="'¥' + orderInfo.amountTotle" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.amountTotle" title="商品金额" :value="'¥' + orderInfo.amountTotle" :arrow="false">
+			</u-cell>
 			<u-cell v-if="orderInfo.score" title="积分" :value="orderInfo.score" :arrow="false"></u-cell>
-			<u-cell v-if="orderInfo.amountLogistics" title="运费" :value="'¥' + orderInfo.amountLogistics" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.amountLogistics" title="运费" :value="'¥' + orderInfo.amountLogistics" :arrow="false">
+			</u-cell>
 			<u-cell v-if="orderInfo.freightScore" title="运费积分" :value="orderInfo.freightScore" :arrow="false"></u-cell>
-			<u-cell v-if="orderInfo.couponAmount" title="优惠券" :value="'-¥' + orderInfo.couponAmount" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.couponAmount" title="优惠券" :value="'-¥' + orderInfo.couponAmount" :arrow="false">
+			</u-cell>
 			<u-cell v-if="orderInfo.amountReal" title="总计" :value="'¥' + orderInfo.amountReal" :arrow="false"></u-cell>
 			<u-cell v-if="userAmount" title="账户可用余额" :value="'¥' + userAmount.balance" :arrow="false"></u-cell>
 			<u-cell v-if="userAmount" title="账户可用积分" :value="userAmount.score" :arrow="false"></u-cell>
@@ -141,13 +147,13 @@
 					this.goodsList = []
 					// .filter(ele => { return ele.selected })
 					res.data.items.forEach(ele => {
-						if(!ele.supplyType) {
+						if (!ele.supplyType) {
 							supplyTypeHasEmpty = true
 						}
-						if(!supplyType && ele.supplyType) {
+						if (!supplyType && ele.supplyType) {
 							supplyType = ele.supplyType
 						}
-						if(supplyType && supplyType != ele.supplyType) {
+						if (supplyType && supplyType != ele.supplyType) {
 							supplyTypeCanBuy = false
 						}
 						this.goodsList.push({
@@ -162,17 +168,17 @@
 							additions: ele.additions, // id name pid pname price
 						})
 					})
-					if(supplyTypeHasEmpty && supplyType) {
+					if (supplyTypeHasEmpty && supplyType) {
 						supplyTypeCanBuy = false
 					}
-					if(!supplyTypeCanBuy) {
+					if (!supplyTypeCanBuy) {
 						uni.showToast({
 							title: supplyType + '商品不能和其他商品一起下单',
 							icon: 'none'
 						})
 						return
 					}
-					if(supplyType == 'jdJoycityPoints') {
+					if (supplyType == 'jdJoycityPoints') {
 						this.goodsType = 2
 					} else {
 						this.goodsType = 0
@@ -285,13 +291,24 @@
 				}
 			},
 			async submit() {
+				// 判断实名认证
+				if (this.sysconfigMap.needIdCheck == '1') {
+					const res = await this.$wxapi.userDetail(this.token)
+					if (res.code == 0 && !res.data.base.isIdcardCheck) {
+						uni.navigateTo({
+							url: '/pages/my/idcheck',
+						})
+						this.canSubmit = true
+						return
+					}
+				}
 				this.canSubmit = false
 				if (!this.goodsList || this.goodsList.length == 0) {
 					this.canSubmit = true
 					return
 				}
 				// 判断余额和积分是否足够
-				if(!this.orderInfo || !this.userAmount) {
+				if (!this.orderInfo || !this.userAmount) {
 					uni.showToast({
 						title: '请稍后',
 						icon: 'none'
@@ -299,7 +316,7 @@
 					this.canSubmit = true
 					return
 				}
-				if(this.userAmount.score < this.orderInfo.score) {
+				if (this.userAmount.score < this.orderInfo.score) {
 					uni.showToast({
 						title: '可用积分不足',
 						icon: 'none'
@@ -517,11 +534,12 @@
 		bottom: 0;
 		z-index: 9;
 	}
+
 	.coupon-box {
 		padding: 0 32rpx;
+
 		.u-radio {
 			padding: 24rpx 0;
 		}
 	}
-	
 </style>

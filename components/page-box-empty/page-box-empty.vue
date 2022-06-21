@@ -2,7 +2,7 @@
 	<view class="page-box">
 		<view>
 			<view class="centre">
-				<image src="/static/images/no-order.png" mode=""></image>
+				<image src="https://dcdn.it120.cc/static/no-order.png" mode=""></image>
 				<view class="explain">
 					{{ title }}
 					<view v-if="subTitle" class="tips">{{ subTitle }}</view>
