@@ -86,6 +86,18 @@
 					<text class="txt">收货地址</text>
 				</view>
 			</u-grid-item>
+			<u-grid-item name="/pages/invoice/list">
+				<view class="grid_item">
+					<u-icon name="red-packet" size="52rpx"></u-icon>
+					<text class="txt">发票管理</text>
+				</view>
+			</u-grid-item>
+			<u-grid-item name="/pages/invoice/apply">
+				<view class="grid_item">
+					<u-icon name="red-packet" size="52rpx"></u-icon>
+					<text class="txt">申请发票</text>
+				</view>
+			</u-grid-item>
 		</u-grid>
 		<u-line></u-line>
 		<u-gap height="5" bgColor="#EAEBEC"></u-gap>

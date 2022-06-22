@@ -288,6 +288,18 @@
 		    "style": {
 				"navigationBarTitleText": "实名认证"
 		    }
+		},
+		{
+		    "path" : "pages/invoice/list",
+		    "style": {
+				"navigationBarTitleText": "发票管理"
+		    }
+		},
+		{
+		    "path" : "pages/invoice/apply",
+		    "style": {
+				"navigationBarTitleText": "申请发票"
+		    }
 		}
     ],
 	"subPackages": [

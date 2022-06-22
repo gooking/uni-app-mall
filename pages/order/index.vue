@@ -52,9 +52,13 @@
 							<u-button type="error" plain size="small" shape="circle" text="撤销售后"
 								@click="refundCancel(item)"></u-button>
 						</view>
-						<view v-else class="btn-box">
-							<u-button type="error" plain size="small" shape="circle" text="退换货" @click="refund(item)">
-							</u-button>
+						<view v-else class="btn-group">
+							<view class="btn-box">
+								<u-button type="error" plain size="small" shape="circle" text="退换货" @click="refund(item)"></u-button>
+							</view>
+							<view v-if="!item.invoiceId && item.status >= 3" class="btn-box">
+								<u-button type="success" plain size="small" shape="circle" text="申请发票" @click="invoice(item)"></u-button>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -302,7 +306,12 @@
 						icon: 'none'
 					})
 				}
-			}
+			},
+			invoice(item) {
+				uni.navigateTo({
+					url: '/pages/invoice/apply?orderId=' + item.id
+				})
+			},
 		}
 	};
 </script>
@@ -449,8 +458,11 @@
 	.ml24 {
 		margin-left: 24rpx;
 	}
-
+	.btn-group {
+		display: flex;
+	}
 	.btn-box {
+		padding: 0 16rpx;
 		width: 160rpx;
 	}
 </style>
