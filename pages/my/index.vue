@@ -111,6 +111,7 @@
   
 		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
 		<u-cell title="帮助中心" isLink clickable url="/pages/help/list"></u-cell>
+		<u-cell title="意见反馈" isLink clickable url="/pages/my/feedback"></u-cell>
 		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
 		<u-cell title="当前版本" :value="version"></u-cell>
 		<view class="btn-block">

@@ -300,6 +300,18 @@
 		    "style": {
 				"navigationBarTitleText": "申请发票"
 		    }
+		},
+		{
+		    "path" : "pages/live/index",
+		    "style": {
+				"navigationBarTitleText": "好礼直播"
+		    }
+		},
+		{
+		    "path" : "pages/my/feedback",
+		    "style": {
+				"navigationBarTitleText": "意见反馈"
+		    }
 		}
     ],
 	"subPackages": [
