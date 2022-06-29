@@ -39,7 +39,7 @@ const store = new Vuex.Store({
 		referrer: lifeData.referrer ? lifeData.referrer : '',
 		token: lifeData.token ? lifeData.token : '',
 		uid: lifeData.uid ? lifeData.uid : '',
-		uid: lifeData.mobile ? lifeData.mobile : '',
+		mobile: lifeData.mobile ? lifeData.mobile : '',
 		agreeYxtk: lifeData.agreeYxtk ? true : false,
 		cartNumber: 0
 	},

@@ -109,14 +109,17 @@
 		</u-cell-group>
 		<u-gap height="5" bgColor="#EAEBEC"></u-gap>
   
+		<u-cell title="个人信息" isLink clickable url="/pages/my/info-menu"></u-cell>
 		<u-cell title="关于我们" isLink clickable url="/pages/about/about?key=aboutus"></u-cell>
 		<u-cell title="帮助中心" isLink clickable url="/pages/help/list"></u-cell>
 		<u-cell title="意见反馈" isLink clickable url="/pages/my/feedback"></u-cell>
 		<u-cell title="清除缓存" isLink clickable @click="clearStorage"></u-cell>
 		<u-cell title="当前版本" :value="version"></u-cell>
+		<!-- #ifndef MP-WEIXIN -->
 		<view class="btn-block">
 			<u-button type="error" text="退出" @click="loginout"></u-button>
 		</view>
+		<!-- #endif -->
 	</view>
 	<view v-else-if="needLogin">
 		<u-empty mode="permission" text="请先登陆" marginTop="88rpx"></u-empty>

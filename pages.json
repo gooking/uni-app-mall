@@ -312,6 +312,30 @@
 		    "style": {
 				"navigationBarTitleText": "意见反馈"
 		    }
+		},
+		{
+		    "path" : "pages/my/info-menu",
+		    "style": {
+				"navigationBarTitleText": "个人信息"
+		    }
+		},
+		{
+		    "path" : "pages/pay/pwd",
+		    "style": {
+				"navigationBarTitleText": "修改交易密码"
+		    }
+		},
+		{
+		    "path" : "pages/pay/pwd-set",
+		    "style": {
+				"navigationBarTitleText": "设置交易密码"
+		    }
+		},
+		{
+		    "path" : "pages/pay/pwd-reset",
+		    "style": {
+				"navigationBarTitleText": "重置交易密码"
+		    }
 		}
     ],
 	"subPackages": [

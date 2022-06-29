@@ -1,5 +1,5 @@
 <template>
-	<view class="shop-select">
+	<view>
 		<view class="search-box">
 			<u-search placeholder="搜索门店" v-model="kw" :showAction="false" @search="search"></u-search>
 		</view>
@@ -98,12 +98,10 @@
 	}
 </script>
 <style scoped lang="scss">
-	.shop-select {
-		.search-box {
-			padding: 0 16rpx;
-		}
-		.shop-box {
-			margin-top: 32rpx;
-		}
-	}
+.search-box {
+	padding: 16rpx;
+}
+.shop-box {
+	margin-top: 32rpx;
+}
 </style>

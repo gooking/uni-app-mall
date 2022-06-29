@@ -1,9 +1,11 @@
 <template>
 	<view>
-		<u-grid col="2" :border="true" @click="gridClick">
-			<u-grid-item v-for="(item,index) in rechargeSendRules" :name="index" class="grid-item">
-				<text class="grid-text"><text>¥</text>{{ item.confine }}</text>
-				<u-badge v-if="item.send" type="error" :value="'赠送 ¥' + item.send"></u-badge>
+		<u-grid col="2" border @click="gridClick">
+			<u-grid-item v-for="(item,index) in rechargeSendRules" :name="index">
+				<view class="grid-item">
+					<text class="grid-text"><text>¥</text>{{ item.confine }}</text>
+					<u-badge v-if="item.send" type="error" :value="'赠送 ¥' + item.send"></u-badge>
+				</view>
 			</u-grid-item>
 		</u-grid>
 		<view class="submit-btn">
@@ -80,6 +82,9 @@
 	.grid-item {
 		height: 200rpx;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.grid-text {
