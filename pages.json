@@ -320,6 +320,12 @@
 		    }
 		},
 		{
+		    "path" : "pages/my/info",
+		    "style": {
+				"navigationBarTitleText": "修改资料"
+		    }
+		},
+		{
 		    "path" : "pages/pay/pwd",
 		    "style": {
 				"navigationBarTitleText": "修改交易密码"

@@ -108,7 +108,7 @@
 				propertyChildNames: undefined,
 				goodsAddition: undefined,
 				faved: false,
-				properties: undefined
+				properties: undefined,
 			}
 		},
 		watch: {
