@@ -26,6 +26,9 @@
 			</view>
 		</view>
 		<u-line></u-line>
+		<u-cell-group v-if="cardMyList" title="会员卡">
+			<u-cell v-for="(item,index) in cardMyList" :title="item.cardInfo.name" :label="item.dateEnd + '到期'" :value="'剩余：' + item.amount" isLink :url="'/pages/my/cardlogs?cardid=' + item.id"></u-cell>
+		</u-cell-group>
 		<u-cell icon="rmb-circle" title="优惠买单" isLink clickable url="/pages/pay/maidan"></u-cell>
 		<u-cell icon="order" title="我的订单" value="更多" isLink clickable url="/pages/order/index"></u-cell>
 		<u-grid col="5" :border="false" @click="orderGridClick">
@@ -142,7 +145,8 @@
 				pic: 'https://uviewui.com/common/logo.png',
 				show: true,
 				version: getApp().globalData.version,
-				version: undefined
+				version: undefined,
+				cardMyList: undefined
 			}
 		},
 		onLoad() {
@@ -151,6 +155,7 @@
 		onShow() {
 			this._userDetail()
 			this._getUserAmount()
+			this._cardMyList()
 		},
 		methods: {
 			async _userDetail() {
@@ -238,7 +243,13 @@
 					url: '/pages/login/login'
 				})
 				// #endif
-			}
+			},
+			async _cardMyList() {
+				const res = await this.$wxapi.cardMyList(this.token)
+				if (res.code == 0) {
+					this.cardMyList = res.data
+				}
+			},
 		}
 	}
 </script>

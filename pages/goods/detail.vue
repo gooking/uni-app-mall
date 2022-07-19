@@ -44,12 +44,25 @@
 					<view v-if="goodsDetail.basicInfo.characteristic" class="title-sub">
 						{{ goodsDetail.basicInfo.characteristic }}
 					</view>
-					<view class="title-sub" v-if="goodsDetail.basicInfo.commissionType == 1">分享有赏，好友下单后可得
+					<view class="commission" v-if="goodsDetail.basicInfo.commissionType == 1">分享有赏，好友下单后可得
 						{{goodsDetail.basicInfo.commission}} 积分奖励
 					</view>
-					<view class="title-sub" v-if="goodsDetail.basicInfo.commissionType == 2">分享有赏，好友下单后可得
+					<view class="commission" v-if="goodsDetail.basicInfo.commissionType == 2">分享有赏，好友下单后可得
 						{{goodsDetail.basicInfo.commission}}元 现金奖励
 					</view>
+				</view>
+				<u-cell-group v-if="curGoodsKanjia" title="砍价设置">
+					<u-cell title="数量" :value="curGoodsKanjia.number + '份'"></u-cell>
+					<u-cell title="已售" :value="curGoodsKanjia.numberBuy + '份'"></u-cell>
+					<u-cell title="原价" :value="curGoodsKanjia.originalPrice"></u-cell>
+					<u-cell title="底价" :value="curGoodsKanjia.minPrice"></u-cell>
+					<u-cell title="截止" :value="curGoodsKanjia.dateEnd"></u-cell>
+				</u-cell-group>
+				<view v-if="curKanjiaprogress && curKanjiaprogress.kanjiaInfo.uid != uid" class="curKanjiaJoin">
+					帮<text>{{curKanjiaprogress.joiner.nick}}</text> 砍价吧！
+				</view>
+				<view v-if="curGoodsKanjia && curKanjiaprogress" class="curKanjiaprogress">
+					<u-line-progress :percentage="100 * (curGoodsKanjia.originalPrice - curKanjiaprogress.kanjiaInfo.curPrice) / (curGoodsKanjia.originalPrice - curGoodsKanjia.minPrice)" activeColor="#ff0000"></u-line-progress>
 				</view>
 				<view id="content">
 					<u-divider text="详细介绍"></u-divider>
@@ -96,13 +109,22 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view class="bottom-btns">
+			<view v-if="curGoodsKanjia && (!curKanjiaprogress || curKanjiaprogress.kanjiaInfo.uid != uid)"
+				class="bottom-btns">
+				<view class="btn">
+					<u-button text="我要砍价" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
+						@click="joinKanjia"></u-button>
+				</view>
+			</view>
+			<view v-else class="bottom-btns">
 				<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 				<view class="icon-btn">
 					<u-icon name="chat" size="48rpx"></u-icon>
 					<text>客服</text>
-					<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name" :send-message-img="goodsDetail.basicInfo.pic"
-					:send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id" show-message-card></button>
+					<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name"
+						:send-message-img="goodsDetail.basicInfo.pic"
+						:send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id"
+						show-message-card></button>
 				</view>
 				<!--  #endif -->
 				<view class="icon-btn" @click="goCart">
@@ -140,7 +162,8 @@
 		</u-modal> -->
 		<u-popup :show="showhaibao">
 			<view class="haibaopop">
-				<hch-poster v-if="showhaibao" ref="hchPoster" @cancel="haibaoCancel" :posterData.sync="posterData" @previewImage='haibaoPreview' />
+				<hch-poster v-if="showhaibao" ref="hchPoster" @cancel="haibaoCancel" :posterData.sync="posterData"
+					@previewImage='haibaoPreview' />
 			</view>
 		</u-popup>
 	</view>
@@ -178,7 +201,10 @@
 				videoMp4Src: undefined,
 				showhaibao: false,
 				// 海报模板数据
-				posterData: {}
+				posterData: {},
+				curGoodsKanjia: undefined,
+				curKanjiaprogress: undefined,
+				myHelpDetail: undefined,
 			}
 		},
 		onLoad(e) {
@@ -199,10 +225,15 @@
 
 		},
 		onShareAppMessage(e) {
-			return {
+			const d = {
 				title: this.goodsDetail.basicInfo.name,
-				path: '/pages/goods/details?id=' + this.goodsDetail.basicInfo.id
+				path: '/pages/goods/details?id=' + this.goodsDetail.basicInfo.id + '&inviter_id=' + this.uid
 			}
+			if (this.kjJoinUid) {
+				_data.title = this.curKanjiaprogress.joiner.nick + '邀请您帮TA砍价'
+				_data.path += '&kjJoinUid=' + this.kjJoinUid
+			}
+			return d
 		},
 		created() {
 
@@ -225,6 +256,9 @@
 					this.goodsDetail = res.data
 					if (res.data.basicInfo.videoId) {
 						this.getVideoSrc(res.data.basicInfo.videoId)
+					}
+					if (res.data.basicInfo.kanjia) {
+						this.kanjiaSet()
 					}
 				} else {
 					// 不是api工厂商品
@@ -530,6 +564,46 @@
 			haibaoCancel() {
 				this.showhaibao = false
 			},
+			async kanjiaSet() {
+				const res = await this.$wxapi.kanjiaSet(this.goodsDetail.basicInfo.id)
+				if (res.code == 0) {
+					this.curGoodsKanjia = res.data[0]
+					this.curGoodsKanjia.dateEnd = this.curGoodsKanjia.dateEnd.replace(/00:00:00/g, '')
+					this.curGoodsKanjia.dateEnd = this.curGoodsKanjia.dateEnd.replace(/ /g, '')
+					this.kanjiaprogress()
+				}
+			},
+			async kanjiaprogress() {
+				let kjJoinUid = this.kjJoinUid
+				if (!kjJoinUid) {
+					kjJoinUid = this.uid
+				}
+				const res = await this.$wxapi.kanjiaDetail(this.curGoodsKanjia.id, kjJoinUid)
+				if (res.code == 0) {
+					this.curKanjiaprogress = res.data
+				}
+			},
+			async joinKanjia() {
+				// 报名参加砍价活动
+				if (!this.curGoodsKanjia) {
+					return
+				}
+				uni.showLoading({
+					title: '加载中'
+				})
+				const res = await this.$wxapi.kanjiaJoin(this.token, this.curGoodsKanjia.id)
+				uni.hideLoading()
+				if (res.code == 0) {
+					this.$u.vuex('kjJoinUid', this.uid)
+					this.myHelpDetail = null
+					this.kanjiaSet()
+				} else {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+				}
+			},
 		}
 	}
 </script>
@@ -608,6 +682,12 @@
 		font-size: 26rpx;
 	}
 
+	.commission {
+		padding: 16rpx 32rpx;
+		color: #e64340;
+		font-size: 24rpx;
+	}
+
 	.amount {
 		text-align: center;
 		font-size: 68rpx;
@@ -644,6 +724,7 @@
 			font-size: 24rpx;
 			color: #333;
 			margin-right: 32rpx;
+
 			button {
 				position: absolute;
 				height: 100%;
@@ -686,11 +767,26 @@
 			flex: 1;
 		}
 	}
+
 	.haibaopop {
 		width: 100vw;
 		height: 100vh;
 	}
+
 	.goods-title {
 		padding: 0 32rpx;
+	}
+	.curKanjiaJoin {
+		padding: 32rpx;
+		font-size: 28rpx;
+		text {
+			color: #e64340;
+			font-weight: bold;
+			padding: 0 8rpx;
+			font-size: 32rpx;
+		}
+	}
+	.curKanjiaprogress {
+		padding: 32rpx;
 	}
 </style>

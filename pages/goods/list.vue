@@ -27,6 +27,9 @@
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
 					</view>
+					<view class="cart">
+						<u-icon name="shopping-cart" size="64rpx" color="#F20C32" @click="addCart(item)"></u-icon>
+					</view>
 				</view>
 				
 			</view>
@@ -46,10 +49,14 @@
 					<view class="price-score">
 						<view v-if="item.minPrice" class="item"><text>¥</text>{{item.minPrice}}</view>
 						<view v-if="item.minScore" class="item"><text><image class="score-icon" src="/static/images/score.png"></image></text>{{item.minScore}}</view>
+						<view class="cart">
+							<u-icon name="shopping-cart" size="64rpx" color="#F20C32" @click="addCart(item)"></u-icon>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		<goods-pop :show="showGoodsPop" :goodsDetail="goodsDetail" @close="showGoodsPop = false"></goods-pop>
 	</view>
 </template>
 
@@ -81,7 +88,9 @@
 					},
 				],
 				goods: undefined,
-				showmod: 1
+				showmod: 1,
+				showGoodsPop: false,
+				goodsDetail: undefined,
 			}
 		},
 		created() {
@@ -166,7 +175,19 @@
 				uni.navigateTo({
 					url: '/pages/goods/detail?id=' + item.id
 				})
-			}
+			},
+			async addCart(item) {
+				const res = await this.$wxapi.goodsDetail(item.id, this.token)
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return
+				}
+				this.goodsDetail = res.data
+				this.showGoodsPop = true
+			},
 		}
 	}
 </script>
@@ -192,6 +213,8 @@
 				border-radius: 16rpx;
 			}
 			.r {
+				position: relative;
+				flex: 1;
 				margin-left: 32rpx;
 				.goods-title {
 					color: #333;
@@ -206,6 +229,11 @@
 					text {
 						margin-left: 8rpx;
 					}
+				}
+				.cart {
+					position: absolute;
+					right: 0;
+					bottom: 32rpx;
 				}
 			}
 			.count-down {
@@ -289,6 +317,11 @@
 				color: #aaa;
 				text-decoration: line-through;
 				margin-left: 20rpx;
+			}
+			.cart {
+				position: absolute;
+				right: 0;
+				top: 0;
 			}
 		}
 	}

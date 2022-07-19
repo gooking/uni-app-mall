@@ -163,6 +163,15 @@
 					})
 					return
 				}
+				if(res.code == 10000) {
+					uni.showModal({
+						showCancel:false,
+						title: '提示',
+						content: '当前手机号码已存在，无需重新注册',
+						confirmText: '知道了',
+					})
+					return
+				}
 				this.$u.vuex('token', res.data.token)
 				this.$u.vuex('uid', res.data.uid)
 				setTimeout(() => {

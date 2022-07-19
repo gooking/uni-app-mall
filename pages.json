@@ -342,6 +342,12 @@
 		    "style": {
 				"navigationBarTitleText": "重置交易密码"
 		    }
+		},
+		{
+		    "path" : "pages/my/cardlogs",
+		    "style": {
+				"navigationBarTitleText": "会员卡消费记录"
+		    }
 		}
     ],
 	"subPackages": [

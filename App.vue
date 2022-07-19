@@ -34,6 +34,9 @@
 			if (e && e.query && e.query.inviter_id) {
 				this.$u.vuex('referrer', e.query.inviter_id)
 			}
+			if (e && e.query && e.query.kjJoinUid) {
+				this.$u.vuex('kjJoinUid', e.query.kjJoinUid)
+			}
 			if (e && e.query && e.query.code) {
 				// 微信登陆
 				this.wxmpLogin(e.query.code)
@@ -189,6 +192,7 @@
 	@import "@/uni_modules/uview-ui/index.scss";
 
 	.price-score {
+		position: relative;
 		display: flex;
 		color: #e64340;
 		font-size: 38rpx;
