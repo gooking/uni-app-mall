@@ -13,10 +13,12 @@ async function showTabBarBadge(noTabBarPage){
   if (res.code == 0) {
     number += res.data.number
   }
-  // 京东购物车 https://www.yuque.com/apifm/nu0f75/gwat37
-  res = await WXAPI.jdvopCartInfo(token)
-  if (res.code == 0) {
-    number += res.data.number
+  if (store.state.sysconfigMap.shopping_cart_vop_open == '1') {
+  	// 京东购物车 https://www.yuque.com/apifm/nu0f75/gwat37
+  	res = await WXAPI.jdvopCartInfo(token)
+  	if (res.code == 0) {
+  	  number += res.data.number
+  	}
   }
   if (!noTabBarPage) {
     if (number == 0) {
