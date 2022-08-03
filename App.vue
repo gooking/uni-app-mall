@@ -198,7 +198,7 @@
 		font-size: 38rpx;
 
 		text {
-			padding: 0 4rpx;
+			padding: 0 6rpx;
 			font-size: 28rpx;
 		}
 
@@ -217,6 +217,7 @@
 		.score-icon {
 			width: 28rpx;
 			height: 28rpx;
+			padding: 0 6rpx;
 		}
 	}
 
@@ -241,5 +242,19 @@
 	}
 	.mt32 {
 		margin-top: 32rpx;
+	}
+	.label-title{
+	  font-size:28rpx;
+	  font-weight: bold;
+	  color:#000000;
+	  padding: 30rpx;
+	  display: flex;
+	  align-items: center;
+	  .icon {
+	    width: 6rpx;
+	    height: 30rpx;
+	    background: linear-gradient(360deg, #FFAD56 0%, #FF8A46 100%);
+	    margin-right: 8rpx;
+	  }
 	}
 </style>

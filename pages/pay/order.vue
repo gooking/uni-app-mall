@@ -1,28 +1,27 @@
 <template>
 	<view class="to-pay-order">
-		<u-divider text="商品信息"></u-divider>
 		<view class="order">
-			<view class="item" v-for="(item, index) in goodsList" :key="'a' + index">
+			<view class="item u-border-bottom" v-for="(item, index) in goodsList" :key="'a' + index">
 				<view class="left">
 					<image :src="item.pic" mode="aspectFill"></image>
 				</view>
-				<view class="content">
-					<view class="title u-line-3">{{ item.goodsName }}</view>
-					<view class="type">
-						<text v-for="(item2, index2) in item.sku"
-							:key="'b' + index2">{{ item2.optionName }}:{{ item2.optionValueName }}/</text>
-						<text v-for="(item3, index3) in item.additions"
-							:key="'c' + index3">{{ item3.pname }}:{{ item3.name }}/</text>
-					</view>
-				</view>
 				<view class="right">
-					<view class="price-score">
-						<view v-if="item.price" class="item"><text>¥</text>{{item.price}}</view>
-						<view v-if="item.score" class="item"><text>
-								<image class="score-icon" src="/static/images/score.png"></image>
-							</text>{{item.score}}</view>
+					<view class="r1">
+						<view class="title">{{ item.goodsName }}</view>
+						<view class="sku">
+							<text v-for="(item2, index2) in item.sku"
+								:key="'b' + index2">{{ item2.optionName }}:{{ item2.optionValueName }}/</text>
+							<text v-for="(item3, index3) in item.additions"
+								:key="'c' + index3">{{ item3.pname }}:{{ item3.name }}/</text>
+						</view>
 					</view>
-					<view class="number">x{{ item.number }}</view>
+					<view class="r2">
+						<view class="price-score">
+							<view v-if="item.price" class="item"><text>¥</text>{{item.price}}</view>
+							<view v-if="item.score" class="item"><image class="score-icon" src="/static/images/score.png"></image>{{item.score}}</view>
+						</view>
+						<view class="number"><text>x</text>{{ item.number }}</view>
+					</view>
 				</view>
 			</view>
 			<view class="total">
@@ -35,38 +34,83 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="orderInfo && orderInfo.couponUserList" class="coupon-box">
-			<u-divider text="使用优惠券"></u-divider>
-			<u-radio-group placement="column" v-model="couponId" iconPlacement="right" @change="couponChange">
-				<u-radio name="" label="不使用优惠券" activeColor="red"></u-radio>
-				<u-radio v-for="(item,index) in orderInfo.couponUserList" :key="index" :name="item.id"
-					:label="item.nameExt" activeColor="red"></u-radio>
-			</u-radio-group>
-		</view>
-		<u-divider text="配送地址"></u-divider>
-		<u-cell v-if="!defaultAddress" icon="map" title="新增收货地址" isLink url="/pages/address/addSite"></u-cell>
-		<u-cell v-else icon="map" :title="defaultAddress.info.linkMan + ' ' + defaultAddress.info.mobile"
+		<block v-if="orderInfo && orderInfo.couponUserList">
+			<u-gap height="20rpx" bgColor="#eee"></u-gap>
+			<view class="label-title"><view class="icon"></view>选择使用优惠券</view>
+			<view class="coupon-box">
+				<u-radio-group placement="column" v-model="couponId" iconPlacement="right" @change="couponChange">
+					<u-radio name="" label="不使用优惠券" activeColor="red"></u-radio>
+					<u-radio v-for="(item,index) in orderInfo.couponUserList" :key="index" :name="item.id"
+						:label="item.nameExt" activeColor="red"></u-radio>
+				</u-radio-group>
+			</view>
+		</block>
+		
+		<u-gap height="20rpx" bgColor="#eee"></u-gap>
+		<view class="label-title"><view class="icon"></view>收货地址</view>
+		<u-cell v-if="!defaultAddress" title="新增收货地址" size="large" isLink url="/pages/address/addSite"></u-cell>
+		<u-cell v-else :title="defaultAddress.info.linkMan + ' ' + defaultAddress.info.mobile"
 			:label="defaultAddress.info.provinceStr + defaultAddress.info.cityStr + defaultAddress.info.areaStr + defaultAddress.info.address"
-			isLink url="/pages/address/index"></u-cell>
+			isLink size="large" url="/pages/address/index"></u-cell>
+
+		<u-gap height="20rpx" bgColor="#eee"></u-gap>
+		<view class="label-title"><view class="icon"></view>备注</view>
 		<view class="remark">
-			<u-textarea v-model="remark" placeholder="订单备注(选填)"></u-textarea>
+			<u-textarea v-model="remark" class="order-remark" placeholder="如果需备注请输入"></u-textarea>
 		</view>
 		<view v-if="orderInfo">
-			<u-divider text="合计"></u-divider>
-			<u-cell v-if="orderInfo.amountTotle" title="商品金额" :value="'¥' + orderInfo.amountTotle" :arrow="false">
+			<u-gap height="20rpx" bgColor="#eee"></u-gap>
+			<view class="label-title"><view class="icon"></view>合计</view>
+			<u-cell v-if="orderInfo.amountTotle" title="商品金额">
+				<view slot="value" class="price-score">
+					<view class="item"><text>¥</text>{{ orderInfo.amountTotle }}</view>
+				</view>
 			</u-cell>
-			<u-cell v-if="orderInfo.score" title="积分" :value="orderInfo.score" :arrow="false"></u-cell>
-			<u-cell v-if="orderInfo.amountLogistics" title="运费" :value="'¥' + orderInfo.amountLogistics" :arrow="false">
+			<u-cell v-if="orderInfo.score" title="需要支付积分">
+				<view slot="value" class="price-score">
+					<view class="item"><image class="score-icon" src="/static/images/score.png"></image>{{ orderInfo.score }}</view>
+				</view>
 			</u-cell>
-			<u-cell v-if="orderInfo.freightScore" title="运费积分" :value="orderInfo.freightScore" :arrow="false"></u-cell>
-			<u-cell v-if="orderInfo.couponAmount" title="优惠券" :value="'-¥' + orderInfo.couponAmount" :arrow="false">
+			<u-cell v-if="orderInfo.amountLogistics" title="运费">
+				<view slot="value" class="price-score">
+					<view class="item"><text>¥</text>{{ orderInfo.amountLogistics }}</view>
+				</view>
 			</u-cell>
-			<u-cell v-if="orderInfo.amountReal" title="总计" :value="'¥' + orderInfo.amountReal" :arrow="false"></u-cell>
-			<u-cell v-if="userAmount" title="账户可用余额" :value="'¥' + userAmount.balance" :arrow="false"></u-cell>
-			<u-cell v-if="userAmount" title="账户可用积分" :value="userAmount.score" :arrow="false"></u-cell>
+			<u-cell v-if="orderInfo.freightScore" title="运费积分">
+				<view slot="value" class="price-score">
+					<view class="item"><image class="score-icon" src="/static/images/score.png"></image>{{ orderInfo.freightScore }}</view>
+				</view>
+			</u-cell>
+			<u-cell v-if="orderInfo.couponAmount" title="优惠券抵扣">
+				<view slot="value" class="price-score">
+					<view class="item"><text>¥</text>{{ orderInfo.couponAmount }}</view>
+				</view>
+			</u-cell>
+			<u-cell v-if="orderInfo.amountReal" title="总计">
+				<view slot="value" class="price-score">
+					<view class="item"><text>¥</text>{{ orderInfo.amountReal }}</view>
+				</view>
+			</u-cell>
 		</view>
+		
+		<view v-if="userAmount">
+			<u-gap height="20rpx" bgColor="#eee"></u-gap>
+			<view class="label-title"><view class="icon"></view>账户余额</view>
+			<u-cell title="可用余额">
+				<view slot="value" class="price-score">
+					<view class="item"><text>¥</text>{{ userAmount.balance }}</view>
+				</view>
+			</u-cell>
+			<u-cell title="可用积分">
+				<view slot="value" class="price-score">
+					<view class="item"><image class="score-icon" src="/static/images/score.png"></image>{{ userAmount.score }}</view>
+				</view>
+			</u-cell>
+		</view>
+		
+		<u-gap height="48rpx" bgColor="#eee"></u-gap>
 		<view class="submit safe-area-inset-bottom">
-			<u-button type="error" @click="submit" :disabled="!canSubmit">提交订单</u-button>
+			<u-button type="error" @click="submit" shape="circle" :disabled="!canSubmit">提交订单</u-button>
 		</view>
 	</view>
 </template>
@@ -275,10 +319,10 @@
 								moneyUnit = '%'
 							}
 							if (ele.moneyHreshold) {
-								ele.nameExt = ele.name + ' [面值' + ele.money + moneyUnit + '，满' + ele
-									.moneyHreshold + '元可用]'
+								ele.nameExt = ele.name + ' （面值' + ele.money + moneyUnit + '，满' + ele
+									.moneyHreshold + '元可用）'
 							} else {
-								ele.nameExt = ele.name + ' [面值' + ele.money + moneyUnit + ']'
+								ele.nameExt = ele.name + ' （面值' + ele.money + moneyUnit + '）'
 							}
 						})
 					}
@@ -407,12 +451,11 @@
 	.order {
 		width: 710rpx;
 		background-color: #ffffff;
-		margin: 20rpx auto;
+		margin: auto;
 		border-radius: 20rpx;
 		box-sizing: border-box;
-		padding: 20rpx;
+		padding: 0 20rpx;
 		font-size: 28rpx;
-
 		.top {
 			display: flex;
 			justify-content: space-between;
@@ -446,55 +489,48 @@
 					border-radius: 10rpx;
 				}
 			}
-
-			.content {
-				flex: 1;
-
-				.title {
-					font-size: 28rpx;
-					line-height: 50rpx;
-				}
-
-				.type {
-					margin: 10rpx 0;
-					font-size: 24rpx;
-					color: $u-tips-color;
-				}
-
-				.delivery-time {
-					color: #e5d001;
-					font-size: 24rpx;
-				}
-			}
-
 			.right {
-				margin-left: 10rpx;
-				padding-top: 20rpx;
-				text-align: right;
-
-				.price {
-					text {
-						font-size: 26rpx;
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				.r1 {
+					padding-left: 16rpx;
+					.title {
+						font-size: 28rpx;
+						line-height: 50rpx;
+						font-weight: bold;
 					}
-
-					font-size: 38rpx;
-					color: #e64340;
+					.sku {
+						margin: 10rpx 0;
+						font-size: 24rpx;
+						line-height: 42rpx;
+						color: $u-tips-color;
+					}
 				}
-
-				.decimal {
-					font-size: 24rpx;
-					margin-top: 4rpx;
-				}
-
-				.number {
-					color: $u-tips-color;
-					font-size: 24rpx;
+				
+				.r2 {
+					margin-left: 10rpx;
+					display: flex;
+					justify-content: space-between;
+					align-items: baseline;
+					padding-bottom: 24rpx;
+					.number {
+						text {
+							font-size: 24rpx;
+							padding: 0 4rpx;
+						}
+						color: $u-tips-color;
+						font-size: 34rpx;
+						color: #e64340;
+					}
 				}
 			}
+			
 		}
 
 		.total {
-			margin-top: 20rpx;
+			padding: 20rpx 0;
 			text-align: right;
 			font-size: 24rpx;
 		}
@@ -528,8 +564,11 @@
 	}
 
 	.submit {
+		box-sizing: border-box;
 		position: fixed;
+		padding: 32rpx;
 		width: 100vw;
+		background-color: #ffffff;
 		left: 0;
 		bottom: 0;
 		z-index: 9;
@@ -541,5 +580,8 @@
 		.u-radio {
 			padding: 24rpx 0;
 		}
+	}
+	.order-remark {		
+		background: #FFEBE0;
 	}
 </style>
