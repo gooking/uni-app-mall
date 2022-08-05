@@ -132,7 +132,8 @@
 				canSubmit: false,
 				orderInfo: undefined,
 				userAmount: undefined,
-				goodsType: 0 // 0 自营商品； 1 京东vop商品
+				goodsType: 0, // 0 自营商品； 1 京东vop商品
+				kjid: undefined
 			};
 		},
 		onLoad(e) {
@@ -154,6 +155,9 @@
 					this.goodsPrice += ele.price * ele.number
 					this.goodsScore += ele.score * ele.number
 					this.goodsType = ele.goodsType
+					if (ele.kjid) {
+						this.kjid = ele.kjid
+					}
 				})
 				this.calculatePrice()
 			}
@@ -290,7 +294,8 @@
 					remark: this.remark,
 					calculate,
 					goodsType: this.goodsType,
-					couponId: this.couponId
+					couponId: this.couponId,
+					kjid: this.kjid ? this.kjid : ''
 				}
 				if (this.defaultAddress) {
 					data.provinceId = this.defaultAddress.info.provinceId

@@ -36,12 +36,19 @@
 			</view>
 		</view>
 		<u-line v-if="goodsAddition || properties" dashed margin="32rpx"></u-line>
-		<view class="buy-number">
-			<text>购买数量</text>
-			<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
+		<block v-if="!kjid">
+			<view class="buy-number">
+				<text>购买数量</text>
+				<u-number-box v-model="buyNumber" :min="min" :max="max" integer></u-number-box>
+			</view>
+			<u-line dashed margin="32rpx"></u-line>
+		</block>
+		<view v-if="kjid">
+			<view class="btn">
+				<u-button text="立即购买" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)" @click="tobuy"></u-button>
+			</view>
 		</view>
-		<u-line dashed margin="32rpx"></u-line>
-		<view class="btns">
+		<view v-else class="btns">
 			<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
 			<view class="icon-btn">
 				<u-icon name="chat" size="48rpx"></u-icon>
@@ -95,6 +102,7 @@
 				type: Array,
 				default: null
 			},
+			kjid: undefined
 		},
 		data() {
 			return {
@@ -532,7 +540,8 @@
 					score: this.goodsDetail.basicInfo.minScore,
 					sku, // optionId optionName optionValueId optionValueName
 					additions: goodsAddition, // id name pid pname price
-					goodsType
+					goodsType,
+					kjid: this.kjid ? this.kjid : ''
 				}]
 				uni.setStorageSync('goodsList', goodsList)
 				uni.navigateTo({

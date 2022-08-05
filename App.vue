@@ -96,7 +96,7 @@
 				// APP 自动更新
 				// #endif
 			},
-			async autoLogin() {
+			async autoLogin(force) {
 				// 自动登陆
 				// #ifdef MP-WEIXIN
 				const isLogined = await WXAUTH.checkHasLogined()
@@ -128,6 +128,9 @@
 					uni.$emit('loginOK', {})
 				}, 500)
 				// #endif
+				if (!force) {
+					return
+				}
 				// #ifdef H5
 				const isLogined = await this.checkHasLoginedH5()
 				if (!isLogined) {
@@ -149,9 +152,9 @@
 						}
 					} else {
 						// 其他浏览器打开的， 按需登陆，不能直接跳转到登陆界面
-						// uni.navigateTo({
-						// 	url: "/pages/login/login"
-						// })
+						uni.navigateTo({
+							url: "/pages/login/login"
+						})
 					}
 				}
 				// #endif

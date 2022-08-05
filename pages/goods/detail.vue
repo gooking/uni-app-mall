@@ -10,7 +10,15 @@
 					<u-swiper v-else :list="goodsDetail.pics" keyName="pic" indicator circular height="750rpx">
 					</u-swiper>
 					<view class="price-share">
-						<view class="price-score">
+						<view v-if="curKanjiaprogress" class="price-score price-score2">
+							<view class="item">
+								<text>¥</text>{{ curKanjiaprogress.kanjiaInfo.curPrice }}
+							</view>
+							<view class="item original">
+								<text>¥</text>{{ curGoodsKanjia.originalPrice }}
+							</view>
+						</view>
+						<view v-else class="price-score price-score2">
 							<view v-if="goodsDetail.basicInfo.minPrice" class="item">
 								<text>¥</text>{{goodsDetail.basicInfo.minPrice}}
 							</view>
@@ -51,21 +59,61 @@
 						{{goodsDetail.basicInfo.commission}}元 现金奖励
 					</view>
 				</view>
-				<u-cell-group v-if="curGoodsKanjia" title="砍价设置">
-					<u-cell title="数量" :value="curGoodsKanjia.number + '份'"></u-cell>
-					<u-cell title="已售" :value="curGoodsKanjia.numberBuy + '份'"></u-cell>
-					<u-cell title="原价" :value="curGoodsKanjia.originalPrice"></u-cell>
-					<u-cell title="底价" :value="curGoodsKanjia.minPrice"></u-cell>
-					<u-cell title="截止" :value="curGoodsKanjia.dateEnd"></u-cell>
-				</u-cell-group>
+
+				<block v-if="curGoodsKanjia">
+					<u-gap height="20rpx" bgColor="#eee"></u-gap>
+					<view class="label-title">
+						<view class="icon"></view>商品砍价设置
+					</view>
+					<u-cell-group>
+						<u-cell title="数量" :value="curGoodsKanjia.number + '份'"></u-cell>
+						<u-cell title="已售" :value="curGoodsKanjia.numberBuy + '份'"></u-cell>
+						<u-cell title="原价" :value="curGoodsKanjia.originalPrice"></u-cell>
+						<u-cell title="底价" :value="curGoodsKanjia.minPrice"></u-cell>
+						<u-cell title="截止" :value="curGoodsKanjia.dateEnd"></u-cell>
+					</u-cell-group>
+				</block>
+				<block v-if="curKanjiaprogress">
+					<u-gap height="20rpx" bgColor="#eee"></u-gap>
+					<view class="label-title">
+						<view class="icon"></view>当前砍价状态
+					</view>
+					<u-cell-group>
+						<u-cell title="帮砍人数" :value="curKanjiaprogress.kanjiaInfo.helpNumber"></u-cell>
+						<u-cell title="状态" :value="curKanjiaprogress.kanjiaInfo.statusStr"></u-cell>
+						<u-cell title="参与时间" :value="curKanjiaprogress.kanjiaInfo.dateAdd"></u-cell>
+					</u-cell-group>
+				</block>
 				<view v-if="curKanjiaprogress && curKanjiaprogress.kanjiaInfo.uid != uid" class="curKanjiaJoin">
 					帮<text>{{curKanjiaprogress.joiner.nick}}</text> 砍价吧！
 				</view>
 				<view v-if="curGoodsKanjia && curKanjiaprogress" class="curKanjiaprogress">
-					<u-line-progress :percentage="100 * (curGoodsKanjia.originalPrice - curKanjiaprogress.kanjiaInfo.curPrice) / (curGoodsKanjia.originalPrice - curGoodsKanjia.minPrice)" activeColor="#ff0000"></u-line-progress>
+					<u-line-progress
+						:percentage="100 * (curGoodsKanjia.originalPrice - curKanjiaprogress.kanjiaInfo.curPrice) / (curGoodsKanjia.originalPrice - curGoodsKanjia.minPrice)"
+						activeColor="#ff0000"></u-line-progress>
+					<view class="curKanjiaprogress-bar">// 砍价完成进度 //</view>
+				</view>
+
+				<block v-if="curKanjiaprogress && curKanjiaprogress.helps && curKanjiaprogress.helps.length>0">
+					<u-gap height="20rpx" bgColor="#eee"></u-gap>
+					<view class="label-title">
+						<view class="icon"></view>好友助力明细
+					</view>
+					<view class="kjlj" v-for="(item,index) in curKanjiaprogress.helps" :key="index">
+						<image class="kjlj-l" :src="item.avatarUrl" mode="aspectFill" />
+						<u-cell class="kjlj-r" :label="item.nick + ' ' + item.dateAdd + '帮砍'" size="large">
+							<view slot="title" class="price-score">
+								<view class="item"><text>¥</text>{{ item.cutPrice }}</view>
+							</view>
+						</u-cell>
+					</view>
+				</block>
+
+				<u-gap height="20rpx" bgColor="#eee"></u-gap>
+				<view class="label-title">
+					<view class="icon"></view>详细介绍
 				</view>
 				<view id="content">
-					<u-divider text="详细介绍"></u-divider>
 					<view class="content">
 						<view v-if="wxintroduction">
 							<u-image v-for="(item,index) in wxintroduction" :src="item" mode="widthFix" width="750rpx"
@@ -109,11 +157,76 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view v-if="curGoodsKanjia && (!curKanjiaprogress || curKanjiaprogress.kanjiaInfo.uid != uid)"
-				class="bottom-btns">
-				<view class="btn">
-					<u-button text="我要砍价" shape="circle" color="linear-gradient(90deg, #ff6034, #ee0a24, #ff6034)"
-						@click="joinKanjia"></u-button>
+			<view v-if="curGoodsKanjia">
+				<view v-if="curKanjiaprogress && curKanjiaprogress.kanjiaInfo.uid == uid" class="bottom-btns">
+					<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
+					<view class="icon-btn">
+						<u-icon name="chat" size="48rpx"></u-icon>
+						<text>客服</text>
+						<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name"
+							:send-message-img="goodsDetail.basicInfo.pic"
+							:send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id"
+							show-message-card></button>
+					</view>
+					<!--  #endif -->
+					<view class="icon-btn" @click="addFav">
+						<u-icon :name="faved ? 'heart-fill' : 'heart'" size="48rpx"></u-icon>
+						<text>收藏</text>
+					</view>
+					<view class="btn">
+						<u-button class="half-l" text="邀请好友助力" shape="circle"
+							color="linear-gradient(90deg,#ffd01e, #ff8917)" open-type='share'>
+						</u-button>
+					</view>
+					<view class="btn">
+						<u-button class="half-r" text="用现价购买" shape="circle"
+							color="linear-gradient(90deg, #ff6034, #ee0a24)" @click="kanjiabuy">
+						</u-button>
+					</view>
+				</view>
+				<view v-else-if="curKanjiaprogress && curKanjiaprogress.kanjiaInfo.uid != uid" class="bottom-btns">
+					<view class="icon-btn">
+						<u-icon name="share" size="48rpx"></u-icon>
+						<text>邀请</text>
+						<button open-type='share'></button>
+					</view>
+					<view class="btn">
+						<u-button class="half-l" :text="myHelpDetail ? '您已助力' : '帮忙砍一刀'" shape="circle"
+							:disabled="myHelpDetail ? true : false" color="linear-gradient(90deg,#ffd01e, #ff8917)"
+							@click="helpKanjia">
+						</u-button>
+					</view>
+					<view class="btn">
+						<u-button class="half-r" text="我也要参与" shape="circle"
+							color="linear-gradient(90deg, #ff6034, #ee0a24)" @click="joinKanjia">
+						</u-button>
+					</view>
+				</view>
+				<view v-else class="bottom-btns">
+					<!--  #ifdef MP-WEIXIN	|| MP-BAIDU -->
+					<view class="icon-btn">
+						<u-icon name="chat" size="48rpx"></u-icon>
+						<text>客服</text>
+						<button open-type='contact' :send-message-title="goodsDetail.basicInfo.name"
+							:send-message-img="goodsDetail.basicInfo.pic"
+							:send-message-path="'/pages/goods/detail?id='+goodsDetail.basicInfo.id"
+							show-message-card></button>
+					</view>
+					<!--  #endif -->
+					<view class="icon-btn" @click="addFav">
+						<u-icon :name="faved ? 'heart-fill' : 'heart'" size="48rpx"></u-icon>
+						<text>收藏</text>
+					</view>
+					<view class="btn">
+						<u-button class="half-l" text="发起砍价" shape="circle"
+							color="linear-gradient(90deg,#ffd01e, #ff8917)" @click="joinKanjia">
+						</u-button>
+					</view>
+					<view class="btn">
+						<u-button class="half-r" text="原价购买" shape="circle"
+							color="linear-gradient(90deg, #ff6034, #ee0a24)" @click="_showGoodsPop">
+						</u-button>
+					</view>
 				</view>
 			</view>
 			<view v-else class="bottom-btns">
@@ -154,7 +267,7 @@
 				</view>
 			</view>
 		</view>
-		<goods-pop :show="showGoodsPop" :goodsDetail="goodsDetail" @close="showGoodsPop = false"></goods-pop>
+		<goods-pop :show="showGoodsPop" :goodsDetail="goodsDetail" :kjid="kjid" @close="showGoodsPop = false"></goods-pop>
 		<!-- <u-modal :show="showhaibao"  :title="title" >
 			<view class="slot-content">
 				<hch-poster v-if="showhaibao" ref="hchPoster" @cancel="handleCancel" :posterData.sync="posterData" @previewImage='previewImage' />
@@ -205,6 +318,7 @@
 				curGoodsKanjia: undefined,
 				curKanjiaprogress: undefined,
 				myHelpDetail: undefined,
+				kjid: undefined
 			}
 		},
 		onLoad(e) {
@@ -425,6 +539,13 @@
 			// 弹出商品购买弹窗
 			async _showGoodsPop() {
 				this.showGoodsPop = true
+				this.kjid = null
+			},
+			kanjiabuy() {
+				// 砍价用现在的价格购买
+				this.goodsDetail.basicInfo.minPrice = this.curKanjiaprogress.kanjiaInfo.curPrice
+				this.kjid = this.curGoodsKanjia.id
+				this.showGoodsPop = true
 			},
 			scrolltolower() {
 				this.page += 1
@@ -581,6 +702,7 @@
 				const res = await this.$wxapi.kanjiaDetail(this.curGoodsKanjia.id, kjJoinUid)
 				if (res.code == 0) {
 					this.curKanjiaprogress = res.data
+					this.kanjiaHelpDetail()
 				}
 			},
 			async joinKanjia() {
@@ -593,6 +715,10 @@
 				})
 				const res = await this.$wxapi.kanjiaJoin(this.token, this.curGoodsKanjia.id)
 				uni.hideLoading()
+				if (res.code == 2000) {
+					getApp().autoLogin(true)
+					return
+				}
 				if (res.code == 0) {
 					this.$u.vuex('kjJoinUid', this.uid)
 					this.myHelpDetail = null
@@ -602,6 +728,36 @@
 						title: res.msg,
 						icon: 'none'
 					})
+				}
+			},
+			async helpKanjia() {
+				console.log(this.curGoodsKanjia);
+				console.log(this.token);
+				const res = await this.$wxapi.kanjiaHelp(this.token, this.curGoodsKanjia.id, this.curKanjiaprogress
+					.kanjiaInfo.uid, '')
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+					return;
+				}
+				this.myHelpDetail = res.data
+				uni.showModal({
+					title: '成功',
+					content: '成功帮TA砍掉 ' + res.data.cutPrice + ' 元',
+					showCancel: false,
+					confirmText: '知道了'
+				})
+				this.kanjiaSet()
+			},
+			async kanjiaHelpDetail() {
+				console.log(this.curGoodsKanjia);
+				console.log(this.token);
+				const res = await this.$wxapi.kanjiaHelpDetail(this.token, this.curGoodsKanjia.id, this
+					.curKanjiaprogress.kanjiaInfo.uid)
+				if (res.code == 0) {
+					this.myHelpDetail = res.data
 				}
 			},
 		}
@@ -775,10 +931,17 @@
 
 	.goods-title {
 		padding: 0 32rpx;
+
+		text {
+			font-weight: bold;
+			font-size: 34rpx;
+		}
 	}
+
 	.curKanjiaJoin {
 		padding: 32rpx;
 		font-size: 28rpx;
+
 		text {
 			color: #e64340;
 			font-weight: bold;
@@ -786,7 +949,36 @@
 			font-size: 32rpx;
 		}
 	}
+
 	.curKanjiaprogress {
 		padding: 32rpx;
+	}
+
+	.price-score2 {
+		.item {
+			font-size: 64rpx;
+		}
+	}
+
+	.curKanjiaprogress-bar {
+		text-align: center;
+		font-size: 20rpx;
+		color: #999;
+		margin-top: 20rpx;
+	}
+	.kjlj {
+	  display: flex;
+	  background-color: #ffffff;
+	  padding: 0 32rpx;
+	  align-items: center;
+	  .kjlj-l {
+	    width: 88rpx;
+	    height: 88rpx;
+	    border-radius: 50%;
+	    flex-shrink: 0;
+	  }
+	  .kjlj-r {
+		  flex: 1;
+	  }
 	}
 </style>
