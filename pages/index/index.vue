@@ -135,7 +135,7 @@
 				</view>
 				<view class="l"><u-line></u-line></view>
 			</view>
-			<view v-for="(item, index) in kanjiaList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
+			<view v-for="(item, index) in pingtuanList" :key="index" class="miaosha-goods-list" @click="toDetailsTap">
 				<image :src="item.pic" class="image" mode="aspectFill" lazy-load="true" @click="goDetail(item)" />
 				<view class="r">
 					<view class="goods-title" @click="goDetail(item)">{{item.name}}</view>

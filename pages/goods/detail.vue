@@ -27,6 +27,9 @@
 									<image class="score-icon" src="/static/images/score.png"></image>
 								</text>{{goodsDetail.basicInfo.minScore}}
 							</view>
+							<view v-if="goodsDetail.basicInfo.originalPrice" class="item original">
+								<text>¥</text>{{goodsDetail.basicInfo.originalPrice}}
+							</view>
 						</view>
 						<!-- #ifdef MP -->
 						<view class="btns">
@@ -752,12 +755,18 @@
 				this.kanjiaSet()
 			},
 			async kanjiaHelpDetail() {
-				console.log(this.curGoodsKanjia);
-				console.log(this.token);
 				const res = await this.$wxapi.kanjiaHelpDetail(this.token, this.curGoodsKanjia.id, this
 					.curKanjiaprogress.kanjiaInfo.uid)
 				if (res.code == 0) {
 					this.myHelpDetail = res.data
+				}
+			},
+			async _pingtuanSet() {
+				const res = await this.$wxapi.pingtuanSet(this.goodsDetail.basicInfo.id)
+				if (res.code == 0) {
+					this.pingtuanSet = res.data
+					// 如果是拼团商品， 默认显示拼团价格
+					this.goodsDetail.basicInfo.minPrice = this.goodsDetail.basicInfo.pingtuanPrice
 				}
 			},
 		}
