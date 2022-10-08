@@ -117,6 +117,7 @@
 				goodsAddition: undefined,
 				faved: false,
 				properties: undefined,
+				lock: false
 			}
 		},
 		watch: {
@@ -136,7 +137,7 @@
 		},
 		methods: {
 			_initData() {
-				if (!this.goodsDetail) {
+				if (this.lock || !this.goodsDetail) {
 					return
 				}
 				this.pic = this.goodsDetail.basicInfo.pic
@@ -157,10 +158,12 @@
 				this.goodsFavCheck()
 			},
 			close() {
+				this.lock = false
 				this.$emit('close')
 			},
 			// sku 选择事件
 			async skuSelect(index, index2) {
+				this.lock = true
 				this.buyNumber = 1
 				const properties = this.goodsDetail.properties
 				const p = properties[index]
