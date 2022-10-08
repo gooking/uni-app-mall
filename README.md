@@ -8,12 +8,13 @@
 
 <img src="https://7.s2m.cc/2022/02/10/d7a52fb7-e123-483b-80ac-1d4227d4f758.png" height="160px">
 
-# 天使童装小程序原生项目
-
-想了解微信小程序原生项目的可以点击下面的链接：
-
-- [ GitHub地址 https://github.com/EastWorld/wechat-app-mall ](https://github.com/EastWorld/wechat-app-mall)
-- [ 码云地址 https://gitee.com/javazj/wechat-app-mall ](https://gitee.com/javazj/wechat-app-mall)
+### 其他优秀开源模板推荐
+- [天使童装](https://github.com/EastWorld/wechat-app-mall) [码云镜像](https://gitee.com/javazj/wechat-app-mall)
+- [天使童装（uni-app版本）](https://github.com/gooking/uni-app-mall) [码云镜像](https://gitee.com/javazj/uni-app-mall)
+- [舔果果小铺（升级版）](https://github.com/gooking/TianguoguoXiaopu)
+- [面馆风格小程序](https://gitee.com/javazj/noodle_shop_procedures)
+- [AI名片](https://github.com/gooking/visitingCard)
+- [仿海底捞订座排队 (uni-app)](https://github.com/gooking/dingzuopaidui) [码云镜像](https://gitee.com/javazj/dingzuopaidui)wechat-app-mall)
 
 ## 扫码体验
 
