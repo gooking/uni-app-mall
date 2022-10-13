@@ -47,6 +47,9 @@
 						<view class="exchange btn" @click="close(item.id)">取消订单</view>
 						<view class="evaluate btn ml24" @click="pay(index)">立即支付</view>
 					</view>
+					<view v-else-if="item.status == -1" class="bottom">
+						<view class="exchange btn" @click="orderDelete(item.id)">删除</view>
+					</view>
 					<view v-if="item.status > 0 && !item.isEnd" class="bottom">
 						<view v-if="item.refundStatus == 1 || refundApplyedOrderIds.includes(item.id + '')" class="btn-box">
 							<u-button type="error" plain size="small" shape="circle" text="撤销售后"
@@ -189,7 +192,37 @@
 					uni.showToast({
 						title: '已取消'
 					})
-					this.change(this.current)
+					this.change({
+						index: this.current
+					})
+				}
+			},
+			async orderDelete(orderId) {
+				uni.showModal({
+					title: '请确认',
+					content: '确定要删除该订单吗？删除后无法恢复！',
+					success: res => {
+						if (res.confirm) {
+							this._orderDelete(orderId)
+						}
+					}
+				});
+			},
+			async _orderDelete(orderId) {
+				// https://www.yuque.com/apifm/nu0f75/wh4rrs
+				const res = await this.$wxapi.orderDelete(this.token, orderId)
+				if (res.code != 0) {
+					uni.showToast({
+						title: res.msg,
+						icon: 'none'
+					})
+				} else {
+					uni.showToast({
+						title: '删除成功'
+					})
+					this.change({
+						index: this.current
+					})
 				}
 			},
 			async pay(index) {
@@ -217,7 +250,9 @@
 						uni.showToast({
 							title: '支付成功'
 						})
-						this.change(1)
+						this.change({
+							index: 1
+						})
 					}
 				} else {
 					// 发起在线支付
@@ -227,7 +262,9 @@
 						type: 0,
 						id: orderInfo.id
 					}, () => {
-						this.change(1)
+						this.change({
+							index: 1
+						})
 					}, (err) => {
 						uni.showToast({
 							title: '支付失败',
