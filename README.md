@@ -43,7 +43,7 @@
 
 # QQ交流群
 
-<img src="https://7.s2m.cc/2021/12/28/ec609c83-6adb-49bf-96b2-002b7dbdcf01.png">
+<img src="https://dcdn.it120.cc/2023/01/05/6a2c43b2-6eb5-473b-aca0-1e15b4308342.png">
 
 # 诚邀请一起来开发
 
@@ -52,10 +52,3 @@
 3. git clone 你自己的git仓库地址，完成开发及测试
 4. 通过 “Pull Request” 将你修改的代码提交合并请求
 
-## 打赏
-
-如果觉得本项目对你有帮助，欢迎打赏～
-
-| 微信 | 支付宝 |
-| :------: | :------: |
-| <img src="https://7.s2m.cc/2021/12/28/19e8851d-9a53-49bc-a4e6-055994b7876f.jpeg" height="250px"> | <img src="https://7.s2m.cc/2021/12/28/8e373db9-f468-43fb-8ca7-63a997439010.jpeg" height="250px"> |
