@@ -8,11 +8,13 @@
 			goLogin: false,
 			subDomain: 'tz', // jdjf0115
 			merchantId: 951, // 42151
-			version: '2.0.0',
+			version: '2.0.1',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open,needIdCheck',
 			wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID
 			openAlipayProvider: false, // 是否开通支付宝支付
 			addressLevel: 3, // 省市区到3级还是4级，可选 3 或者 4
+			curLong: undefined, // 当前用户经纬度
+			curLat: undefined, // 当前用户经纬度
 		},
 		onLaunch: function() {
 			// https://www.yuque.com/apifm/nu0f75/cdqz1n
@@ -185,7 +187,27 @@
 						uni.$emit('loginOK', {})
 					}, 500)
 				}
-			}
+			},
+			async getLocation() {
+				// 统一获取经纬度
+				if (this.globalData.curLong && this.globalData.curLat) {
+					return {
+						long: this.globalData.curLong,
+						lat: this.globalData.curLat
+					}
+				}
+				const res = await this.$wxapi.getLocation()
+				if (res) {
+					this.globalData.curLong = res.long
+					this.globalData.curLat = res.lat
+					return res
+				} else {
+					return {
+						long: 0,
+						lat: 0
+					}
+				}
+			},
 		}
 	}
 </script>

@@ -4,7 +4,7 @@
 		<view class="profile">
 			很遗憾，若您不同意《用户协议》和《隐私协议》，将无法继续使用我们的服务。
 		</view>
-		<image class="img" width="100%" mode="widthFix" src="https://7.s2m.cc/2021/11/30/efd832a3-5184-4c22-af64-728999a90add.png"></image>
+		<image class="img" width="100%" mode="widthFix" src="https://dcdn.it120.cc/2023/01/03/b68c3363-a598-4e8e-b51a-014dd824c687.png"></image>
 	</view>
 </template>
 
