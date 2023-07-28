@@ -68,6 +68,12 @@
 						sysconfigMap[config.key] = config.value
 					})
 					this.$u.vuex('sysconfigMap', sysconfigMap)
+					uni.$emit('sysconfigOK', sysconfigMap)
+					/**
+					 * uni.$on('sysconfigOK',data => {
+							console.log('监听到事件来自 update ，携带参数 msg 为：' + data.msg);
+						})
+					 */
 				}
 			},
 			checkForUpdate() {
