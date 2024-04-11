@@ -141,7 +141,8 @@
             "scope.userLocation" : {
                 "desc" : "为你推荐附近的门店"
             }
-        }
+        },
+		"slotMultipleInstance" : true
     },
     "mp-alipay" : {
         "usingComponents" : true,

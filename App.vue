@@ -4,11 +4,12 @@
 	const QQAUTH = require('@/common/qqauth.js')
 	export default {
 		globalData: {
-			h5Domain: 'https://flpt.jxsupplier.com',
+			h5Domain: 'http://tstz.s2m.cc',
+			wxh5autologin: false, // 微信内浏览器打开是否启用微信自动登录
 			goLogin: false,
 			subDomain: 'tz', // jdjf0115
 			merchantId: 951, // 42151
-			version: '2.0.1',
+			version: '2.1.0',
 			sysconfigkeys: 'mallName,shopMod,share_profile,recharge_amount_min,open_growth,shopping_cart_vop_open,needIdCheck',
 			wxpayOpenAppId: 'wx9b04553fd8c7b9c3', // 微信开放平台的移动端应用appID
 			openAlipayProvider: false, // 是否开通支付宝支付
@@ -144,7 +145,7 @@
 				if (!isLogined) {
 					// 判断是普通浏览器还是微信浏览器
 					const ua = window.navigator.userAgent.toLowerCase();
-					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+					if (ua.match(/MicroMessenger/i) == 'micromessenger' && this.globalData.wxh5autologin) {
 						// 微信内置浏览器打开的
 						// https://www.yuque.com/apifm/nu0f75/fpvc3m
 						const res = await this.$wxapi.siteStatistics()

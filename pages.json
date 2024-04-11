@@ -348,6 +348,12 @@
 		    "style": {
 				"navigationBarTitleText": "会员卡消费记录"
 		    }
+		},
+		{
+		    "path" : "pages/raffle/index",
+		    "style": {
+				"navigationBarTitleText": "抽奖"
+		    }
 		}
     ],
 	"subPackages": [

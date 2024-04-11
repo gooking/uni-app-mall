@@ -6,9 +6,16 @@
 
 我希望可以持续的将本项目一直开源维护下去，但是毕竟个人精力有限，所以非常希望大家可以一同加入到开发工作中来，群策群力，一起把这个项目真正的长期做下去
 
-<img src="https://7.s2m.cc/2022/02/10/d7a52fb7-e123-483b-80ac-1d4227d4f758.png" height="160px">
+<img src="https://dcdn.it120.cc/2021/09/13/61a80363-9085-4a10-9447-e276a3d40ab3.jpeg" height="160px">
 
-### 其他优秀开源模板推荐
+## 近期更新
+
+| 抽奖功能
+| :------: |
+| <img src="https://dcdn.it120.cc/2024/04/11/2a87edf6-5be8-4f22-99cb-a625ef92986b.png" width="250px"> |
+
+
+## 其他优秀开源模板推荐
 - [天使童装](https://github.com/EastWorld/wechat-app-mall)   /  [码云镜像](https://gitee.com/javazj/wechat-app-mall)
 - [天使童装（uni-app版本）](https://github.com/gooking/uni-app-mall)  /   [码云镜像](https://gitee.com/javazj/uni-app-mall)
 - [简约精品商城（uni-app版本）](https://github.com/gooking/uni-app--mini-mall)  /   [码云镜像](https://gitee.com/javazj/uni-app--mini-mall)
@@ -26,13 +33,13 @@
 
 如果觉得本项目对你有帮助，欢迎打赏～
 
-| 微信小程序 | h5
-| :------: | :------: |
-| <img src="https://www.it120.cc/images/tz.jpg" height="250px"> | <img src="https://7.s2m.cc/2022/02/22/5cd37f0d-cd24-47f0-95c2-da168fe91548.png" height="250px"> |
+| 微信小程序 | h5 | 抽奖演示
+| :------: | :------: | :------: |
+| <img src="https://www.it120.cc/images/tz.jpg" height="250px"> | <img src="https://dcdn.it120.cc/2024/04/11/5e626d7d-8047-475d-a205-b08e076942c1.png" height="250px"> | <img src="https://dcdn.it120.cc/2024/04/11/8302499d-f48a-438d-b27b-fb4ccc00119e.png" height="250px"> |
 
 | Android | ios
 | :------: | :------: |
-| <img src="https://7.s2m.cc/2022/02/22/dee83513-bb5a-4a5c-afab-18a0c57f13a9.png" height="250px"> | <img src="https://7.s2m.cc/2022/02/22/dee83513-bb5a-4a5c-afab-18a0c57f13a9.png" height="250px"> |
+| <img src="https://dcdn.it120.cc/2023/01/03/ee5fc56d-0ea8-4bda-a8d0-2eb458da4aea.png" height="250px"> | <img src="https://dcdn.it120.cc/2023/01/03/ee5fc56d-0ea8-4bda-a8d0-2eb458da4aea.png" height="250px"> |
 
 # 特别感谢
 
